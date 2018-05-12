@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using GoMemory.UWP.DataAccess;
 
 namespace GoMemory.UWP
 {
@@ -20,8 +21,8 @@ namespace GoMemory.UWP
         public MainPage()
         {
             this.InitializeComponent();
-
-            LoadApplication(new GoMemory.App());
+            string dbPath = SqliteDbConnectionHelper.GetLocalDbPath("GoMemory.db3");
+            LoadApplication(new GoMemory.App(dbPath));
         }
     }
 }

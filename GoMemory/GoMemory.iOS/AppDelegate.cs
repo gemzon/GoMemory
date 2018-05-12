@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using GoMemory.iOS.DataAccess;
 using UIKit;
 
 namespace GoMemory.iOS
@@ -22,8 +23,9 @@ namespace GoMemory.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            string dbPath = SqliteDbConnectionHelper.GetLocalDbPath("GoMemory.db3");
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            LoadApplication(new App(dbPath));
 
             return base.FinishedLaunching(app, options);
         }
