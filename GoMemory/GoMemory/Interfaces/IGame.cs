@@ -14,6 +14,6 @@ namespace GoMemory.Interfaces
 
         void CheckSelections();
 
-        void GenerateImages();
+     
     }
 }

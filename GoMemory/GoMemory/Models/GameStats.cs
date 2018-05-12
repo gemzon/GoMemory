@@ -8,8 +8,8 @@ namespace GoMemory.Models
     {
         public int Id { get; set; } 
         public string GameTitle { get; set; }
-        public int BestLevel { get; set; }
-        public DateTime AverageTime { get; set; }
+        public int Level { get; set; }
+        
 
     }
 }

@@ -12,6 +12,5 @@
 
   <ItemGroup>
     <Folder Include="DataAccess\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 </Project>
