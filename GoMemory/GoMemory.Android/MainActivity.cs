@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using GoMemory.Droid.DataAccess;
 
 namespace GoMemory.Droid
 {
@@ -18,9 +19,9 @@ namespace GoMemory.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-
+            string dbPath = SqliteDbConnectionHelper.GetLocalDbPath("GoMemory.db3");
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App());
+            LoadApplication(new App(dbPath));
         }
     }
 }

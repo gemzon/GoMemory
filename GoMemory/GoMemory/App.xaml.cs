@@ -1,4 +1,5 @@
 using System;
+using GoMemory.Pages;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Xamarin.Forms;
@@ -9,12 +10,12 @@ namespace GoMemory
 {
 	public partial class App : Application
 	{
-		public App ()
+		public App(string dbPath)
 		{
 			InitializeComponent();
 
-			MainPage = new MainPage();
-		}
+		    MainPage = new NavigationPage(new HomePage());
+        }
 
 		protected override void OnStart ()
 		{
