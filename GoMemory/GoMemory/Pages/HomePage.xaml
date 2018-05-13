@@ -2,13 +2,20 @@
 <ContentPage
     x:Class="GoMemory.Pages.HomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="{Binding Title}">
+
     <ContentPage.Content>
         <StackLayout>
-            <Label
-                HorizontalOptions="CenterAndExpand"
-                Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" />
+
+            <Image
+                Margin="10"
+                HeightRequest="150"
+                Source="thinking.png" />
+            <Label Style="{StaticResource BlackTextLabel}" Text="Games" />
+            <Button Style="{StaticResource GoldenRodButton}" Text="What you see" />
+            <Button Style="{StaticResource GoldenRodButton}" Text="Color Complex" />
+            <Button Style="{StaticResource GoldenRodButton}" Text="Sequential" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

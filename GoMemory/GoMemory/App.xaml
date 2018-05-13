@@ -3,5 +3,33 @@
     x:Class="GoMemory.App"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <Application.Resources />
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="Goldenrod" />
+            </Style>
+
+            <Style x:Key="GoldenRodButton" TargetType="Button">
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="BackgroundColor" Value="Goldenrod" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="CornerRadius" Value="10" />
+            </Style>
+
+            <Style x:Key="BlackTextLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Margin" Value="10" />
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+
 </Application>

@@ -10,7 +10,15 @@ namespace GoMemory
 {
 	public partial class App : Application
 	{
-		public App(string dbPath)
+	    public App()
+	    {
+	        InitializeComponent();
+
+	        MainPage = new NavigationPage(new HomePage());
+	    }
+
+
+        public App(string dbPath)
 		{
 			InitializeComponent();
 
