@@ -5,11 +5,82 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Images\thinking.png" />
+    <None Remove="Images\GameImages\african_parrot.png" />
+    <None Remove="Images\GameImages\apple_red.png" />
+    <None Remove="Images\GameImages\beer.png" />
+    <None Remove="Images\GameImages\bell.png" />
+    <None Remove="Images\GameImages\birthday_cake.png" />
+    <None Remove="Images\GameImages\bison.png" />
+    <None Remove="Images\GameImages\camera.png" />
+    <None Remove="Images\GameImages\carrot.png" />
+    <None Remove="Images\GameImages\cheese_slice.png" />
+    <None Remove="Images\GameImages\chocolate_bar.png" />
+    <None Remove="Images\GameImages\clock.png" />
+    <None Remove="Images\GameImages\codfish.png" />
+    <None Remove="Images\GameImages\crab.png" />
+    <None Remove="Images\GameImages\fried_egg.png" />
+    <None Remove="Images\GameImages\frog.png" />
+    <None Remove="Images\GameImages\hammer.png" />
+    <None Remove="Images\GameImages\lightning.png" />
+    <None Remove="Images\GameImages\light_bulb_on.png" />
+    <None Remove="Images\GameImages\microphone.png" />
+    <None Remove="Images\GameImages\milkshake.png" />
+    <None Remove="Images\GameImages\orange.png" />
+    <None Remove="Images\GameImages\phone.png" />
+    <None Remove="Images\GameImages\pig.png" />
+    <None Remove="Images\GameImages\portobello.png" />
+    <None Remove="Images\GameImages\rabbit.png" />
+    <None Remove="Images\GameImages\robots.png" />
+    <None Remove="Images\GameImages\rocket_popsicle.png" />
+    <None Remove="Images\GameImages\sausage.png" />
+    <None Remove="Images\GameImages\scissors.png" />
+    <None Remove="Images\GameImages\spider.png" />
+    <None Remove="Images\GameImages\star.png" />
+    <None Remove="Images\GameImages\strawberry.png" />
+    <None Remove="Images\GameImages\teapot.png" />
+    <None Remove="Images\GameImages\wasp.png" />
+    <None Remove="Images\GameImages\watermelon.png" />
+    <None Remove="Images\GameImages\wine_cup.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="thinking.png" />
+    <EmbeddedResource Include="Images\GameImages\african_parrot.png" />
+    <EmbeddedResource Include="Images\GameImages\apple_red.png" />
+    <EmbeddedResource Include="Images\GameImages\beer.png" />
+    <EmbeddedResource Include="Images\GameImages\bell.png" />
+    <EmbeddedResource Include="Images\GameImages\birthday_cake.png" />
+    <EmbeddedResource Include="Images\GameImages\bison.png" />
+    <EmbeddedResource Include="Images\GameImages\camera.png" />
+    <EmbeddedResource Include="Images\GameImages\carrot.png" />
+    <EmbeddedResource Include="Images\GameImages\cheese_slice.png" />
+    <EmbeddedResource Include="Images\GameImages\chocolate_bar.png" />
+    <EmbeddedResource Include="Images\GameImages\clock.png" />
+    <EmbeddedResource Include="Images\GameImages\codfish.png" />
+    <EmbeddedResource Include="Images\GameImages\crab.png" />
+    <EmbeddedResource Include="Images\GameImages\fried_egg.png" />
+    <EmbeddedResource Include="Images\GameImages\frog.png" />
+    <EmbeddedResource Include="Images\GameImages\hammer.png" />
+    <EmbeddedResource Include="Images\GameImages\lightning.png" />
+    <EmbeddedResource Include="Images\GameImages\light_bulb_on.png" />
+    <EmbeddedResource Include="Images\GameImages\microphone.png" />
+    <EmbeddedResource Include="Images\GameImages\milkshake.png" />
+    <EmbeddedResource Include="Images\GameImages\orange.png" />
+    <EmbeddedResource Include="Images\GameImages\phone.png" />
+    <EmbeddedResource Include="Images\GameImages\pig.png" />
+    <EmbeddedResource Include="Images\GameImages\portobello.png" />
+    <EmbeddedResource Include="Images\GameImages\rabbit.png" />
+    <EmbeddedResource Include="Images\GameImages\robots.png" />
+    <EmbeddedResource Include="Images\GameImages\rocket_popsicle.png" />
+    <EmbeddedResource Include="Images\GameImages\sausage.png" />
+    <EmbeddedResource Include="Images\GameImages\scissors.png" />
+    <EmbeddedResource Include="Images\GameImages\spider.png" />
+    <EmbeddedResource Include="Images\GameImages\star.png" />
+    <EmbeddedResource Include="Images\GameImages\strawberry.png" />
+    <EmbeddedResource Include="Images\GameImages\teapot.png" />
+    <EmbeddedResource Include="Images\GameImages\wasp.png" />
+    <EmbeddedResource Include="Images\GameImages\watermelon.png" />
+    <EmbeddedResource Include="Images\GameImages\wine_cup.png" />
+    <EmbeddedResource Include="Images\thinking.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,9 +94,5 @@
     <EmbeddedResource Update="Pages\HomePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Images\" />
   </ItemGroup>
 </Project>

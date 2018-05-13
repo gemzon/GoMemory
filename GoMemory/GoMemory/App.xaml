@@ -15,7 +15,7 @@
                 <Setter Property="BackgroundColor" Value="Goldenrod" />
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="WidthRequest" Value="200" />
+
                 <Setter Property="Margin" Value="10" />
                 <Setter Property="CornerRadius" Value="10" />
             </Style>

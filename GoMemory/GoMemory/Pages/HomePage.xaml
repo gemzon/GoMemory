@@ -3,19 +3,34 @@
     x:Class="GoMemory.Pages.HomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:helpers="clr-namespace:GoMemory.Helpers;assembly=GoMemory"
     Title="{Binding Title}">
 
     <ContentPage.Content>
         <StackLayout>
 
             <Image
+                x:Name="ImageLogo"
                 Margin="10"
                 HeightRequest="150"
-                Source="thinking.png" />
+                Source="{helpers:ImageResource GoMemory.Images.thinking.png}" />
+
+
             <Label Style="{StaticResource BlackTextLabel}" Text="Games" />
-            <Button Style="{StaticResource GoldenRodButton}" Text="What you see" />
-            <Button Style="{StaticResource GoldenRodButton}" Text="Color Complex" />
-            <Button Style="{StaticResource GoldenRodButton}" Text="Sequential" />
+            <Button
+                x:Name="AnchorBtn"
+                Style="{StaticResource GoldenRodButton}"
+                Text="What you see"
+                WidthRequest="400" />
+            <Button
+                Style="{StaticResource GoldenRodButton}"
+                Text="Color Complex"
+                WidthRequest="{Binding Path=Width, Source={x:Reference AnchorBtn}}" />
+            <Button
+                Style="{StaticResource GoldenRodButton}"
+                Text="Sequential"
+                WidthRequest="{Binding Path=Width, Source={x:Reference AnchorBtn}}" />
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

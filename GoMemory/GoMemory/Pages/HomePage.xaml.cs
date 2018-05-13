@@ -12,10 +12,16 @@ namespace GoMemory.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
+        #if __IOS__
+
+                Padding = new Thickness(0, 20, 0, 0);
+
+        #endif
         public HomePage()
         {
             InitializeComponent();
             Title = "Go Memory";
+           
         }
 
        
