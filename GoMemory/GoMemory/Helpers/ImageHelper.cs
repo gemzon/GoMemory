@@ -7,16 +7,14 @@ using Xamarin.Forms;
 
 namespace GoMemory.Helpers
 {
-    public class Icons
+    public class ImageHelper
     {
-        public ObservableCollection<GameImage> images;
-        public Icons()
+        public ObservableCollection<GameImage> Images;
+        public ImageHelper()
         {
-            var imagesPath =  "GoMemory.Images.GameImages.";
-            images = new ObservableCollection<GameImage>
+            const string imagesPath = "GoMemory.Images.GameImages.";
+            Images = new ObservableCollection<GameImage>
             {
-
-
                 new GameImage{Location =  imagesPath +   "apple.png", Name = "apple"},
                 new GameImage{Location =  imagesPath +  "beer.png", Name = "beer"},
                 new GameImage{Location =  imagesPath +  "bell.png", Name = "bell"},
@@ -55,9 +53,6 @@ namespace GoMemory.Helpers
                 new GameImage{Location =  imagesPath +  "wine.png", Name = "wine"}
 
             };
-
-
-
         }
         public IEnumerable<string> GenerateIconList()
         {

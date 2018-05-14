@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using GoMemory.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,10 +12,10 @@ namespace GoMemory.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class GameLandingPage : ContentPage
 	{
-		public GameLandingPage ()
+		public GameLandingPage (GameType gameType)
 		{
 			InitializeComponent ();
-		    Title = "Complex Color";
+		    Title = gameType.Title;
 
 		}
 

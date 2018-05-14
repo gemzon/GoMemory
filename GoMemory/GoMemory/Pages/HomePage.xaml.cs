@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using GoMemory.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,7 +27,28 @@ namespace GoMemory.Pages
 
         private async void Button_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new GameLandingPage());
+            Button btn = sender as Button;
+            GameType gametype = new GameType();
+            if (btn == null)
+            {
+                return;
+            }
+
+            if (btn.Text == "What You See")
+            {
+                gametype.Type = "WhatYouSeeGame";
+            }
+            else if(btn.Text == "Colour Complex")
+            {
+                gametype.Type = "ColourComplexGame";
+            }
+            else if(btn.Text == "Sequential")
+            {
+                gametype.Type = "SequentialGame";
+            }
+
+            gametype.Title = btn.Text;
+            await Navigation.PushAsync(new GameLandingPage(gametype));
         }
     }
 }
