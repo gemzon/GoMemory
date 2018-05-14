@@ -18,18 +18,11 @@
 
             <Label Style="{StaticResource BlackTextLabel}" Text="Games" />
             <Button
-                x:Name="AnchorBtn"
+                Clicked="Button_OnClicked"
                 Style="{StaticResource GoldenRodButton}"
-                Text="What you see"
-                WidthRequest="400" />
-            <Button
-                Style="{StaticResource GoldenRodButton}"
-                Text="Color Complex"
-                WidthRequest="{Binding Path=Width, Source={x:Reference AnchorBtn}}" />
-            <Button
-                Style="{StaticResource GoldenRodButton}"
-                Text="Sequential"
-                WidthRequest="{Binding Path=Width, Source={x:Reference AnchorBtn}}" />
+                Text="What you see" />
+            <Button Style="{StaticResource GoldenRodButton}" Text="Color Complex" />
+            <Button Style="{StaticResource GoldenRodButton}" Text="Sequential" />
 
         </StackLayout>
     </ContentPage.Content>
