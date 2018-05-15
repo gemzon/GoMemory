@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using GoMemory.Models;
 using Xamarin.Forms;
@@ -9,11 +10,11 @@ namespace GoMemory.Helpers
 {
     public class ImageHelper
     {
-        public ObservableCollection<GameImage> Images;
+        public GameImage[] Images;
         public ImageHelper()
         {
             const string imagesPath = "GoMemory.Images.GameImages.";
-            Images = new ObservableCollection<GameImage>
+            Images = new GameImage[]
             {
                 new GameImage{Location =  imagesPath +   "apple.png", Name = "apple"},
                 new GameImage{Location =  imagesPath +  "beer.png", Name = "beer"},
@@ -54,9 +55,43 @@ namespace GoMemory.Helpers
 
             };
         }
-        public IEnumerable<string> GenerateIconList()
+
+        /// <summary>
+        /// Randomize the order of a GameImage Array
+        /// </summary>
+        /// <returns>
+        /// ObservableCollection of GameImage
+        /// </returns>
+        public ObservableCollection<GameImage> ShuffleCollection()
         {
-            return null;
+            Random rnd = new Random();
+            GameImage[] unsorted = Images;
+            for (int i = 0; i < unsorted.Length; i++)
+            {
+                GameImage temp  = unsorted[i];
+                int randomIndex = rnd.Next(0, 35);
+                unsorted[i] = unsorted[randomIndex];
+                unsorted[randomIndex] = temp;
+            }
+            return ConvertArrayTObservableCollection(unsorted);
+        }
+
+
+        /// <summary>
+        /// Converts GameImage Array to Observable Collection of GameImage
+        /// </summary>
+        /// <returns>
+        /// ObservableCollection of GameImage
+        /// </returns>
+        public ObservableCollection<GameImage> ConvertArrayTObservableCollection(GameImage[] array)
+        {
+            ObservableCollection<GameImage> collection = new ObservableCollection<GameImage>();
+            foreach (var gameImage in array)
+            {
+                collection.Add(gameImage);
+            }
+
+            return collection;
         }
     }
 }

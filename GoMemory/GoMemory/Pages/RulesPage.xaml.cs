@@ -14,7 +14,7 @@ namespace GoMemory.Pages
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RulesPage : ContentPage
 	{
-	    private readonly RulesViewModel _rulesViewModel;
+	    private  RulesViewModel _rulesViewModel;
 		public RulesPage (GameType gameType)
 		{
 			InitializeComponent ();
