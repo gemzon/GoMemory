@@ -10,11 +10,11 @@ namespace GoMemory.Helpers
 {
     public class ImageHelper
     {
-        public GameImage[] Images;
+       private readonly GameImage[] _images;
         public ImageHelper()
         {
             const string imagesPath = "GoMemory.Images.GameImages.";
-            Images = new GameImage[]
+            _images = new[]
             {
                 new GameImage{Location =  imagesPath +   "apple.png", Name = "apple"},
                 new GameImage{Location =  imagesPath +  "beer.png", Name = "beer"},
@@ -57,6 +57,17 @@ namespace GoMemory.Helpers
         }
 
         /// <summary>
+        /// zero argument method for getting a unmodified ObservableCollection of GameImage
+        /// </summary>
+        /// <returns>
+        /// ObservableCollection of GameImage
+        /// </returns>
+        public ObservableCollection<GameImage> GetImages()
+        {
+            return ConvertArrayToObservableCollection(_images);
+        }
+
+        /// <summary>
         /// Randomize the order of a GameImage Array
         /// </summary>
         /// <returns>
@@ -65,15 +76,15 @@ namespace GoMemory.Helpers
         public ObservableCollection<GameImage> ShuffleCollection()
         {
             Random rnd = new Random();
-            GameImage[] unsorted = Images;
+            GameImage[] unsorted = _images;
             for (int i = 0; i < unsorted.Length; i++)
             {
-                GameImage temp  = unsorted[i];
-                int randomIndex = rnd.Next(0, 35);
+                GameImage temp = unsorted[i];
+                int randomIndex = rnd.Next(0, _images.Length);
                 unsorted[i] = unsorted[randomIndex];
                 unsorted[randomIndex] = temp;
             }
-            return ConvertArrayTObservableCollection(unsorted);
+            return ConvertArrayToObservableCollection(unsorted);
         }
 
 
@@ -83,7 +94,7 @@ namespace GoMemory.Helpers
         /// <returns>
         /// ObservableCollection of GameImage
         /// </returns>
-        public ObservableCollection<GameImage> ConvertArrayTObservableCollection(GameImage[] array)
+        public ObservableCollection<GameImage> ConvertArrayToObservableCollection(GameImage[] array)
         {
             ObservableCollection<GameImage> collection = new ObservableCollection<GameImage>();
             foreach (var gameImage in array)
@@ -92,6 +103,33 @@ namespace GoMemory.Helpers
             }
 
             return collection;
+        }
+
+        /// <summary>
+        /// Select a defined amount of random GameImage for game-play 
+        /// </summary>
+        /// <returns>
+        /// Array of GameImage
+        /// </returns>
+        public GameImage[] ToMatchGameImages(int numberOfImagesNeeded)
+        {
+
+            GameImage[] matchImages = new GameImage[numberOfImagesNeeded];
+
+            Random rnd = new Random();
+
+            int count = 0;
+            while (count != matchImages.Length)
+            {
+                GameImage selectedImage = _images[rnd.Next(0, _images.Length)];
+                if (matchImages.Contains(selectedImage)) continue;
+                matchImages[count] = selectedImage;
+                count++;
+
+            }
+
+            return matchImages;
+
         }
     }
 }

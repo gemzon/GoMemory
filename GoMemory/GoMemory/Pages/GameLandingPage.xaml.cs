@@ -22,24 +22,26 @@ namespace GoMemory.Pages
 
 		}
 
-	    private void ResumeBtn_OnClicked(object sender, EventArgs e)
+	    public void ResumeBtn_OnClicked(object sender, EventArgs e)
 	    {
 	        throw new NotImplementedException();
 	    }
 
-	    private async Task StatsBtn_OnClickedAsync(object sender, EventArgs e)
+	    public async void StatsBtn_OnClicked(object sender, EventArgs e)
 	    {
 	        await Navigation.PushAsync(new StatsPage(_gameLandingViewModel.GameType));
 	    }
 
-	    private async void RulesBtn_OnClicked(object sender, EventArgs e)
+	    public async void RulesBtn_OnClicked(object sender, EventArgs e)
 	    {
 	        await Navigation.PushAsync(new RulesPage(_gameLandingViewModel.GameType)); 
 	    }
 
-	    private void Difficulty_OnClicked(object sender, EventArgs e)
+	    public void Difficulty_OnClicked(object sender, EventArgs e)
 	    {
 	        throw new NotImplementedException();
 	    }
+
+	    
 	}
 }
