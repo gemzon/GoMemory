@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GoMemory.Enums;
 using GoMemory.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -36,15 +37,15 @@ namespace GoMemory.Pages
 
             if (btn.Text == "What You See")
             {
-                gametype.Type = "WhatYouSeeGame";
+                gametype.Style = PlayStyle.WhatYouSeeGame;
             }
             else if(btn.Text == "Colour Complex")
             {
-                gametype.Type = "ColourComplexGame";
+                gametype.Style = PlayStyle.ColourComplexGame;
             }
             else if(btn.Text == "Sequential")
             {
-                gametype.Type = "SequentialGame";
+                gametype.Style = PlayStyle.SequentialGame;
             }
 
             gametype.Title = btn.Text;
