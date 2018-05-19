@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using GoMemory.Enums;
 using GoMemory.Models;
 using GoMemory.ViewModels;
@@ -12,78 +13,130 @@ using Xamarin.Forms.Xaml;
 
 namespace GoMemory.Pages
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class WhatYouSeeGamePlayPage : ContentPage
-	{
-	    readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel ;
-	    private int GridSize;
-	    public Grid grid;
-		public WhatYouSeeGamePlayPage (Difficulty difficulty)
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class WhatYouSeeGamePlayPage : ContentPage
+    {
+        readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel ;
+        private int _gridSize;
+        public Grid Grid;
+        public StackLayout StackLayout;
+       
+
+
+        public WhatYouSeeGamePlayPage (Difficulty difficulty)
+        {
+            InitializeComponent ();
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty) ;
-		 
-		   grid = new Grid();
-            CreateGrid();
-            Content = grid;
-		}
-
-	
-
-	    private void CreateGrid()
-	    {
-            
-            GridSize = 0;
-            if (_whatYouSeeGamePlayViewModel.Difficulty == Difficulty.Easy)
-            {
-                GridSize = 4;
-            }
-            if (_whatYouSeeGamePlayViewModel.Difficulty == Difficulty.Normal)
-            {
-                GridSize = 5;
-            }
-            if (_whatYouSeeGamePlayViewModel.Difficulty == Difficulty.Hard)
-            {
-                GridSize = 6;
-            }
-
+         
+          
           
 
-            for (int i = 0; i < GridSize; i++)
+            CreatePageContent();
+            Content = StackLayout;
+        }
+
+        private bool OnTapped(Image img)
+        {
+            var found = false;
+            ImagePath imagePath = new ImagePath();
+          imagePath.Path = img.Source.ToString();
+            foreach (var playCollectionsAllImage in _whatYouSeeGamePlayViewModel.PlayCollections.AllImages)
             {
-                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                  if (playCollectionsAllImage.Path == imagePath.Path)
+                  {
+                found = true;
+
+                  }
             }
- //grid.Children.Add(new Image
-	//        {
-	//            Source = ImageSource.FromResource(_whatYouSeeGamePlayViewModel.PlayCollections.AllImages[0].Path)
-	//        }, 0, 0);
-            AddGridImages();
+
+            return found;
 
         }
 
-	    private void AddGridImages()
-	    {
+        private void CreatePageContent()
+        {
+            StackLayout = new StackLayout();
+            Label label = new Label {Text = "Level " + _whatYouSeeGamePlayViewModel.Level};
+            StackLayout.Children.Add(label);
+            SetStackLayoutMargins();
+            CreateGrid();
+            AddGridImages();
+            StackLayout.Children.Add(Grid);
+        }
 
-
-
-
-
-            int imagecount = 0;
-            for (int row = 0; row < GridSize; row++)
+        private void SetStackLayoutMargins()
+        {
+            switch (Device.RuntimePlatform)
             {
-                for (int column = 0; column < GridSize; column++)
+                case Device.iOS:
+                    StackLayout.Margin = new Thickness(20, 40, 20, 20);
+                    break;
+                case Device.Android:
+                    StackLayout.Margin = new Thickness(20);
+                    break;
+                default:
+                    StackLayout.Margin = new Thickness(20);
+                    break;
+            }
+        }
+
+        private void CreateGrid()
+        {
+            Grid = new Grid {Margin = new Thickness(0,20,0,0),ColumnSpacing = 1,RowSpacing = 1};
+            _gridSize = SetGridSize();
+            for (int i = 0; i < _gridSize; i++)
+            {
+                Grid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
+                Grid.RowDefinitions.Add(new RowDefinition {Height = new GridLength(1, GridUnitType.Star)});
+            }
+
+           
+        }
+
+        private int SetGridSize()
+        {
+            switch (_whatYouSeeGamePlayViewModel.Difficulty)
+            {
+                case Difficulty.Easy:
+                    return  4;
+                case Difficulty.Normal:
+                    return 5;
+                case Difficulty.Hard:
+                    return 6;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void AddGridImages()
+        {
+            int imagecount = 0;
+            for (int row = 0; row < _gridSize; row++)
+            {
+                for (int column = 0; column < _gridSize; column++)
                 {
-                    grid.Children.Add(new Image
+
+                    Image image = new Image
                     {
                         Source = ImageSource.FromResource(_whatYouSeeGamePlayViewModel.PlayCollections.AllImages[imagecount].Path)
-                    }, row, column);
+                       
+                      
+                    };
+                 
+                    var tapGestureRecognizer = new TapGestureRecognizer();
+                    tapGestureRecognizer.Tapped += (s, e) => {
+                        OnTapped(s as Image);
+                    };
+                    image.GestureRecognizers.Add(tapGestureRecognizer);
+
+                    Grid.Children.Add(image, row, column);
 
                     imagecount += 1;
                 }
             }
-
-
         }
+
+
+
     }
 }

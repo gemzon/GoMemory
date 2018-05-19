@@ -75,7 +75,7 @@ namespace GoMemory.ViewModels
         /// the list of image that are needed to be matched
         /// </summary>
         /// <param name="selectedImage"></param>
-        public void CheckSelections(ImagePath selectedImage)
+        public bool CheckSelections(ImagePath selectedImage)
         {
 
             if (PlayCollections.ToMatchImages.Contains(selectedImage))
@@ -85,10 +85,12 @@ namespace GoMemory.ViewModels
             }
             else
             {
-                EndGame(PlayCollections.SelectedImages.Count != PlayCollections.ToMatchImages.Count
+                 EndGame(PlayCollections.SelectedImages.Count != PlayCollections.ToMatchImages.Count
                     ? "Lose"
                     : "Win");
             }
+
+            return true;
         }
 
         /// <summary>

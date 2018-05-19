@@ -14,7 +14,7 @@ namespace GoMemory.Interfaces
         void Start();
         void EndGame(string endStatus);
 
-        void CheckSelections(ImagePath selectedImage);
+       bool CheckSelections(ImagePath selectedImage);
 
      
     }
