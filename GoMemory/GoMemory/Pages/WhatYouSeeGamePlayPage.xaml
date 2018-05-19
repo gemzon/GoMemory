@@ -4,14 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <ContentPage.Content>
-        <StackLayout>
-            <Button
-                x:Name="GoButton"
-                IsVisible="True"
-                Text="Go ! " />
-            <Label x:Name="Tries" />
-
-            <Grid x:Name="PlayGrid" />
-        </StackLayout>
+      
+        <Grid x:Name="PlayGrid" />
     </ContentPage.Content>
 </ContentPage>

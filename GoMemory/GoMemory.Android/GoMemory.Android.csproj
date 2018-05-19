@@ -108,5 +108,113 @@
       <Name>GoMemory</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\apple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\beer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\bell.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\bison.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\cake.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\carrot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\cheese.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\chocolate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\codfish.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\crab.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\egg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\frog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\hammer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\lightbulb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\lightning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\lolly.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\microphone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\milkshake.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\orange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\parrot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\phone.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\pig.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\portobello.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\rabbit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\robots.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\sausage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\scissors.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\spider.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\star.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\strawberry.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\teapot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\wasp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\watermelon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Assets\GameImages\wine.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

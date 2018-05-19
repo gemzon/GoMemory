@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Text;
+using GoMemory.Models;
 
 namespace GoMemory.Interfaces
 {
     public interface IGame
     {
-        void Initilize();
+        void InitilizeRound();
 
         void Start();
-        void EndGame();
+        void EndGame(string endStatus);
 
-        void CheckSelections();
+        void CheckSelections(GameImage selectedImage);
 
      
     }
