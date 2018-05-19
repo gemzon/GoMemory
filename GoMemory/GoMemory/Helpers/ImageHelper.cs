@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using GoMemory.Models;
 using Xamarin.Forms;
@@ -10,77 +11,83 @@ namespace GoMemory.Helpers
 {
     public class ImageHelper
     {
-        private readonly GameImage[] _images;
+        private readonly ImagePath[] _images;
         public ImageHelper()
         {
-           // const string new Uri ( imagesPath = "GoMemory.Images.GameImages.";
-             //Uri  imagesPath = new Uri( "ms-appx:///GameImages/");
+
+            const string imagesPath = "GoMemory.Images.GameImages.";
+            //Uri  imagesPath = new Uri( "ms-appx:///Images/");
             _images = new[]
             {
-                new GameImage{Location =  new Uri ( imagesPath +   "apple.png"), Name = "apple"},
-                new GameImage{Location =  new Uri ( imagesPath +  "beer.png"), Name = "beer"},
-                new GameImage{Location =  new Uri ( imagesPath +  "bell.png"), Name = "bell"},
-                new GameImage{Location =  new Uri ( imagesPath + "bison.png"), Name = "bison"},
-                new GameImage{Location =  new Uri ( imagesPath + "cake.png"), Name = "cake"},
-                new GameImage{Location =  new Uri ( imagesPath +  "camera.png"), Name = "camera"},
-                new GameImage{Location =  new Uri ( imagesPath +  "carrot.png"), Name = "carrot"},
-                new GameImage{Location =  new Uri ( imagesPath +  "cheese.png"), Name = "cheese"},
-                new GameImage{Location =  new Uri ( imagesPath +  "chocolate.png"), Name = "chocolate"},
-                new GameImage{Location =  new Uri ( imagesPath +  "clock.png"), Name = "clock"},
-                new GameImage{Location =  new Uri ( imagesPath +  "codfish.png"), Name = "codfish"},
-                new GameImage{Location =  new Uri ( imagesPath +  "crab.png"), Name = "crab"},
-                new GameImage{Location =  new Uri ( imagesPath +  "egg.png"), Name = "egg"},
-                new GameImage{Location =  new Uri ( imagesPath +  "frog.png"), Name = "frog"},
-                new GameImage{Location =  new Uri ( imagesPath +  "hammer.png"), Name = "hammer"},
-                new GameImage{Location =  new Uri ( imagesPath +  "lightbulb.png"), Name = "lightbulb"},
-                new GameImage{Location =  new Uri ( imagesPath +  "lightning.png"), Name = "lightning"},
-                new GameImage{Location =  new Uri ( imagesPath +  "lolly.png"), Name = "lolly"},
-                new GameImage{Location =  new Uri ( imagesPath +  "microphone.png"), Name = "microphone"},
-                new GameImage{Location =  new Uri ( imagesPath +  "milkshake.png"), Name = "milkshake"},
-                new GameImage{Location =  new Uri ( imagesPath +  "orange.png"), Name = "orange"},
-                new GameImage{Location =  new Uri ( imagesPath +  "parrot.png"), Name = "parrot"},
-                new GameImage{Location =  new Uri ( imagesPath +  "phone.png"), Name = "phone"},
-                new GameImage{Location =  new Uri ( imagesPath +  "pig.png"), Name = "pig"},
-                new GameImage{Location =  new Uri ( imagesPath +  "portobello.png"), Name = "portobello"},
-                new GameImage{Location =  new Uri ( imagesPath +  "rabbit.png"), Name = "rabbit"},
-                new GameImage{Location =  new Uri ( imagesPath +  "robots.png"), Name = "robots"},
-                new GameImage{Location =  new Uri ( imagesPath +  "sausage.png"), Name = "sausage"},
-                new GameImage{Location =  new Uri ( imagesPath +  "scissors.png"), Name = "scissors"},
-                new GameImage{Location =  new Uri ( imagesPath +  "spider.png"), Name = "spider"},
-                new GameImage{Location =  new Uri ( imagesPath +  "star.png"), Name = "star"},
-                new GameImage{Location =  new Uri ( imagesPath +  "strawberry.png"), Name = "strawberry"},
-                new GameImage{Location =  new Uri ( imagesPath +  "teapot.png"), Name = "teapot"},
-                new GameImage{Location =  new Uri ( imagesPath +  "wasp.png"), Name = "wasp"},
-                new GameImage{Location =  new Uri ( imagesPath +  "watermelon.png"), Name = "watermelon"},
-                new GameImage{Location =  new Uri ( imagesPath +  "wine.png"), Name = "wine"}
+                new ImagePath{Path =   imagesPath +   "apple.png"},
+                new ImagePath{Path =  imagesPath +  "beer.png"},
+                new ImagePath{Path =  imagesPath +  "bell.png"},
+                new ImagePath{Path =  imagesPath + "bison.png"},
+                new ImagePath{Path =  imagesPath + "cake.png"},
+                new ImagePath{Path =  imagesPath +  "camera.png"},
+                new ImagePath{Path =  imagesPath +  "carrot.png"},
+                new ImagePath{Path =  imagesPath +  "cheese.png"},
+                new ImagePath{Path =  imagesPath +  "chocolate.png"},
+                new ImagePath{Path =  imagesPath +  "clock.png"},
+                new ImagePath{Path =  imagesPath +  "codfish.png"},
+                new ImagePath{Path =  imagesPath +  "crab.png"},
+                new ImagePath{Path =  imagesPath +  "egg.png"},
+                new ImagePath{Path =  imagesPath +  "frog.png"},
+                new ImagePath{Path =  imagesPath +  "hammer.png"},
+                new ImagePath{Path =  imagesPath +  "lightbulb.png"},
+                new ImagePath{Path =  imagesPath +  "lightning.png"},
+                new ImagePath{Path =  imagesPath +  "lolly.png"},
+                new ImagePath{Path =  imagesPath +  "microphone.png"},
+                new ImagePath{Path =  imagesPath +  "milkshake.png"},
+                new ImagePath{Path =  imagesPath +  "orange.png"},
+                new ImagePath{Path =  imagesPath +  "parrot.png"},
+                new ImagePath{Path =  imagesPath +  "phone.png"},
+                new ImagePath{Path =  imagesPath +  "pig.png"},
+                new ImagePath{Path =  imagesPath +  "portobello.png"},
+                new ImagePath{Path =  imagesPath +  "rabbit.png"},
+                new ImagePath{Path =  imagesPath +  "robots.png"},
+                new ImagePath{Path =  imagesPath +  "sausage.png"},
+                new ImagePath{Path =  imagesPath +  "scissors.png"},
+                new ImagePath{Path =  imagesPath +  "spider.png"},
+                new ImagePath{Path =  imagesPath +  "star.png"},
+                new ImagePath{Path =  imagesPath +  "strawberry.png"},
+                new ImagePath{Path =  imagesPath +  "teapot.png"},
+                new ImagePath{Path =  imagesPath +  "wasp.png"},
+                new ImagePath{Path =  imagesPath +  "watermelon.png"},
+                new ImagePath{Path =  imagesPath +  "wine.png"}
 
             };
         }
 
+
+      
+
+
+
         /// <summary>
-        /// zero argument method for getting a unmodified ObservableCollection of GameImage
+        /// zero argument method for getting a unmodified ObservableCollection of Image
         /// </summary>
         /// <returns>
-        /// ObservableCollection of GameImage
+        /// ObservableCollection of Image
         /// </returns>
-        public GameImage[] GetImages()
+        public ImagePath[] GetImages()
         {
             return _images;
         }
 
         /// <summary>
-        /// Randomize the order of a GameImage Array
+        /// Randomize the order of a Image Array
         /// </summary>
         /// <returns>
-        /// ObservableCollection of GameImage
+        /// ObservableCollection of Image
         /// </returns>
-        public GameImage[] ShuffleCollection()
+        public ImagePath[] ShuffleCollection()
         {
             Random rnd = new Random();
-            GameImage[] unsorted = _images;
+            ImagePath[] unsorted = _images;
             for (int i = 0; i < unsorted.Length; i++)
             {
-                GameImage temp = unsorted[i];
+                ImagePath temp = unsorted[i];
                 int randomIndex = rnd.Next(0, _images.Length);
                 unsorted[i] = unsorted[randomIndex];
                 unsorted[randomIndex] = temp;
@@ -91,22 +98,22 @@ namespace GoMemory.Helpers
 
 
         /// <summary>
-        /// Select a defined amount of random GameImage for game-play 
+        /// Select a defined amount of random Image for game-play 
         /// </summary>
         /// <returns>
-        /// Array of GameImage
+        /// Array of Image
         /// </returns>
-        public List<GameImage> ToMatchGameImages(int numberOfImagesNeeded)
+        public List<ImagePath> ToMatchImages(int numberOfImagesNeeded)
         {
 
-            List<GameImage> matchImages = new List<GameImage>();
+            List<ImagePath> matchImages = new List<ImagePath>();
 
             Random rnd = new Random();
 
             int count = 0;
             while (count != numberOfImagesNeeded)
             {
-                GameImage selectedImage = _images[rnd.Next(0, _images.Length)];
+                ImagePath selectedImage = _images[rnd.Next(0, _images.Length)];
                 if (matchImages.Contains(selectedImage)) continue;
                 matchImages.Add(selectedImage);
                 count++;
@@ -127,7 +134,7 @@ namespace GoMemory.Helpers
         //            break;
         //        case Device.Android:
         //        case Device.UWP:
-        //            imagefolder = "ms-appx:///GameImages/";
+        //            imagefolder = "ms-appx:///Images/";
 
         //        default:
         //            break;

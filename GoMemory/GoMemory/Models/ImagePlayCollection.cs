@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using Xamarin.Forms;
 
 namespace GoMemory.Models
 {
     public class ImagePlayCollection
     {
-        public GameImage[] AllGameImages { get; set; }
-        public List<GameImage> ToMatchGameImages { get; set; }
-        public List<GameImage> SelectedGameImages { get; set; }
+        public ImagePath[] AllImages { get; set; }
+        public List<ImagePath> ToMatchImages { get; set; }
+        public List<ImagePath> SelectedImages { get; set; }
     }
 }

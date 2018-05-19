@@ -6,6 +6,7 @@ using GoMemory.Enums;
 using GoMemory.Helpers;
 using GoMemory.Interfaces;
 using GoMemory.Models;
+using Xamarin.Forms;
 
 namespace GoMemory.ViewModels
 {
@@ -25,8 +26,8 @@ namespace GoMemory.ViewModels
             Difficulty = difficulty;
             _imageHelper = new ImageHelper();
             SetMaxLevel();
-            PlayCollections = new ImagePlayCollection { AllGameImages = _imageHelper.ShuffleCollection() };
-            NextRound();
+            PlayCollections = new ImagePlayCollection { AllImages = _imageHelper.ShuffleCollection() };
+             NextRound();
         }
 
         
@@ -52,8 +53,8 @@ namespace GoMemory.ViewModels
 
             Level += 1;
             NumberOfImagesToMatch += 1;
-            PlayCollections.ToMatchGameImages = _imageHelper.ToMatchGameImages(NumberOfImagesToMatch);
-            PlayCollections.SelectedGameImages = new List<GameImage>();
+            PlayCollections.ToMatchImages = _imageHelper.ToMatchImages(NumberOfImagesToMatch);
+            PlayCollections.SelectedImages = new List<ImagePath>();
         }
 
         //Todo implement start of round
@@ -73,18 +74,18 @@ namespace GoMemory.ViewModels
         /// Check if the selected image is contain within 
         /// the list of image that are needed to be matched
         /// </summary>
-        /// <param name="selectedGameImage"></param>
-        public void CheckSelections(GameImage selectedGameImage)
+        /// <param name="selectedImage"></param>
+        public void CheckSelections(ImagePath selectedImage)
         {
 
-            if (PlayCollections.ToMatchGameImages.Contains(selectedGameImage))
+            if (PlayCollections.ToMatchImages.Contains(selectedImage))
             {
-                PlayCollections.SelectedGameImages.Add(selectedGameImage);
+                PlayCollections.SelectedImages.Add(selectedImage);
                 NextRound();
             }
             else
             {
-                EndGame(PlayCollections.SelectedGameImages.Count != PlayCollections.ToMatchGameImages.Count
+                EndGame(PlayCollections.SelectedImages.Count != PlayCollections.ToMatchImages.Count
                     ? "Lose"
                     : "Win");
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using System.Text;
 using GoMemory.Models;
+using Xamarin.Forms;
 
 namespace GoMemory.Interfaces
 {
@@ -13,7 +14,7 @@ namespace GoMemory.Interfaces
         void Start();
         void EndGame(string endStatus);
 
-        void CheckSelections(GameImage selectedImage);
+        void CheckSelections(ImagePath selectedImage);
 
      
     }

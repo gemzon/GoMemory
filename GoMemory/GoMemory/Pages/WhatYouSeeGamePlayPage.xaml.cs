@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using GoMemory.Enums;
@@ -16,68 +17,73 @@ namespace GoMemory.Pages
 	{
 	    readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel ;
 	    private int GridSize;
+	    public Grid grid;
 		public WhatYouSeeGamePlayPage (Difficulty difficulty)
 		{
 			InitializeComponent ();
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty) ;
-		  
-		   
+		 
+		   grid = new Grid();
+            CreateGrid();
+            Content = grid;
 		}
 
-	    protected override void OnAppearing()
-	    {
-	        base.OnAppearing();
-	        CreateGrid();
-	    }
+	
 
 	    private void CreateGrid()
 	    {
-	         GridSize = 0;
-	        if (_whatYouSeeGamePlayViewModel.Difficulty == Difficulty.Easy)
-	        {
-	            GridSize = 4;
-	        }
+            
+            GridSize = 0;
+            if (_whatYouSeeGamePlayViewModel.Difficulty == Difficulty.Easy)
+            {
+                GridSize = 4;
+            }
             if (_whatYouSeeGamePlayViewModel.Difficulty == Difficulty.Normal)
-	        {
-	            GridSize = 5;
-	        }
-	        if (_whatYouSeeGamePlayViewModel.Difficulty == Difficulty.Hard)
-	        {
-	            GridSize = 6;
-	        }
+            {
+                GridSize = 5;
+            }
+            if (_whatYouSeeGamePlayViewModel.Difficulty == Difficulty.Hard)
+            {
+                GridSize = 6;
+            }
 
-            var grid =  new Grid();
-	        for (int i = 0; i < GridSize; i++)
-	        {
-	            grid.ColumnDefinitions.Add(new ColumnDefinition{Width = new GridLength(1,GridUnitType.Star)});
-                grid.RowDefinitions.Add(new RowDefinition{Height = new GridLength(1, GridUnitType.Star) });
-	        }
+          
 
-	        AddGridImages(grid);
-            PlayGrid = grid;
-	    }
+            for (int i = 0; i < GridSize; i++)
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            }
+ //grid.Children.Add(new Image
+	//        {
+	//            Source = ImageSource.FromResource(_whatYouSeeGamePlayViewModel.PlayCollections.AllImages[0].Path)
+	//        }, 0, 0);
+            AddGridImages();
 
-	    private void AddGridImages(Grid grid)
+        }
+
+	    private void AddGridImages()
 	    {
-	        int imagecount = 0;
-	        for (int row = 0; row < GridSize; row++)
-	        {
-	            for (int column = 0; column < GridSize; column++)
-	            {
-	                GameImage nextImage = _whatYouSeeGamePlayViewModel.PlayCollections.AllGameImages[imagecount];
-                    Image image = new Image
+
+
+
+
+
+            int imagecount = 0;
+            for (int row = 0; row < GridSize; row++)
+            {
+                for (int column = 0; column < GridSize; column++)
+                {
+                    grid.Children.Add(new Image
                     {
-                        
+                        Source = ImageSource.FromResource(_whatYouSeeGamePlayViewModel.PlayCollections.AllImages[imagecount].Path)
+                    }, row, column);
 
-                        Source = nextImage.Location
-                    };
+                    imagecount += 1;
+                }
+            }
 
-	                Grid.SetRow(image, row);
-                    Grid.SetColumn(image,column);
-                    grid.Children.Add(image);
-	                imagecount += 1;
-	            }
-	        }
-	    }
-	}
+
+        }
+    }
 }
