@@ -12,10 +12,10 @@ namespace GoMemory.ViewModels
 {
     public class WhatYouSeeGamePlayViewModel : BaseViewModel, IGame
     {
-        public Difficulty Difficulty { get; set; }
+        public DifficultySetting DifficultySetting { get; set; }
         public int Level { get; set; }
         public int NumberOfImagesToMatch { get; set; } = 1;
-        public int Maxlevel { get; set; }
+        
 
         private readonly ImageHelper _imageHelper;
         public ImagePlayCollection PlayCollections;
@@ -23,14 +23,20 @@ namespace GoMemory.ViewModels
 
         public WhatYouSeeGamePlayViewModel(Difficulty difficulty)
         {
-            Difficulty = difficulty;
+            DifficultySetting = new DifficultySetting(difficulty);
             _imageHelper = new ImageHelper();
-            SetMaxLevel();
-            PlayCollections = new ImagePlayCollection { AllImages = _imageHelper.ShuffleCollection() };
-             NextRound();
+           
+            GetDifficulyImages();
+            NextRound();
         }
 
-        
+        private void GetDifficulyImages()
+        {
+            
+            PlayCollections = new ImagePlayCollection {AllImages = _imageHelper.GetImages(DifficultySetting.TotalImagesNeeded)};
+   
+        }
+
 
         /// <summary>
         /// Determinees if max level for difficulty is reached if not
@@ -38,9 +44,15 @@ namespace GoMemory.ViewModels
         /// </summary>
         private void NextRound()
         {
-            if (Level <= Maxlevel)
+            if (Level <= DifficultySetting.MaxLevel)
             {
                 InitilizeRound();
+            }
+            else
+            {
+                //EndGame(PlayCollections.SelectedImages.Count != PlayCollections.ToMatchImages.Count
+                //    ? "Lose"
+                //    : "Win");
             }
         }
 
@@ -53,8 +65,8 @@ namespace GoMemory.ViewModels
 
             Level += 1;
             NumberOfImagesToMatch += 1;
-            PlayCollections.ToMatchImages = _imageHelper.ToMatchImages(NumberOfImagesToMatch);
-            PlayCollections.SelectedImages = new List<ImagePath>();
+            PlayCollections.ToMatchImages = _imageHelper.ToMatchImages(NumberOfImagesToMatch,PlayCollections.AllImages);
+            PlayCollections.SelectedImages = new List<Image>();
         }
 
         //Todo implement start of round
@@ -75,44 +87,27 @@ namespace GoMemory.ViewModels
         /// the list of image that are needed to be matched
         /// </summary>
         /// <param name="selectedImage"></param>
-        public bool CheckSelections(ImagePath selectedImage)
+        public bool CheckSelections(Image selectedImage)
         {
-
-            if (PlayCollections.ToMatchImages.Contains(selectedImage))
+            bool found = false;
+            foreach (var image in PlayCollections.ToMatchImages)
             {
-                PlayCollections.SelectedImages.Add(selectedImage);
-                NextRound();
-            }
-            else
-            {
-                 EndGame(PlayCollections.SelectedImages.Count != PlayCollections.ToMatchImages.Count
-                    ? "Lose"
-                    : "Win");
+                if (image.Source == selectedImage.Source)
+                {
+                    PlayCollections.SelectedImages.Add(selectedImage);
+                    found = true;
+                    
+                }
             }
 
-            return true;
+
+            return found;
         }
 
-        /// <summary>
-        /// Sets Maxlevel by determining which level of difficulty 
-        /// was selected
-        /// </summary>
-        private void SetMaxLevel()
+        //Todo implement
+        public void RoundComplete()
         {
-            switch (Difficulty)
-            {
-                case Difficulty.Hard:
-                    Maxlevel = 30;
-                    break;
-                case Difficulty.Normal:
-                    Maxlevel = 20;
-                    break;
-                default:
-                    Maxlevel = 10;
-                    break;
-            }
+            throw new NotImplementedException();
         }
-
-
     }
-}
+    }

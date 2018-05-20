@@ -27,30 +27,28 @@ namespace GoMemory.Pages
         {
             InitializeComponent ();
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty) ;
-         
-          
-          
-
-            CreatePageContent();
+         CreatePageContent();
             Content = StackLayout;
         }
 
-        private bool OnTapped(Image img)
+        private void OnTapped(Image img)
         {
-            var found = false;
-            ImagePath imagePath = new ImagePath();
-          imagePath.Path = img.Source.ToString();
-            foreach (var playCollectionsAllImage in _whatYouSeeGamePlayViewModel.PlayCollections.AllImages)
-            {
-                  if (playCollectionsAllImage.Path == imagePath.Path)
-                  {
-                found = true;
+            bool found = false;
+           found =  _whatYouSeeGamePlayViewModel.CheckSelections(img);
 
-                  }
+            if (found)
+            {
+                img.Opacity = 0.5;
+            }
+            else
+            {
+                _whatYouSeeGamePlayViewModel.EndGame("error");
             }
 
-            return found;
-
+            if (_whatYouSeeGamePlayViewModel.PlayCollections.SelectedImages.Count == _whatYouSeeGamePlayViewModel.NumberOfImagesToMatch)
+            {
+                _whatYouSeeGamePlayViewModel.RoundComplete();
+            }
         }
 
         private void CreatePageContent()
@@ -83,7 +81,7 @@ namespace GoMemory.Pages
         private void CreateGrid()
         {
             Grid = new Grid {Margin = new Thickness(0,20,0,0),ColumnSpacing = 1,RowSpacing = 1};
-            _gridSize = SetGridSize();
+            _gridSize = _whatYouSeeGamePlayViewModel.DifficultySetting.GridSize;
             for (int i = 0; i < _gridSize; i++)
             {
                 Grid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
@@ -93,34 +91,20 @@ namespace GoMemory.Pages
            
         }
 
-        private int SetGridSize()
-        {
-            switch (_whatYouSeeGamePlayViewModel.Difficulty)
-            {
-                case Difficulty.Easy:
-                    return  4;
-                case Difficulty.Normal:
-                    return 5;
-                case Difficulty.Hard:
-                    return 6;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
+        
 
         private void AddGridImages()
         {
+            
             int imagecount = 0;
-            for (int row = 0; row < _gridSize; row++)
+            for (int row = 0; row < _whatYouSeeGamePlayViewModel.DifficultySetting.GridSize; row++)
             {
-                for (int column = 0; column < _gridSize; column++)
+                for (int column = 0; column < _whatYouSeeGamePlayViewModel.DifficultySetting.GridSize; column++)
                 {
 
                     Image image = new Image
                     {
-                        Source = ImageSource.FromResource(_whatYouSeeGamePlayViewModel.PlayCollections.AllImages[imagecount].Path)
-                       
-                      
+                        Source = _whatYouSeeGamePlayViewModel.PlayCollections.AllImages[imagecount].Source
                     };
                  
                     var tapGestureRecognizer = new TapGestureRecognizer();

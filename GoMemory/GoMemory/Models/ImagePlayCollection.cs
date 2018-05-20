@@ -8,8 +8,8 @@ namespace GoMemory.Models
 {
     public class ImagePlayCollection
     {
-        public ImagePath[] AllImages { get; set; }
-        public List<ImagePath> ToMatchImages { get; set; }
-        public List<ImagePath> SelectedImages { get; set; }
+        public Image[] AllImages { get; set; }
+        public List<Image> ToMatchImages { get; set; }
+        public List<Image> SelectedImages { get; set; }
     }
 }
