@@ -46,8 +46,6 @@ namespace GoMemory.Pages
             if (clickedButton != null && clickedButton.Text == "Easy")
             {
                 SetGamePlay(Difficulty.Easy);
-
-
             }
             else if (clickedButton != null && clickedButton.Text == "Normal")
             {

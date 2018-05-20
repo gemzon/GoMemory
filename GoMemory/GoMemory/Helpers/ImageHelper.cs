@@ -12,50 +12,67 @@ namespace GoMemory.Helpers
     public class ImageHelper
     {
         private readonly Image[] _images;
+        public Image GameOverImage { get; set; }
+        public Image CompleteImage { get; set; }
         public ImageHelper()
         {
 
           //  const string imagesPath = "GoMemory.Images.Images.";
             //Uri  imagesPath = new Uri( "ms-appx:///Images/");
+            string folder = "";
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    folder = "";
+                    break;
+                case Device.Android:
+                    folder = "";
+                    break;
+                default:
+                    folder = "Images/";
+                    break;
+            }
+            GameOverImage = new Image{ Source = folder + "gameover.png" };
+            CompleteImage = new Image { Source = folder + "complete.png" };
             _images = new[]
             {
                 
-                new Image{Source =   "apple.png"},
-                new Image{Source =  "beer.png"},
-                new Image{Source =  "bell.png"},
-                new Image{Source =  "bison.png"},
-                new Image{Source =  "cake.png"},
-                new Image{Source =   "camera.png"},
-                new Image{Source =   "carrot.png"},
-                new Image{Source =   "cheese.png"},
-                new Image{Source =   "chocolate.png"},
-                new Image{Source =   "clock.png"},
-                new Image{Source =   "codfish.png"},
-                new Image{Source =   "crab.png"},
-                new Image{Source =   "egg.png"},
-                new Image{Source =   "frog.png"},
-                new Image{Source =   "hammer.png"},
-                new Image{Source =   "lightbulb.png"},
-                new Image{Source =   "lightning.png"},
-                new Image{Source =   "lolly.png"},
-                new Image{Source =   "microphone.png"},
-                new Image{Source =   "milkshake.png"},
-                new Image{Source =   "orange.png"},
-                new Image{Source =   "parrot.png"},
-                new Image{Source =   "phone.png"},
-                new Image{Source =   "pig.png"},
-                new Image{Source =   "portobello.png"},
-                new Image{Source =   "rabbit.png"},
-                new Image{Source =   "robots.png"},
-                new Image{Source =   "sausage.png"},
-                new Image{Source =   "scissors.png"},
-                new Image{Source =   "spider.png"},
-                new Image{Source =   "star.png"},
-                new Image{Source =   "strawberry.png"},
-                new Image{Source =   "teapot.png"},
-                new Image{Source =   "wasp.png"},
-                new Image{Source =   "watermelon.png"},
-                new Image{Source =   "wine.png"}
+                new Image{Source = folder +    "apple.png"},
+                new Image{Source = folder +  "beer.png"},
+                new Image{Source = folder +  "bell.png"},
+                new Image{Source = folder +  "bison.png"},
+                new Image{Source = folder +  "cake.png"},
+                new Image{Source = folder +   "camera.png"},
+                new Image{Source = folder +   "carrot.png"},
+                new Image{Source = folder +   "cheese.png"},
+                new Image{Source = folder +   "chocolate.png"},
+                new Image{Source = folder +   "clock.png"},
+                new Image{Source = folder +   "codfish.png"},
+                new Image{Source = folder +   "crab.png"},
+                new Image{Source = folder +   "egg.png"},
+                new Image{Source = folder +   "frog.png"},
+                new Image{Source = folder +   "hammer.png"},
+                new Image{Source = folder +   "lightbulb.png"},
+                new Image{Source = folder +   "lightning.png"},
+                new Image{Source = folder +   "lolly.png"},
+                new Image{Source = folder +   "microphone.png"},
+                new Image{Source = folder +   "milkshake.png"},
+                new Image{Source = folder +   "orange.png"},
+                new Image{Source = folder +   "parrot.png"},
+                new Image{Source = folder +   "phone.png"},
+                new Image{Source = folder +   "pig.png"},
+                new Image{Source = folder +   "portobello.png"},
+                new Image{Source = folder +   "rabbit.png"},
+                new Image{Source = folder +   "robots.png"},
+                new Image{Source = folder +   "sausage.png"},
+                new Image{Source = folder +   "scissors.png"},
+                new Image{Source = folder +   "spider.png"},
+                new Image{Source = folder +   "star.png"},
+                new Image{Source = folder +   "strawberry.png"},
+                new Image{Source = folder +   "teapot.png"},
+                new Image{Source = folder +   "wasp.png"},
+                new Image{Source = folder +   "watermelon.png"},
+                new Image{Source = folder +   "wine.png"}
 
             };
         }
@@ -73,7 +90,7 @@ namespace GoMemory.Helpers
         /// </returns>
         public Image[] GetImages(int totalImages)
         {
-           Image[] shuffled =  ShuffleCollection();
+           Image[] shuffled =  ShuffleCollection(_images);
             Image[] unsorted = new Image[totalImages];
             for (int i = 0; i < unsorted.Length; i++)
             {
@@ -88,14 +105,14 @@ namespace GoMemory.Helpers
         /// <returns>
         /// ObservableCollection of Image
         /// </returns>
-        public Image[] ShuffleCollection()
+        public Image[] ShuffleCollection(Image[] imageArray)
         {
             Random rnd = new Random();
-            Image[] unsorted = _images;
+            Image[] unsorted = imageArray;
             for (int i = 0; i < unsorted.Length; i++)
             {
                 Image temp = unsorted[i];
-                int randomIndex = rnd.Next(0, _images.Length);
+                int randomIndex = rnd.Next(0, imageArray.Length);
                 unsorted[i] = unsorted[randomIndex];
                 unsorted[randomIndex] = temp;
             }

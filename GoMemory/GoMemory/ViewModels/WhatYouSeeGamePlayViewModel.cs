@@ -17,43 +17,43 @@ namespace GoMemory.ViewModels
         public int NumberOfImagesToMatch { get; set; } = 1;
         
 
-        private readonly ImageHelper _imageHelper;
+        public ImageHelper ImageHelper;
         public ImagePlayCollection PlayCollections;
 
 
         public WhatYouSeeGamePlayViewModel(Difficulty difficulty)
         {
             DifficultySetting = new DifficultySetting(difficulty);
-            _imageHelper = new ImageHelper();
+            ImageHelper = new ImageHelper();
            
             GetDifficulyImages();
             NextRound();
         }
 
+        /// <summary>
+        /// Retrieve collection of image
+        /// amount depends on difficulty setting
+        /// </summary>
         private void GetDifficulyImages()
         {
-            
-            PlayCollections = new ImagePlayCollection {AllImages = _imageHelper.GetImages(DifficultySetting.TotalImagesNeeded)};
-   
-        }
+            PlayCollections = new ImagePlayCollection {AllImages = ImageHelper.GetImages(DifficultySetting.TotalImagesNeeded)};
+   }
 
 
         /// <summary>
         /// Determinees if max level for difficulty is reached if not
         /// next round is intilized
         /// </summary>
-        private void NextRound()
+       public bool NextRound()
         {
+            Level += 1;
             if (Level <= DifficultySetting.MaxLevel)
             {
                 InitilizeRound();
+                return true;
             }
-            else
-            {
-                //EndGame(PlayCollections.SelectedImages.Count != PlayCollections.ToMatchImages.Count
-                //    ? "Lose"
-                //    : "Win");
-            }
+
+            return false;
         }
 
 
@@ -62,25 +62,53 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void InitilizeRound()
         {
-
-            Level += 1;
+            
             NumberOfImagesToMatch += 1;
-            PlayCollections.ToMatchImages = _imageHelper.ToMatchImages(NumberOfImagesToMatch,PlayCollections.AllImages);
+            PlayCollections.ToMatchImages = ImageHelper.ToMatchImages(NumberOfImagesToMatch,PlayCollections.AllImages);
             PlayCollections.SelectedImages = new List<Image>();
         }
 
-        //Todo implement start of round
-        public void Start()
+       /// <summary>
+       /// Set up the to memoriseGrid
+       /// </summary>
+       /// <param name="grid"></param>
+       /// <returns></returns>
+        public Grid SetMemoriseGrid(Grid grid)
         {
+            foreach (var image  in grid.Children)
+            {
+                image.Opacity = 0;
+                Image temp = image as Image;
+                
+                foreach (var matchImage in PlayCollections.ToMatchImages)
+                {
+                    if (temp.Source == matchImage.Source)
+                    {
+                       temp.Opacity = 1;
+                    }
+                  
+                }
+            }
 
+            return grid;
         }
 
-
-        //Todo Implement end Game conditions
-        public void EndGame(string status)
+        /// <summary>
+        /// Toggles opacity of all the  images in the grid
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <returns></returns>
+        public Grid SetOpacity(Grid grid)
         {
-            throw new NotImplementedException();
+            foreach (var image in grid.Children)
+            {
+                image.Opacity = 1;
+            }
+
+            return grid;
         }
+
+      
 
         /// <summary>
         /// Check if the selected image is contain within 
@@ -89,25 +117,97 @@ namespace GoMemory.ViewModels
         /// <param name="selectedImage"></param>
         public bool CheckSelections(Image selectedImage)
         {
-            bool found = false;
+
             foreach (var image in PlayCollections.ToMatchImages)
             {
-                if (image.Source == selectedImage.Source)
+                if (image.Source != selectedImage.Source) continue;
+
+                if (PlayCollections.SelectedImages.Count > 0)
+                {
+                    foreach (var img in PlayCollections.SelectedImages)
+                    {
+                        if (img.Source == selectedImage.Source) continue;
+                        PlayCollections.SelectedImages.Add(selectedImage);
+
+                        return true;
+                    }
+                }
+                else
                 {
                     PlayCollections.SelectedImages.Add(selectedImage);
-                    found = true;
-                    
+
+                    return true;
                 }
             }
 
-
-            return found;
+            return false;
+           
         }
 
-        //Todo implement
-        public void RoundComplete()
+        /// <summary>
+        /// Toggle the click event of image of the Grid
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="visible"></param>
+        /// <returns></returns>
+        public Grid ToggleImageIsEnabled(Grid grid,bool visible)
         {
-            throw new NotImplementedException();
+            foreach (var child in grid.Children)
+            {
+                child.IsEnabled = visible;
+            }
+            return grid;
         }
+        /// <summary>
+        /// Insert images into the Grid
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <returns></returns>
+        public Grid AddGridImages(Grid grid)
+        {
+            if (grid.Children.Count != 0)
+            {
+                grid.Children.Clear();
+            }
+
+
+            int imagecount = 0;
+            for (int row = 0; row < DifficultySetting.GridSize; row++)
+            {
+                for (int column = 0; column < DifficultySetting.GridSize; column++)
+                {
+
+                    Image image = new Image
+                    {
+                        Source = PlayCollections.AllImages[imagecount].Source,
+                        
+                    };
+
+                    grid.Children.Add(image, row, column);
+
+
+                    imagecount += 1;
+                }
+            }
+
+            return grid;
+        }
+
+    
+
+      /// <summary>
+      /// reshuffles the grid images on start 
+      /// </summary>
+      /// <param name="grid"></param>
+      /// <returns></returns>
+        public Grid ReShuffle(Grid grid)
+        {
+            PlayCollections.AllImages = ImageHelper.ShuffleCollection(PlayCollections.AllImages);
+            grid = SetOpacity(grid);
+            grid = ToggleImageIsEnabled(grid, true);
+            grid = AddGridImages(grid);
+            return grid;
+        }
+
     }
     }

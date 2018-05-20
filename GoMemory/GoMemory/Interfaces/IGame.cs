@@ -11,8 +11,8 @@ namespace GoMemory.Interfaces
     {
         void InitilizeRound();
 
-        void Start();
-        void EndGame(string endStatus);
+        Grid SetMemoriseGrid(Grid grid);
+       
 
        bool CheckSelections(Image selectedImage);
 

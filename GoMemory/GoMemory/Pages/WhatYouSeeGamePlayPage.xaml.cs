@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using GoMemory.Enums;
+using GoMemory.Helpers;
 using GoMemory.Models;
 using GoMemory.ViewModels;
 using Xamarin.Forms;
@@ -16,111 +17,224 @@ namespace GoMemory.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WhatYouSeeGamePlayPage : ContentPage
     {
-        readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel ;
-        private int _gridSize;
+        readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel;
+       // private int _gridSize;
         public Grid Grid;
         public StackLayout StackLayout;
-       
+        public Button StartButton;
+        public Label LevelLabel;
+       // public Label MessageLabel;
+      
 
-
-        public WhatYouSeeGamePlayPage (Difficulty difficulty)
+        public WhatYouSeeGamePlayPage(Difficulty difficulty)
         {
-            InitializeComponent ();
-            _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty) ;
-         CreatePageContent();
+            InitializeComponent();
+           
+            _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty);
+            CreatePageContent();
             Content = StackLayout;
+            Grid = _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
         }
 
-        private void OnTapped(Image img)
-        {
-            bool found = false;
-           found =  _whatYouSeeGamePlayViewModel.CheckSelections(img);
-
-            if (found)
-            {
-                img.Opacity = 0.5;
-            }
-            else
-            {
-                _whatYouSeeGamePlayViewModel.EndGame("error");
-            }
-
-            if (_whatYouSeeGamePlayViewModel.PlayCollections.SelectedImages.Count == _whatYouSeeGamePlayViewModel.NumberOfImagesToMatch)
-            {
-                _whatYouSeeGamePlayViewModel.RoundComplete();
-            }
-        }
-
+        /// <summary>
+        /// Create the initial layout of the page
+        /// </summary>
         private void CreatePageContent()
         {
-            StackLayout = new StackLayout();
-            Label label = new Label {Text = "Level " + _whatYouSeeGamePlayViewModel.Level};
-            StackLayout.Children.Add(label);
-            SetStackLayoutMargins();
-            CreateGrid();
-            AddGridImages();
+            StackLayout = ControlStyles.SetStackLayout();
+
+            StackLayout innerStackLayout = ControlStyles.SetStackLayout();
+            innerStackLayout.Orientation = StackOrientation.Horizontal;
+
+            LevelLabel = ControlStyles.LargeTextBlueLabel();
+            LevelLabel.Text = "Level " + _whatYouSeeGamePlayViewModel.Level;
+
+            StartButton = ControlStyles.LargeTextGreenButton();
+            StartButton.Text = "Go !";
+            StartButton.Clicked += StartButton_Clicked;
+
+
+           innerStackLayout.Children.Add(LevelLabel);
+            innerStackLayout.Children.Add(StartButton);
+            
+            StackLayout.Children.Add(innerStackLayout);
+            
+            NewGrid();
+            Grid = _whatYouSeeGamePlayViewModel.AddGridImages(Grid);
+           
             StackLayout.Children.Add(Grid);
         }
 
-        private void SetStackLayoutMargins()
+      
+      
+
+        /// <summary>
+        /// Create image grid 
+        /// </summary>
+        private void NewGrid()
         {
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                    StackLayout.Margin = new Thickness(20, 40, 20, 20);
-                    break;
-                case Device.Android:
-                    StackLayout.Margin = new Thickness(20);
-                    break;
-                default:
-                    StackLayout.Margin = new Thickness(20);
-                    break;
-            }
+            Grid = GridCreator.CreateGrid(_whatYouSeeGamePlayViewModel.DifficultySetting.GridSize);
+
         }
 
-        private void CreateGrid()
+      /// <summary>
+      /// Add Tap gesture for the Grid Images
+      /// </summary>
+        public void AddTapGestures()
         {
-            Grid = new Grid {Margin = new Thickness(0,20,0,0),ColumnSpacing = 1,RowSpacing = 1};
-            _gridSize = _whatYouSeeGamePlayViewModel.DifficultySetting.GridSize;
-            for (int i = 0; i < _gridSize; i++)
+            foreach (var view in Grid.Children)
             {
-                Grid.ColumnDefinitions.Add(new ColumnDefinition {Width = new GridLength(1, GridUnitType.Star)});
-                Grid.RowDefinitions.Add(new RowDefinition {Height = new GridLength(1, GridUnitType.Star)});
+                Image image = view as Image;
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.Tapped += OnTapped;
+                image.GestureRecognizers.Add(tapGestureRecognizer);
             }
 
            
         }
 
-        
-
-        private void AddGridImages()
+        /// <summary>
+        /// When player is ready to recall images 
+        /// coordinates the start of the guessing  phase
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private void StartButton_Clicked(object sender, EventArgs eventArgs)
         {
-            
-            int imagecount = 0;
-            for (int row = 0; row < _whatYouSeeGamePlayViewModel.DifficultySetting.GridSize; row++)
+            Button s = sender as Button;
+            s.IsEnabled = false;
+            Grid =   _whatYouSeeGamePlayViewModel.ReShuffle(Grid);
+            AddTapGestures();
+        }
+
+        /// <summary>
+        /// Handles the tapping of a image once guessing phase has started
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="ev"></param>
+        private void OnTapped(object sender,EventArgs ev)
+        {
+            if (IsBusy)
             {
-                for (int column = 0; column < _whatYouSeeGamePlayViewModel.DifficultySetting.GridSize; column++)
+                return;
+            }
+
+            IsBusy = true;
+            bool found;
+            try
+            {
+                Image img = sender as Image;
+                found = _whatYouSeeGamePlayViewModel.CheckSelections(img);
+                if (found)
                 {
-
-                    Image image = new Image
+                    if (img != null)
                     {
-                        Source = _whatYouSeeGamePlayViewModel.PlayCollections.AllImages[imagecount].Source
-                    };
-                 
-                    var tapGestureRecognizer = new TapGestureRecognizer();
-                    tapGestureRecognizer.Tapped += (s, e) => {
-                        OnTapped(s as Image);
-                    };
-                    image.GestureRecognizers.Add(tapGestureRecognizer);
+                        img.Opacity = 0.5;
+                        img.IsEnabled = false;
+                    }
+                }
+                else
+                {
+                  FailedGameOver();
+                }
 
-                    Grid.Children.Add(image, row, column);
-
-                    imagecount += 1;
+                if (_whatYouSeeGamePlayViewModel.PlayCollections.SelectedImages.Count ==
+                    _whatYouSeeGamePlayViewModel.PlayCollections.ToMatchImages.Count)
+                {
+                    NextRound();
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+
         }
 
 
+        /// <summary>
+        /// Intiates next Level of play or signals game completed 
+        /// 
+        /// </summary>
+        public void NextRound()
+        {
+            bool next;
+            next = _whatYouSeeGamePlayViewModel.NextRound();
+            if (next)
+            {
+                StartButton.IsEnabled = true;
+                Grid = _whatYouSeeGamePlayViewModel.ToggleImageIsEnabled(Grid,false);
+                LevelLabel.Text = "Level " + _whatYouSeeGamePlayViewModel.Level;
+                 Grid =  _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
+            }
+            else
+            {
+                DifficultyCompleted();
+             
+            }
+           
+        }
+
+
+        /// <summary>
+        /// Handles the events for selection wrong image in guessing phase
+        /// </summary>
+        private void FailedGameOver()
+        {
+           Image gameOver = new Image
+            {
+                Source = _whatYouSeeGamePlayViewModel.ImageHelper.GameOverImage.Source,
+               
+                WidthRequest = Application.Current.MainPage.Width * 0.8,
+                HeightRequest = Application.Current.MainPage.Height * 0.6
+            };
+
+            Button retryButton = ControlStyles.LargeTextGreenButton();
+            retryButton.Text = "Retry";
+            retryButton.Clicked += RetryButton_Clicked;
+
+            StackLayout failedGameOver = ControlStyles.SetStackLayout();
+            failedGameOver.Children.Add(gameOver);
+            failedGameOver.Children.Add(retryButton);
+           
+            Content = failedGameOver;
+
+        }
+
+        /// <summary>
+        /// Activates the Image for completing the difficutl
+        /// </summary>
+        private void DifficultyCompleted()
+        {
+            Content = new Image
+            {
+                Source = _whatYouSeeGamePlayViewModel.ImageHelper.CompleteImage.Source,
+
+                WidthRequest = Application.Current.MainPage.Width * 0.8
+            };
+
+        }
+
+
+        /// <summary>
+        /// Sets Game play to retry the current level
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private void RetryButton_Clicked(object sender, EventArgs eventArgs)
+        {
+            Button s = sender as Button;
+            _whatYouSeeGamePlayViewModel.Level -= 1;
+            _whatYouSeeGamePlayViewModel.NumberOfImagesToMatch -= 1;
+            Content = StackLayout;
+            NextRound();
+
+        }
 
     }
 }
