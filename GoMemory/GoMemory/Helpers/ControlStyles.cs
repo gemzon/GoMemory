@@ -35,7 +35,7 @@ namespace GoMemory.Helpers
            StackLayout stackLayout = new StackLayout
             {
                 HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.StartAndExpand,
                 Margin = new Thickness(10)
             };
 

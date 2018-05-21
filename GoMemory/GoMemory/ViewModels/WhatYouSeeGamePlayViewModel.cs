@@ -23,12 +23,41 @@ namespace GoMemory.ViewModels
 
         public WhatYouSeeGamePlayViewModel(Difficulty difficulty)
         {
-            DifficultySetting = new DifficultySetting(difficulty);
+            DifficultySetting = SetDifficultySettings(difficulty);
             ImageHelper = new ImageHelper();
            
             GetDifficulyImages();
             NextRound();
         }
+
+        public DifficultySetting SetDifficultySettings(Difficulty difficulty)
+        {
+            DifficultySetting difficultySetting = new DifficultySetting();
+            switch (difficulty)
+            {
+                case Difficulty.Easy:
+                    difficultySetting.GridColumnSize = 4;
+                    difficultySetting.GridRowSize = 4;
+                    difficultySetting.TotalImagesNeeded = 16;
+                    difficultySetting.MaxLevel = 12;
+                    break;
+                case Difficulty.Hard:
+                    difficultySetting.GridColumnSize = 6;
+                    difficultySetting.GridRowSize = 6;
+                    difficultySetting.TotalImagesNeeded = 36;
+                    difficultySetting.MaxLevel = 32;
+                    break;
+                default:
+                    difficultySetting.GridColumnSize = 5;
+                    difficultySetting.GridRowSize = 5;
+                    difficultySetting.TotalImagesNeeded = 25;
+                    difficultySetting.MaxLevel = 22;
+                    break;
+            }
+
+            return difficultySetting;
+        }
+
 
         /// <summary>
         /// Retrieve collection of image
@@ -77,7 +106,7 @@ namespace GoMemory.ViewModels
         {
             foreach (var image  in grid.Children)
             {
-                image.Opacity = 0;
+                image.Opacity = 0.1;
                 Image temp = image as Image;
                 
                 foreach (var matchImage in PlayCollections.ToMatchImages)
@@ -108,7 +137,13 @@ namespace GoMemory.ViewModels
             return grid;
         }
 
-      
+        public Grid CreateNewGrid()
+        {
+          return GridHelper.CreateGrid(DifficultySetting.GridRowSize, DifficultySetting.GridColumnSize);
+            
+        }
+
+
 
         /// <summary>
         /// Check if the selected image is contain within 
@@ -148,16 +183,13 @@ namespace GoMemory.ViewModels
         /// Toggle the click event of image of the Grid
         /// </summary>
         /// <param name="grid"></param>
-        /// <param name="visible"></param>
+        /// <param name="enabled"></param>
         /// <returns></returns>
-        public Grid ToggleImageIsEnabled(Grid grid,bool visible)
+        public Grid ToggleImageClickable(Grid grid,bool enabled)
         {
-            foreach (var child in grid.Children)
-            {
-                child.IsEnabled = visible;
-            }
-            return grid;
+            return GridHelper.ToggleImageIsEnabled(grid, enabled);
         }
+
         /// <summary>
         /// Insert images into the Grid
         /// </summary>
@@ -172,15 +204,15 @@ namespace GoMemory.ViewModels
 
 
             int imagecount = 0;
-            for (int row = 0; row < DifficultySetting.GridSize; row++)
+            for (int row = 0; row < DifficultySetting.GridRowSize; row++)
             {
-                for (int column = 0; column < DifficultySetting.GridSize; column++)
+                for (int column = 0; column < DifficultySetting.GridColumnSize; column++)
                 {
 
                     Image image = new Image
                     {
                         Source = PlayCollections.AllImages[imagecount].Source,
-                        
+                        Aspect = Aspect.AspectFit
                     };
 
                     grid.Children.Add(image, row, column);
@@ -204,7 +236,7 @@ namespace GoMemory.ViewModels
         {
             PlayCollections.AllImages = ImageHelper.ShuffleCollection(PlayCollections.AllImages);
             grid = SetOpacity(grid);
-            grid = ToggleImageIsEnabled(grid, true);
+            grid = ToggleImageClickable(grid, true);
             grid = AddGridImages(grid);
             return grid;
         }

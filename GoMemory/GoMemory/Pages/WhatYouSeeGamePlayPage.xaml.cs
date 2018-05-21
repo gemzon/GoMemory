@@ -18,12 +18,12 @@ namespace GoMemory.Pages
     public partial class WhatYouSeeGamePlayPage : ContentPage
     {
         readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel;
-       // private int _gridSize;
+      
         public Grid Grid;
         public StackLayout StackLayout;
         public Button StartButton;
         public Label LevelLabel;
-       // public Label MessageLabel;
+      
       
 
         public WhatYouSeeGamePlayPage(Difficulty difficulty)
@@ -73,8 +73,7 @@ namespace GoMemory.Pages
         /// </summary>
         private void NewGrid()
         {
-            Grid = GridCreator.CreateGrid(_whatYouSeeGamePlayViewModel.DifficultySetting.GridSize);
-
+            Grid = _whatYouSeeGamePlayViewModel.CreateNewGrid();
         }
 
       /// <summary>
@@ -89,7 +88,6 @@ namespace GoMemory.Pages
                 tapGestureRecognizer.Tapped += OnTapped;
                 image.GestureRecognizers.Add(tapGestureRecognizer);
             }
-
            
         }
 
@@ -168,14 +166,13 @@ namespace GoMemory.Pages
             if (next)
             {
                 StartButton.IsEnabled = true;
-                Grid = _whatYouSeeGamePlayViewModel.ToggleImageIsEnabled(Grid,false);
+                Grid = _whatYouSeeGamePlayViewModel.ToggleImageClickable(Grid,false);
                 LevelLabel.Text = "Level " + _whatYouSeeGamePlayViewModel.Level;
                  Grid =  _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
             }
             else
             {
                 DifficultyCompleted();
-             
             }
            
         }
@@ -203,7 +200,6 @@ namespace GoMemory.Pages
             failedGameOver.Children.Add(retryButton);
            
             Content = failedGameOver;
-
         }
 
         /// <summary>
@@ -214,10 +210,8 @@ namespace GoMemory.Pages
             Content = new Image
             {
                 Source = _whatYouSeeGamePlayViewModel.ImageHelper.CompleteImage.Source,
-
                 WidthRequest = Application.Current.MainPage.Width * 0.8
             };
-
         }
 
 
@@ -233,7 +227,6 @@ namespace GoMemory.Pages
             _whatYouSeeGamePlayViewModel.NumberOfImagesToMatch -= 1;
             Content = StackLayout;
             NextRound();
-
         }
 
     }
