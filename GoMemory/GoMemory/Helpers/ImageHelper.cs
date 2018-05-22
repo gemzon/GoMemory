@@ -127,7 +127,7 @@ namespace GoMemory.Helpers
         /// <returns>
         /// Array of Image
         /// </returns>
-        public List<Image> ToMatchImages(int numberOfImagesNeeded,Image[] images) 
+        public ICollection<Image> ToMatchImages(int numberOfImagesNeeded,Image[] images,string sortType) 
         {
 
             List<Image> matchImages = new List<Image>();
@@ -142,6 +142,11 @@ namespace GoMemory.Helpers
                 matchImages.Add(selectedImage);
                 count++;
 
+            }
+
+            if (string.IsNullOrEmpty(sortType))
+            {
+                return matchImages.ToArray();
             }
 
             return matchImages;

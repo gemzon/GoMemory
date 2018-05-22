@@ -47,7 +47,7 @@ namespace GoMemory.Pages
             innerStackLayout.Orientation = StackOrientation.Horizontal;
 
             LevelLabel = ControlStyles.LargeTextBlueLabel();
-            LevelLabel.Text = "Level " + _whatYouSeeGamePlayViewModel.Level;
+            LevelLabel.Text =  _whatYouSeeGamePlayViewModel.SetLevelText();
 
             StartButton = ControlStyles.LargeTextGreenButton();
             StartButton.Text = "Go !";
@@ -136,8 +136,7 @@ namespace GoMemory.Pages
                   FailedGameOver();
                 }
 
-                if (_whatYouSeeGamePlayViewModel.PlayCollections.SelectedImages.Count ==
-                    _whatYouSeeGamePlayViewModel.PlayCollections.ToMatchImages.Count)
+                if (_whatYouSeeGamePlayViewModel.CheckIsRoundComplete())
                 {
                     NextRound();
                 }
@@ -167,7 +166,7 @@ namespace GoMemory.Pages
             {
                 StartButton.IsEnabled = true;
                 Grid = _whatYouSeeGamePlayViewModel.ToggleImageClickable(Grid,false);
-                LevelLabel.Text = "Level " + _whatYouSeeGamePlayViewModel.Level;
+                LevelLabel.Text =  _whatYouSeeGamePlayViewModel.SetLevelText();
                  Grid =  _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
             }
             else
@@ -222,10 +221,8 @@ namespace GoMemory.Pages
         /// <param name="eventArgs"></param>
         private void RetryButton_Clicked(object sender, EventArgs eventArgs)
         {
-            Button s = sender as Button;
-            _whatYouSeeGamePlayViewModel.Level -= 1;
-            _whatYouSeeGamePlayViewModel.NumberOfImagesToMatch -= 1;
-            Content = StackLayout;
+            _whatYouSeeGamePlayViewModel.Retry();
+          Content = StackLayout;
             NextRound();
         }
 
