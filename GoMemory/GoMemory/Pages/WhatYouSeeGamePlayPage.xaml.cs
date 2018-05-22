@@ -29,7 +29,7 @@ namespace GoMemory.Pages
         public WhatYouSeeGamePlayPage(Difficulty difficulty)
         {
             InitializeComponent();
-           
+            Title = "What you see";
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty);
             CreatePageContent();
             Content = StackLayout;

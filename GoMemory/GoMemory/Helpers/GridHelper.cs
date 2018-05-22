@@ -9,7 +9,15 @@ namespace GoMemory.Helpers
     {
         public static Grid CreateGrid(int rowSize,int columSize)
         {
-          Grid Grid =   new Grid { Margin = new Thickness(0, 20, 0, 0), ColumnSpacing = 1, RowSpacing = 1 };
+          Grid Grid =   new Grid
+          {
+              Margin = new Thickness(0,10,0,0),
+              ColumnSpacing = 1,
+              RowSpacing = 1,
+              HorizontalOptions = LayoutOptions.FillAndExpand,
+              VerticalOptions = LayoutOptions.FillAndExpand,
+          };
+
 
             for (int i = 0; i < rowSize; i++)
             {
