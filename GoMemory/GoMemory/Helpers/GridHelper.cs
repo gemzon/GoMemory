@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using GoMemory.Models;
 using Xamarin.Forms;
 
 namespace GoMemory.Helpers
@@ -43,6 +44,43 @@ namespace GoMemory.Helpers
             {
                 child.IsEnabled = enabled;
             }
+            return grid;
+        }
+
+
+        /// <summary>
+        /// Insert images into the Grid
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <returns></returns>
+        public static Grid InsertGridImages(Grid grid,Image[] images,DifficultySetting difficultySetting)
+        {
+            if (grid.Children.Count != 0)
+            {
+                grid.Children.Clear();
+            }
+
+
+            int imagecount = 0;
+            for (int row = 0; row < difficultySetting.GridRowSize; row++)
+            {
+                for (int column = 0; column < difficultySetting.GridColumnSize; column++)
+                {
+
+                    Image image = new Image
+                    {
+                        Source = images[imagecount].Source,
+                        Aspect = Aspect.AspectFit,
+                        Margin = new Thickness(2)
+                    };
+
+                    grid.Children.Add(image, row, column);
+
+
+                    imagecount += 1;
+                }
+            }
+
             return grid;
         }
     }

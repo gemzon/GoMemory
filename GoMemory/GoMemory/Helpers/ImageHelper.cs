@@ -127,48 +127,42 @@ namespace GoMemory.Helpers
         /// <returns>
         /// Array of Image
         /// </returns>
-        public ICollection<Image> ToMatchImages(int numberOfImagesNeeded,Image[] images,string sortType) 
+        public List<Image> ToMatchImagesList(int numberOfImagesNeeded,Image[] images)
         {
 
-            List<Image> matchImages = new List<Image>();
+           
+         
 
+                List<Image> matchImages = new List<Image>();
+
+                Random rnd = new Random();
+
+                int count = 0;
+                while (count != numberOfImagesNeeded)
+                {
+                    Image selectedImage = images[rnd.Next(0, images.Length)];
+                    if (matchImages.Contains(selectedImage)) continue;
+                    matchImages.Add(selectedImage);
+                    count++;
+
+                }
+
+            return matchImages;
+        }
+
+        public Image[] ToMatchImagesArray(Image[]selectFromImages )
+        {
             Random rnd = new Random();
-
-            int count = 0;
-            while (count != numberOfImagesNeeded)
+            int maxIndex = selectFromImages.Length;
+            Image[] matchImages = new Image[maxIndex];
+            for (int i = 0; i < selectFromImages.Length; i++)
             {
-                Image selectedImage = images[rnd.Next(0, images.Length)];
+                Image selectedImage = selectFromImages[rnd.Next(0, maxIndex)];
                 if (matchImages.Contains(selectedImage)) continue;
-                matchImages.Add(selectedImage);
-                count++;
-
+                matchImages[i] =selectedImage;
             }
-
-            if (string.IsNullOrEmpty(sortType))
-            {
-                return matchImages.ToArray();
-            }
-
             return matchImages;
 
         }
-
-        //public void imageget()
-        //{
-        //    Uri imagefolder ;
-        //    switch (Device.RuntimePlatform)
-        //    {
-        //        case Device.iOS:
-
-        //            break;
-        //        case Device.Android:
-        //        case Device.UWP:
-        //            imagefolder = "ms-appx:///Images/";
-
-        //        default:
-        //            break;
-        //    };
-               
-        //}
     }
 }

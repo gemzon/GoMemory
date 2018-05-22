@@ -61,7 +61,11 @@ namespace GoMemory.Pages
             
             NewGrid();
             Grid = _whatYouSeeGamePlayViewModel.AddGridImages(Grid);
-           
+            Grid.HorizontalOptions = LayoutOptions.FillAndExpand;
+            Grid.VerticalOptions = LayoutOptions.FillAndExpand;
+            Grid.MinimumWidthRequest = Application.Current.MainPage.Width * 0.5;
+            Grid.MinimumWidthRequest = Application.Current.MainPage.Height * 0.6;
+
             StackLayout.Children.Add(Grid);
         }
 
@@ -73,7 +77,7 @@ namespace GoMemory.Pages
         /// </summary>
         private void NewGrid()
         {
-            Grid = _whatYouSeeGamePlayViewModel.CreateNewGrid();
+            Grid = _whatYouSeeGamePlayViewModel.CreateNewGrid(Grid);
         }
 
       /// <summary>

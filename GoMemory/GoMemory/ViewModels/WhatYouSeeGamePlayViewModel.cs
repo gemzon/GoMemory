@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace GoMemory.ViewModels
 {
-    public class WhatYouSeeGamePlayViewModel : BaseViewModel, IGame
+    public class WhatYouSeeGamePlayViewModel : BaseViewModel,IGame
     {
         public DifficultySetting DifficultySetting { get; set; }
         public ImageHelper ImageHelper { get; set; }
@@ -22,7 +22,7 @@ namespace GoMemory.ViewModels
         {
             SetDifficultySettings(difficulty);
             ImageHelper = new ImageHelper();
-            GetDifficulyImages();
+            GetDifficultyImages();
             NextRound();
         }
 
@@ -32,7 +32,7 @@ namespace GoMemory.ViewModels
         /// </summary>
         /// <param name="difficulty"></param>
         /// <returns></returns>
-        private void SetDifficultySettings(Difficulty difficulty)
+        public void SetDifficultySettings(Difficulty difficulty)
         {
            switch (difficulty)
             {
@@ -53,7 +53,7 @@ namespace GoMemory.ViewModels
         /// Retrieve collection of image
         /// amount depends on difficulty setting
         /// </summary>
-        private void GetDifficulyImages()
+        public void GetDifficultyImages()
         {
             UnorderedGameValues = new UnorderedGameValues {AllImages = ImageHelper.GetImages(DifficultySetting.TotalImagesNeeded)};
    }
@@ -82,7 +82,7 @@ namespace GoMemory.ViewModels
         public void InitilizeRound()
         {
             UnorderedGameValues.NumberOfImagesToMatch += 1;
-            UnorderedGameValues.ToMatchImages = ImageHelper.ToMatchImages(UnorderedGameValues.NumberOfImagesToMatch,UnorderedGameValues.AllImages,"unsorted").ToList();
+            UnorderedGameValues.ToMatchImages = ImageHelper.ToMatchImagesList(UnorderedGameValues.NumberOfImagesToMatch,UnorderedGameValues.AllImages);
             UnorderedGameValues.SelectedImages = new List<Image>();
         }
 
@@ -129,10 +129,11 @@ namespace GoMemory.ViewModels
         /// Create a new GameGrid
         /// </summary>
         /// <returns></returns>
-        public Grid CreateNewGrid()
+        public Grid CreateNewGrid(Grid grid)
         {
-          return GridHelper.CreateGrid(DifficultySetting.GridRowSize, DifficultySetting.GridColumnSize);
-       }
+            grid = GridHelper.CreateGrid(DifficultySetting.GridRowSize, DifficultySetting.GridColumnSize);
+            return grid;
+        }
 
         
         /// <summary>
@@ -187,32 +188,7 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public Grid AddGridImages(Grid grid)
         {
-            if (grid.Children.Count != 0)
-            {
-                grid.Children.Clear();
-            }
-
-
-            int imagecount = 0;
-            for (int row = 0; row < DifficultySetting.GridRowSize; row++)
-            {
-                for (int column = 0; column < DifficultySetting.GridColumnSize; column++)
-                {
-
-                    Image image = new Image
-                    {
-                        Source = UnorderedGameValues.AllImages[imagecount].Source,
-                        Aspect = Aspect.AspectFit
-                    };
-
-                    grid.Children.Add(image, row, column);
-
-
-                    imagecount += 1;
-                }
-            }
-
-            return grid;
+            return GridHelper.InsertGridImages(grid,UnorderedGameValues.AllImages,DifficultySetting);
         }
 
     
