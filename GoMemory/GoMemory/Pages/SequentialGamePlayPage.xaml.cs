@@ -23,6 +23,7 @@ namespace GoMemory.Pages
         public FlexLayout FlexLayout;
         public Button StartButton;
         public Label LevelLabel;
+        public Grid SequenceGrid;
 
         public SequentialGamePlayPage (Difficulty difficulty)
         {
@@ -55,18 +56,36 @@ namespace GoMemory.Pages
             StartStackLayout.Children.Add(LevelLabel);
             StartStackLayout.Children.Add(StartButton);
             StackLayout.Children.Add(StartStackLayout);
+            Label sequencelabel = ControlStyles.LargeTextPurpleLabel();
 
-            FlexLayout = new FlexLayout
-            {
-               JustifyContent = FlexJustify.SpaceEvenly,
-                Wrap = FlexWrap.Wrap,
-                WidthRequest = Application.Current.MainPage.Width -10
-            };
+            sequencelabel.Text = "This level's sequence ";
 
-
-            StackLayout.Children.Add(FlexLayout);
+            //Frame frame = new Frame
+            //{
+            //    Content =sequencelabel,
+            //    BorderColor = Color.Black
+            //};
 
            
+            StackLayout.Children.Add(sequencelabel);
+            //ScrollView sc = new ScrollView {
+            //    //WidthRequest = Application.Current.MainPage.Width - 10,
+            //    //HeightRequest =  Application.Current.MainPage.Height * 0.7,
+            //};
+            FlexLayout = new FlexLayout
+            {
+                JustifyContent = FlexJustify.Start,
+                WidthRequest = Application.Current.MainPage.Width -10,
+               HeightRequest =  Application.Current.MainPage.Height * 0.6,
+                Wrap = FlexWrap.Wrap,
+               Margin = new Thickness(2)
+
+            };
+
+            //sc.Content = FlexLayout;
+
+            StackLayout.Children.Add(FlexLayout);
+ 
         } 
 
         public void NextRound()
@@ -77,7 +96,7 @@ namespace GoMemory.Pages
             {
               CreatePageContent();
                 FlexLayout = _sequentialGamePlayViewModel.CreateSequenceFlexLayout(FlexLayout);
-                LevelLabel.Text = _sequentialGamePlayViewModel.SetLevelText();
+               LevelLabel.Text = _sequentialGamePlayViewModel.SetLevelText();
                 Content = StackLayout;
             }
             else

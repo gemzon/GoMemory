@@ -25,7 +25,22 @@ namespace GoMemory.Helpers
                 Margin = new Thickness(0, 0, 50, 0),
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
                 TextColor = Color.MidnightBlue,
+                FontAttributes = FontAttributes.Bold
+
+
+            };
+        }
+        public static Label LargeTextPurpleLabel()
+        {
+            return new Label
+            {
+               
+                Margin = new Thickness(0),
+                FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
+                TextColor = Color.DarkSlateBlue,
                 FontAttributes = FontAttributes.Bold,
+                HorizontalTextAlignment = TextAlignment.Center,
+                HorizontalOptions = LayoutOptions.Center
 
             };
         }

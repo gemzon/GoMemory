@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using GoMemory.Enums;
 using GoMemory.Helpers;
@@ -35,12 +36,12 @@ namespace GoMemory.ViewModels
             switch (difficulty)
             {
                 case Difficulty.Easy:
-                    DifficultySetting = new DifficultySetting(2, 2, 4, 20);
-                    break;
-                case Difficulty.Hard:
-                    DifficultySetting = new DifficultySetting(3, 3, 9, 50);
+                    DifficultySetting = new DifficultySetting(2, 2, 4, 10);
                     break;
                 case Difficulty.Normal:
+                    DifficultySetting = new DifficultySetting(3, 3, 9, 20);
+                    break;
+                case Difficulty.Hard:
                     DifficultySetting = new DifficultySetting(4, 4, 16, 30);
                     break;
             }
@@ -57,12 +58,20 @@ namespace GoMemory.ViewModels
             };
         }
 
+
+      
         public FlexLayout CreateSequenceFlexLayout(FlexLayout flexLayout)
         {
             
             for (int i = 0; i < OrderedGameValues.ToMatchImages.Length; i++)
             {
-                Image img = new Image {Source = OrderedGameValues.ToMatchImages[i].Source};
+                Image img = new Image
+                {
+                    Source = OrderedGameValues.ToMatchImages[i].Source,
+                   
+                    Margin = new Thickness(2)
+                };
+
                 flexLayout.Children.Add(img);
             }
 
