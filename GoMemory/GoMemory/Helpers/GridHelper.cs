@@ -8,6 +8,12 @@ namespace GoMemory.Helpers
 {
     public static class GridHelper
     {
+        /// <summary>
+        /// create grid
+        /// </summary>
+        /// <param name="rowSize"></param>
+        /// <param name="columSize"></param>
+        /// <returns></returns>
         public static Grid CreateGrid(int rowSize,int columSize)
         {
           Grid Grid =   new Grid
