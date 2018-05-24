@@ -24,6 +24,7 @@ namespace GoMemory.Pages
         public Button StartButton;
         public Label LevelLabel;
         public Grid SequenceGrid;
+        public StackLayout PlayLayout;
 
         public SequentialGamePlayPage (Difficulty difficulty)
         {
@@ -41,6 +42,8 @@ namespace GoMemory.Pages
         /// </summary>
         private void CreatePageContent()
         {
+            
+            Failed.IsVisible = false;
             StackLayout = ControlStyles.SetStackLayout();
 
             StartStackLayout = ControlStyles.SetStackLayout();
@@ -109,11 +112,7 @@ namespace GoMemory.Pages
 
         private void DifficultyCompleted()
         {
-            Content = new Image
-            {
-                Source = _sequentialGamePlayViewModel.ImageHelper.CompleteImage.Source,
-                WidthRequest = Application.Current.MainPage.Width * 0.8
-            };
+            Complete.IsVisible = true;
         }
 
         private void StartButton_Clicked(object sender, EventArgs e)
@@ -125,7 +124,7 @@ namespace GoMemory.Pages
 
         private StackLayout GuessLayout()
         {
-            StackLayout layout = ControlStyles.SetStackLayout();
+             PlayLayout = ControlStyles.SetStackLayout();
 
             StartStackLayout = ControlStyles.SetStackLayout();
             StartStackLayout.Orientation = StackOrientation.Horizontal;
@@ -134,7 +133,7 @@ namespace GoMemory.Pages
             selectionLabel.Text = "Your Guesses";
             
             StartStackLayout.Children.Add(selectionLabel);
-          layout.Children.Add(StartStackLayout);
+            PlayLayout.Children.Add(StartStackLayout);
         
             Frame frame = new Frame();
             SelectedImageStacklayout = new StackLayout
@@ -147,7 +146,7 @@ namespace GoMemory.Pages
         };
             frame.Content = SelectedImageStacklayout;
             frame.BorderColor = Color.Black;
-            layout.Children.Add(frame);
+            PlayLayout.Children.Add(frame);
 
             Grid = _sequentialGamePlayViewModel.CreateNewGrid(Grid);
             Grid.HorizontalOptions = LayoutOptions.FillAndExpand;
@@ -155,9 +154,9 @@ namespace GoMemory.Pages
             Grid.WidthRequest =  Application.Current.MainPage.Width *0.5;
             Grid.HeightRequest = Application.Current.MainPage.Height * 0.6;
 
-            layout.Children.Add(Grid);
+            PlayLayout.Children.Add(Grid);
             AddTapGestures();
-            return layout;
+            return PlayLayout;
         }
         /// <summary>
         /// Add Tap gesture for the Grid Images
@@ -204,7 +203,9 @@ namespace GoMemory.Pages
                 }
                 else
                 {
-                    FailedGameOver();
+                    Failed.IsVisible = true;
+                    Content = Failed;
+
                 }
                 if (_sequentialGamePlayViewModel.CheckIsRoundComplete())
                 {
@@ -226,33 +227,13 @@ namespace GoMemory.Pages
 
         }
 
-        /// <summary>
-        /// Handles the events for selection wrong image in guessing phase
-        /// </summary>
-        private void FailedGameOver()
-        {
-            Image gameOver = new Image
-            {
-                Source = _sequentialGamePlayViewModel.ImageHelper.GameOverImage.Source,
-
-                WidthRequest = Application.Current.MainPage.Width * 0.8,
-                HeightRequest = Application.Current.MainPage.Height * 0.6
-            };
-
-            Button retryButton = ControlStyles.LargeTextGreenButton();
-            retryButton.Text = "Retry";
-            retryButton.Clicked += RetryButton_Clicked;
-
-            StackLayout failedGameOver = ControlStyles.SetStackLayout();
-            failedGameOver.Children.Add(gameOver);
-            failedGameOver.Children.Add(retryButton);
-
-            Content = failedGameOver;
-        }
+      
 
         private void RetryButton_Clicked(object sender, EventArgs e)
         {
             _sequentialGamePlayViewModel.Retry();
+            StackLayout.IsVisible = true;
+            Failed.IsVisible = false;
             Content = StackLayout;
             SelectedImageStacklayout.Children.Clear();
             NextRound();

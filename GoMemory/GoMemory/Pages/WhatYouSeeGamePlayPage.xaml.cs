@@ -20,7 +20,7 @@ namespace GoMemory.Pages
         readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel;
       
         public Grid Grid;
-        public StackLayout StackLayout;
+     //  public StackLayout StackLayout;
         public Button StartButton;
         public Label LevelLabel;
       
@@ -32,7 +32,7 @@ namespace GoMemory.Pages
             Title = "What you see";
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty);
             CreatePageContent();
-            Content = StackLayout;
+     //       Content = StackLayout;
             Grid = _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
         }
 
@@ -41,8 +41,9 @@ namespace GoMemory.Pages
         /// </summary>
         private void CreatePageContent()
         {
-            StackLayout = ControlStyles.SetStackLayout();
-
+           // StackLayout = ControlStyles.SetStackLayout();
+            StackLayout.IsVisible= true;
+            Failed.IsVisible = false;
             StackLayout innerStackLayout = ControlStyles.SetStackLayout();
             innerStackLayout.Orientation = StackOrientation.Horizontal;
 
@@ -137,7 +138,8 @@ namespace GoMemory.Pages
                 }
                 else
                 {
-                  FailedGameOver();
+                    StackLayout.IsVisible = false;
+                    Failed.IsVisible = true;
                 }
 
                 if (_whatYouSeeGamePlayViewModel.CheckIsRoundComplete())
@@ -175,48 +177,14 @@ namespace GoMemory.Pages
             }
             else
             {
-                DifficultyCompleted();
+                StackLayout.IsVisible = false;
+                Failed.IsVisible = false;
+                Complete.IsVisible = true;
+             
             }
            
         }
-
-
-        /// <summary>
-        /// Handles the events for selection wrong image in guessing phase
-        /// </summary>
-        private void FailedGameOver()
-        {
-           Image gameOver = new Image
-            {
-                Source = _whatYouSeeGamePlayViewModel.ImageHelper.GameOverImage.Source,
-               
-                WidthRequest = Application.Current.MainPage.Width * 0.8,
-                HeightRequest = Application.Current.MainPage.Height * 0.6
-            };
-
-            Button retryButton = ControlStyles.LargeTextGreenButton();
-            retryButton.Text = "Retry";
-            retryButton.Clicked += RetryButton_Clicked;
-
-            StackLayout failedGameOver = ControlStyles.SetStackLayout();
-            failedGameOver.Children.Add(gameOver);
-            failedGameOver.Children.Add(retryButton);
-           
-            Content = failedGameOver;
-        }
-
-        /// <summary>
-        /// Activates the Image for completing the difficutl
-        /// </summary>
-        private void DifficultyCompleted()
-        {
-            Content = new Image
-            {
-                Source = _whatYouSeeGamePlayViewModel.ImageHelper.CompleteImage.Source,
-                WidthRequest = Application.Current.MainPage.Width * 0.8
-            };
-        }
-
+        
 
         /// <summary>
         /// Sets Game play to retry the current level
@@ -226,8 +194,9 @@ namespace GoMemory.Pages
         private void RetryButton_Clicked(object sender, EventArgs eventArgs)
         {
             _whatYouSeeGamePlayViewModel.Retry();
-          Content = StackLayout;
             NextRound();
+            StackLayout.IsVisible = true;
+            Failed.IsVisible = false;
         }
 
     }

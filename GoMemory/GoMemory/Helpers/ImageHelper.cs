@@ -17,7 +17,7 @@ namespace GoMemory.Helpers
         public ImageHelper()
         {
 
-          //  const string imagesPath = "GoMemory.Images.Images.";
+            //  const string imagesPath = "GoMemory.Images.Images.";
             //Uri  imagesPath = new Uri( "ms-appx:///Images/");
             string folder = "";
             switch (Device.RuntimePlatform)
@@ -32,8 +32,10 @@ namespace GoMemory.Helpers
                     folder = "Images/";
                     break;
             }
-            GameOverImage = new Image{ Source = folder + "gameover.png" };
+
+            GameOverImage = new Image { Source = folder + "gameover.png" };
             CompleteImage = new Image { Source = folder + "complete.png" };
+
             _images = new[]
             {
                 
@@ -78,8 +80,7 @@ namespace GoMemory.Helpers
         }
 
 
-      
-
+    
 
 
         /// <summary>

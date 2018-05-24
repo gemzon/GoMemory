@@ -13,7 +13,8 @@ namespace GoMemory.Helpers
                 BackgroundColor = Color.Green,
                 HorizontalOptions = LayoutOptions.Center,
                 FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Button)),
-                CornerRadius = 20,
+                CornerRadius = 5,
+                WidthRequest = 150
             };
         }
 
