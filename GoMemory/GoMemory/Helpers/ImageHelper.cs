@@ -12,8 +12,7 @@ namespace GoMemory.Helpers
     public class ImageHelper
     {
         private readonly Image[] _images;
-        public Image GameOverImage { get; set; }
-        public Image CompleteImage { get; set; }
+    
         public ImageHelper()
         {
 
@@ -33,8 +32,7 @@ namespace GoMemory.Helpers
                     break;
             }
 
-            GameOverImage = new Image { Source = folder + "gameover.png" };
-            CompleteImage = new Image { Source = folder + "complete.png" };
+         
 
             _images = new[]
             {

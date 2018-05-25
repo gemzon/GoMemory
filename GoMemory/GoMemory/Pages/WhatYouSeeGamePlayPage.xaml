@@ -13,12 +13,24 @@
     </ContentPage.Padding>
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout x:Name="StackLayout" IsEnabled="True" />
+            <StackLayout x:Name="StackLayout" IsVisible="True">
+                <StackLayout x:Name="InnerStackLayout" Orientation="Horizontal">
+                    <Label x:Name="LevelLabel" Style="{StaticResource LargeBlueTextLabel}" />
+                    <Button
+                        x:Name="StartButton"
+                        Clicked="StartButton_OnClicked"
+                        Style="{StaticResource GreenButton}"
+                        Text="Go !" />
+                </StackLayout>
+            </StackLayout>
             <StackLayout x:Name="Failed" IsVisible="False">
 
                 <Image Source="{helpers:ImageResource GoMemory.Images.gameover.png}" />
 
-                <Button Clicked="RetryButton_Clicked" Text="Retry" />
+                <Button
+                    Clicked="RetryButton_Clicked"
+                    Style="{StaticResource GreenButton}"
+                    Text="Retry" />
             </StackLayout>
             <Image
                 x:Name="Complete"

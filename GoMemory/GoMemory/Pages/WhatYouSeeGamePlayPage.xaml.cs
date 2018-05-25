@@ -20,10 +20,6 @@ namespace GoMemory.Pages
         readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel;
       
         public Grid Grid;
-     //  public StackLayout StackLayout;
-        public Button StartButton;
-        public Label LevelLabel;
-      
       
 
         public WhatYouSeeGamePlayPage(Difficulty difficulty)
@@ -32,7 +28,6 @@ namespace GoMemory.Pages
             Title = "What you see";
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty);
             CreatePageContent();
-     //       Content = StackLayout;
             Grid = _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
         }
 
@@ -41,33 +36,17 @@ namespace GoMemory.Pages
         /// </summary>
         private void CreatePageContent()
         {
-           // StackLayout = ControlStyles.SetStackLayout();
             StackLayout.IsVisible= true;
             Failed.IsVisible = false;
-            StackLayout innerStackLayout = ControlStyles.SetStackLayout();
-            innerStackLayout.Orientation = StackOrientation.Horizontal;
-
-            LevelLabel = ControlStyles.LargeTextBlueLabel();
             LevelLabel.Text =  _whatYouSeeGamePlayViewModel.SetLevelText();
-
-            StartButton = ControlStyles.LargeTextGreenButton();
-            StartButton.Text = "Go !";
-            StartButton.Clicked += StartButton_Clicked;
-
-
-           innerStackLayout.Children.Add(LevelLabel);
-            innerStackLayout.Children.Add(StartButton);
-            
-            StackLayout.Children.Add(innerStackLayout);
             
             NewGrid();
             Grid = _whatYouSeeGamePlayViewModel.AddGridImages(Grid);
-            Grid.HorizontalOptions = LayoutOptions.FillAndExpand;
-            Grid.VerticalOptions = LayoutOptions.FillAndExpand;
             Grid.MinimumWidthRequest = Application.Current.MainPage.Width * 0.5;
             Grid.MinimumWidthRequest = Application.Current.MainPage.Height * 0.6;
 
             StackLayout.Children.Add(Grid);
+
         }
 
       
@@ -102,11 +81,11 @@ namespace GoMemory.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="eventArgs"></param>
-        private void StartButton_Clicked(object sender, EventArgs eventArgs)
+        private void StartButton_OnClicked(object sender, EventArgs eventArgs)
         {
             Button s = sender as Button;
             s.IsEnabled = false;
-            Grid =   _whatYouSeeGamePlayViewModel.ReShuffle(Grid);
+       //     Grid =   _whatYouSeeGamePlayViewModel.ReShuffle(Grid);
             AddTapGestures();
         }
 
@@ -198,6 +177,7 @@ namespace GoMemory.Pages
             StackLayout.IsVisible = true;
             Failed.IsVisible = false;
         }
+
 
     }
 }

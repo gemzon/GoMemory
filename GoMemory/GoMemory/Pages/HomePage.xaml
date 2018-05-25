@@ -16,7 +16,7 @@
                 Source="{helpers:ImageResource GoMemory.Images.thinking.png}" />
 
 
-            <Label Style="{StaticResource BlackTextLabel}" Text="Games" />
+            <Label Style="{StaticResource BaseLabel}" Text="Games" />
             <Button
                 Clicked="Button_OnClicked"
                 Style="{StaticResource GoldenRodButton}"
