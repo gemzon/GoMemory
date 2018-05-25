@@ -12,7 +12,26 @@
     </ContentPage.Padding>
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout x:Name="Failed">
+            <!--  Sequence Layout  -->
+            <StackLayout x:Name="StackLayout" IsVisible="True">
+                <StackLayout x:Name="StartStackLayout" Orientation="Horizontal">
+                    <Label x:Name="LevelLabel" Style="{StaticResource LargeBlueTextLabel}" />
+                    <Button
+                        x:Name="StartButton"
+                        Clicked="StartButton_OnClicked"
+                        Style="{StaticResource GreenButton}"
+                        Text="Go !" />
+                </StackLayout>
+                <Label Style="{StaticResource LargeDarkBlueTextLabel}" Text="Your Sequence" />
+                <FlexLayout
+                    x:Name="FlexLayout"
+                    Margin="10"
+                    JustifyContent="Start"
+                    Wrap="Wrap" />
+            </StackLayout>
+
+
+            <StackLayout x:Name="Failed" IsVisible="False">
 
                 <Image Source="{helpers:ImageResource GoMemory.Images.gameover.png}" />
 
@@ -21,7 +40,23 @@
                     Style="{StaticResource GreenButton}"
                     Text="Retry" />
             </StackLayout>
-            <Image x:Name="Complete" Source="{helpers:ImageResource GoMemory.Images.complete.png}" />
+            <Image
+                x:Name="Complete"
+                IsVisible="False"
+                Source="{helpers:ImageResource GoMemory.Images.complete.png}" />
+
+            <!--  Selection Layout  -->
+            <StackLayout x:Name="PlayLayout" IsVisible="False">
+                <Label Style="{StaticResource LargeBlueTextLabel}" Text="Your Guesses" />
+                <Frame x:Name="Frame" BorderColor="Black">
+                    <StackLayout
+                        x:Name="SelectedImageStackLayout"
+                        Margin="0"
+                        Padding="2"
+                        Orientation="Horizontal" />
+                </Frame>
+                <Grid x:Name="Grid" />
+            </StackLayout>
 
         </StackLayout>
     </ContentPage.Content>
