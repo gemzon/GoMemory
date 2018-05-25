@@ -12,7 +12,7 @@ namespace GoMemory.Helpers
     public class ImageHelper
     {
         private readonly Image[] _images;
-    
+     
         public ImageHelper()
         {
 
@@ -32,7 +32,6 @@ namespace GoMemory.Helpers
                     break;
             }
 
-         
 
             _images = new[]
             {

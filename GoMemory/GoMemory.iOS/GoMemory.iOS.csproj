@@ -198,7 +198,7 @@
     <ImageAsset Include="Assets.xcassets\frog.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\frog.imageset\gameover.png">
+    <ImageAsset Include="Assets.xcassets\frog.imageset\frog.png">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\hammer.imageset\Contents.json">

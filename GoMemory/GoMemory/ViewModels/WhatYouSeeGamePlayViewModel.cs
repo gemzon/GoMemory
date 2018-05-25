@@ -198,9 +198,9 @@ namespace GoMemory.ViewModels
       /// </summary>
       /// <param name="grid"></param>
       /// <returns></returns>
-        public Grid ReShuffle(Grid grid)
+        public Grid SetGuessGrid(Grid grid)
         {
-            UnorderedGameValues.AllImages = ImageHelper.ShuffleCollection(UnorderedGameValues.AllImages);
+         
             grid = SetOpacity(grid);
             grid = ToggleImageClickable(grid, true);
             grid = AddGridImages(grid);

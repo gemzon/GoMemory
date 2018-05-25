@@ -18,9 +18,9 @@ namespace GoMemory.Pages
     public partial class WhatYouSeeGamePlayPage : ContentPage
     {
         readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel;
-      
+
         public Grid Grid;
-      
+
 
         public WhatYouSeeGamePlayPage(Difficulty difficulty)
         {
@@ -36,10 +36,10 @@ namespace GoMemory.Pages
         /// </summary>
         private void CreatePageContent()
         {
-            StackLayout.IsVisible= true;
+            StackLayout.IsVisible = true;
             Failed.IsVisible = false;
-            LevelLabel.Text =  _whatYouSeeGamePlayViewModel.SetLevelText();
-            
+            LevelLabel.Text = _whatYouSeeGamePlayViewModel.SetLevelText();
+
             NewGrid();
             Grid = _whatYouSeeGamePlayViewModel.AddGridImages(Grid);
             Grid.MinimumWidthRequest = Application.Current.MainPage.Width * 0.5;
@@ -49,8 +49,8 @@ namespace GoMemory.Pages
 
         }
 
-      
-      
+
+
 
         /// <summary>
         /// Create image grid 
@@ -60,9 +60,9 @@ namespace GoMemory.Pages
             Grid = _whatYouSeeGamePlayViewModel.CreateNewGrid(Grid);
         }
 
-      /// <summary>
-      /// Add Tap gesture for the Grid Images
-      /// </summary>
+        /// <summary>
+        /// Add Tap gesture for the Grid Images
+        /// </summary>
         public void AddTapGestures()
         {
             foreach (var view in Grid.Children)
@@ -72,7 +72,7 @@ namespace GoMemory.Pages
                 tapGestureRecognizer.Tapped += OnTapped;
                 image.GestureRecognizers.Add(tapGestureRecognizer);
             }
-           
+
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace GoMemory.Pages
         {
             Button s = sender as Button;
             s.IsEnabled = false;
-       //     Grid =   _whatYouSeeGamePlayViewModel.ReShuffle(Grid);
+              Grid =   _whatYouSeeGamePlayViewModel.SetGuessGrid(Grid);
             AddTapGestures();
         }
 
@@ -94,7 +94,7 @@ namespace GoMemory.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="ev"></param>
-        private void OnTapped(object sender,EventArgs ev)
+        private void OnTapped(object sender, EventArgs ev)
         {
             if (IsBusy)
             {
@@ -150,20 +150,20 @@ namespace GoMemory.Pages
             if (next)
             {
                 StartButton.IsEnabled = true;
-                Grid = _whatYouSeeGamePlayViewModel.ToggleImageClickable(Grid,false);
-                LevelLabel.Text =  _whatYouSeeGamePlayViewModel.SetLevelText();
-                 Grid =  _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
+                Grid = _whatYouSeeGamePlayViewModel.ToggleImageClickable(Grid, false);
+                LevelLabel.Text = _whatYouSeeGamePlayViewModel.SetLevelText();
+                Grid = _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
             }
             else
             {
                 StackLayout.IsVisible = false;
                 Failed.IsVisible = false;
                 Complete.IsVisible = true;
-             
+
             }
-           
+
         }
-        
+
 
         /// <summary>
         /// Sets Game play to retry the current level

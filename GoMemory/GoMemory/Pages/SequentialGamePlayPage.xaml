@@ -16,8 +16,10 @@
 
                 <Image Source="{helpers:ImageResource GoMemory.Images.gameover.png}" />
 
-                <Button Clicked="RetryButton_Clicked" Text="Retry" 
-                       Style= "{StaticResource GreenButton}"/>
+                <Button
+                    Clicked="RetryButton_Clicked"
+                    Style="{StaticResource GreenButton}"
+                    Text="Retry" />
             </StackLayout>
             <Image x:Name="Complete" Source="{helpers:ImageResource GoMemory.Images.complete.png}" />
 
