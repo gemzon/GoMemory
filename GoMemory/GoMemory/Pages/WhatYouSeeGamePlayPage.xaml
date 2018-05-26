@@ -22,6 +22,12 @@
                         Style="{StaticResource GreenButton}"
                         Text="Go !" />
                 </StackLayout>
+                <FlexLayout
+                    x:Name="FlexLayout"
+                    Margin="10"
+                    IsVisible="True"
+                    JustifyContent="Start"
+                    Wrap="Wrap" />
             </StackLayout>
             <StackLayout x:Name="Failed" IsVisible="False">
 

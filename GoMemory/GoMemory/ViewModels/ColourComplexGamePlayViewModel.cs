@@ -68,7 +68,7 @@ namespace GoMemory.ViewModels
         public void InitilizeRound()
         {
             ComplexColourGame.MatchsNeeded += 1;
-            SetComplexColourPlayArray();
+            GenreateRoundToMatchComplexColours();
             ComplexColourGame.SequenceColours = new ComplexColour[ComplexColourGame.MatchsNeeded];
         }
 
@@ -77,7 +77,7 @@ namespace GoMemory.ViewModels
         ///  set the color and text that will be need for the 
         /// round
         /// </summary>
-        private void SetComplexColourPlayArray()
+        private void GenreateRoundToMatchComplexColours()
         {
             Random rnd = new Random();
             ComplexColourGame.SequenceColours = new ComplexColour[ComplexColourGame.MatchsNeeded];

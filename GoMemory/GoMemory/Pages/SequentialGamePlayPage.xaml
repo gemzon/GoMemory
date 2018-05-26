@@ -23,6 +23,7 @@
                         Text="Go !" />
                 </StackLayout>
                 <Label Style="{StaticResource LargeDarkBlueTextLabel}" Text="Your Sequence" />
+
                 <FlexLayout
                     x:Name="FlexLayout"
                     Margin="10"

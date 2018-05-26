@@ -110,19 +110,6 @@ namespace GoMemory.ViewModels
         }
 
 
-        /// <summary>
-        /// Toggles opacity of all the  images in the grid
-        /// </summary>
-        /// <param name="grid"></param>
-        /// <returns></returns>
-        public Grid SetOpacity(Grid grid)
-        {
-            foreach (var image in grid.Children)
-            {
-                image.Opacity = 1;
-            }
-            return grid;
-        }
 
 
         /// <summary>
@@ -170,16 +157,7 @@ namespace GoMemory.ViewModels
            
         }
 
-        /// <summary>
-        /// Toggle the click event of image of the Grid
-        /// </summary>
-        /// <param name="grid"></param>
-        /// <param name="enabled"></param>
-        /// <returns></returns>
-        public Grid ToggleImageClickable(Grid grid,bool enabled)
-        {
-            return GridHelper.ToggleImageIsEnabled(grid, enabled);
-        }
+     
 
         /// <summary>
         /// Insert images into the Grid
@@ -193,19 +171,7 @@ namespace GoMemory.ViewModels
 
     
 
-      /// <summary>
-      /// reshuffles the grid images on start 
-      /// </summary>
-      /// <param name="grid"></param>
-      /// <returns></returns>
-        public Grid SetGuessGrid(Grid grid)
-        {
-         
-            grid = SetOpacity(grid);
-            grid = ToggleImageClickable(grid, true);
-            grid = AddGridImages(grid);
-            return grid;
-        }
+     
 
 
 
@@ -237,6 +203,24 @@ namespace GoMemory.ViewModels
             UnorderedGame.Level -= 1;
             UnorderedGame.MatchsNeeded -= 1;
 
+        }
+
+        public FlexLayout CreateSequenceFlexLayout(FlexLayout flexLayout)
+        {
+            flexLayout.Children.Clear();
+            for (int i = 0; i < UnorderedGame.ToMatchImages.Count; i++)
+            {
+                Image img = new Image
+                {
+                    Source = UnorderedGame.ToMatchImages[i].Source,
+
+                    Margin = new Thickness(2)
+                };
+
+                flexLayout.Children.Add(img);
+            }
+
+            return flexLayout;
         }
     }
     }

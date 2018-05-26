@@ -28,7 +28,7 @@ namespace GoMemory.Pages
             Title = "What you see";
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty);
             CreatePageContent();
-            Grid = _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
+       
         }
 
         /// <summary>
@@ -40,16 +40,20 @@ namespace GoMemory.Pages
             Failed.IsVisible = false;
             LevelLabel.Text = _whatYouSeeGamePlayViewModel.SetLevelText();
 
+            AddImagesToselectFlexLayout();
             NewGrid();
             Grid = _whatYouSeeGamePlayViewModel.AddGridImages(Grid);
             Grid.MinimumWidthRequest = Application.Current.MainPage.Width * 0.5;
             Grid.MinimumWidthRequest = Application.Current.MainPage.Height * 0.6;
-
+            Grid.IsVisible = false;
             StackLayout.Children.Add(Grid);
 
         }
 
-
+        private void AddImagesToselectFlexLayout()
+        {
+            FlexLayout = _whatYouSeeGamePlayViewModel.CreateSequenceFlexLayout(FlexLayout);
+        } 
 
 
         /// <summary>
@@ -83,9 +87,12 @@ namespace GoMemory.Pages
         /// <param name="eventArgs"></param>
         private void StartButton_OnClicked(object sender, EventArgs eventArgs)
         {
+
             Button s = sender as Button;
             s.IsEnabled = false;
-              Grid =   _whatYouSeeGamePlayViewModel.SetGuessGrid(Grid);
+            FlexLayout.IsVisible = false;
+            Grid.IsVisible = true;
+              Grid =   _whatYouSeeGamePlayViewModel.AddGridImages(Grid);
             AddTapGestures();
         }
 
@@ -150,9 +157,12 @@ namespace GoMemory.Pages
             if (next)
             {
                 StartButton.IsEnabled = true;
-                Grid = _whatYouSeeGamePlayViewModel.ToggleImageClickable(Grid, false);
+             //  Grid = _whatYouSeeGamePlayViewModel.ToggleImageClickable(Grid, false);
                 LevelLabel.Text = _whatYouSeeGamePlayViewModel.SetLevelText();
-                Grid = _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
+              Grid = _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
+                AddImagesToselectFlexLayout();
+                FlexLayout.IsVisible = true;
+                Grid.IsVisible = false;
             }
             else
             {
