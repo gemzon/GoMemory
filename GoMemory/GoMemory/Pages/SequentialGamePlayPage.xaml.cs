@@ -26,6 +26,7 @@ namespace GoMemory.Pages
             
             NextRound();
             GuessLayout();
+          
         }
 
         public void NextRound()
@@ -38,7 +39,7 @@ namespace GoMemory.Pages
                 StackLayout.IsVisible = true;
                 PlayLayout.IsVisible = false;
                 Failed.IsVisible = false;
-                FlexLayout = _sequentialGamePlayViewModel.CreateSequenceFlexLayout(FlexLayout);
+                SequenceStackLayout = _sequentialGamePlayViewModel.PopulateSequenceStackLayout(SequenceStackLayout);
                 LevelLabel.Text = _sequentialGamePlayViewModel.SetLevelText();
                 Content = StackLayout;
             }
@@ -57,7 +58,8 @@ namespace GoMemory.Pages
 
         private void StartButton_OnClicked(object sender, EventArgs e)
         {
-            FlexLayout.Children.Clear();
+       
+            SequenceStackLayout.Children.Clear();
             SelectedImageStackLayout.Children.Clear();
             StackLayout.IsVisible = false;
             PlayLayout.IsVisible = true;
@@ -69,8 +71,6 @@ namespace GoMemory.Pages
         private void GuessLayout()
         {
             Grid = _sequentialGamePlayViewModel.CreateNewGrid(Grid);
-
-
             WidthRequest = Application.Current.MainPage.Width - 10;
             HeightRequest = Application.Current.MainPage.Height * 0.6;
             Frame.WidthRequest = Application.Current.MainPage.Width * 0.7;
@@ -128,7 +128,7 @@ namespace GoMemory.Pages
                 else
                 {
                     Failed.IsVisible = true;
-                    FlexLayout.Children.Clear();
+                    SequenceStackLayout.Children.Clear();
                     Content = Failed;
 
                 }
@@ -157,6 +157,7 @@ namespace GoMemory.Pages
         private void RetryButton_Clicked(object sender, EventArgs e)
         {
             _sequentialGamePlayViewModel.Retry();
+         
             StackLayout.IsVisible = true;
             Failed.IsVisible = false;
             PlayLayout.IsVisible = false;

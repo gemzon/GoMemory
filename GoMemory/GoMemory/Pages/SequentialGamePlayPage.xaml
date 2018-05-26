@@ -23,12 +23,12 @@
                         Text="Go !" />
                 </StackLayout>
                 <Label Style="{StaticResource LargeDarkBlueTextLabel}" Text="Your Sequence" />
+                <ScrollView x:Name="SequenceScrollView">
 
-                <FlexLayout
-                    x:Name="FlexLayout"
-                    Margin="10"
-                    JustifyContent="Start"
-                    Wrap="Wrap" />
+                    <StackLayout x:Name="SequenceStackLayout" />
+
+                </ScrollView>
+
             </StackLayout>
 
 

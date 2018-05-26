@@ -37,7 +37,7 @@ namespace GoMemory.ViewModels
            switch (difficulty)
             {
                 case Difficulty.Easy:
-                    DifficultySetting = new DifficultySetting(4,4,16,2);
+                    DifficultySetting = new DifficultySetting(4,4,16,15);
                     break;
                 case Difficulty.Hard:
                     DifficultySetting = new DifficultySetting(6, 6, 36, 32);

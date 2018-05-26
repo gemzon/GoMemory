@@ -58,25 +58,24 @@ namespace GoMemory.ViewModels
             };
         }
 
-
-      
-        public FlexLayout CreateSequenceFlexLayout(FlexLayout flexLayout)
+        public StackLayout PopulateSequenceStackLayout(StackLayout layout)
         {
-            
             for (int i = 0; i < OrderedGame.ToMatchImages.Length; i++)
             {
                 Image img = new Image
                 {
                     Source = OrderedGame.ToMatchImages[i].Source,
-                   
+
                     Margin = new Thickness(2)
                 };
 
-                flexLayout.Children.Add(img);
+                layout.Children.Add(img);
             }
 
-            return flexLayout;
+            return layout;
         }
+      
+    
 
         public Grid CreateNewGrid(Grid grid)
         {
