@@ -32,7 +32,7 @@
                 <Setter Property="BackgroundColor" Value="Goldenrod" />
                 <Setter Property="CornerRadius" Value="3" />
                 <Setter Property="TextColor" Value="White" />
-                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontSize" Value="Medium" />
                 <Setter Property="Margin" Value="5" />
             </Style>
 
@@ -47,7 +47,7 @@
                 x:Key="GoldenRodSmallButton"
                 BasedOn="{StaticResource BaseButton}"
                 TargetType="Button">
-                <Setter Property="FontSize" Value="Medium" />
+
                 <Setter Property="Margin" Value="2" />
                 <Setter Property="WidthRequest" Value="100" />
             </Style>
@@ -57,13 +57,13 @@
                 BasedOn="{StaticResource BaseButton}"
                 TargetType="Button">
                 <Setter Property="BackgroundColor" Value="Green" />
-                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="WidthRequest" Value="100" />
             </Style>
 
 
             <!--  Labels  -->
             <Style x:Key="BaseLabel" TargetType="Label">
-                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontSize" Value="Medium" />
                 <Setter Property="TextColor" Value="Black" />
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="VerticalOptions" Value="Center" />
@@ -77,7 +77,7 @@
                 BasedOn="{StaticResource BaseLabel}"
                 TargetType="Label">
                 <Setter Property="TextColor" Value="MidnightBlue" />
-                <Setter Property="Margin" Value="0,0,15,0" />
+                <Setter Property="Margin" Value="0,0,5,0" />
             </Style>
 
             <Style
@@ -85,7 +85,7 @@
                 BasedOn="{StaticResource BaseLabel}"
                 TargetType="Label">
                 <Setter Property="TextColor" Value="DarkSlateBlue" />
-                <Setter Property="Margin" Value="0,0,15,0" />
+                <Setter Property="Margin" Value="0,0,5,0" />
             </Style>
 
 

@@ -16,19 +16,21 @@ namespace GoMemory.Pages
     {
         private readonly SequentialGamePlayViewModel _sequentialGamePlayViewModel;
 
-
         public SequentialGamePlayPage(Difficulty difficulty)
         {
-            InitializeComponent(); Title = "Sequential";
+            InitializeComponent();
+            Title =  "Sequential";
             _sequentialGamePlayViewModel = new SequentialGamePlayViewModel(difficulty);
-
-            Content = StackLayout;
-            
+       
             NextRound();
-            GuessLayout();
-          
+           
+           GuessLayout();
         }
 
+        /// <summary>
+        /// intiate the visibility of elemetns and 
+        /// changes the page content
+        /// </summary>
         public void NextRound()
         {
             bool next;
@@ -51,11 +53,20 @@ namespace GoMemory.Pages
 
         }
 
+        /// <summary>
+        /// Make visible to difficuly completeImage
+        /// </summary>
         private void DifficultyCompleted()
         {
             Complete.IsVisible = true;
         }
 
+        /// <summary>
+        /// Trigger the trigger the visiblity of view and chgange to 
+        /// pages content assignmnet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartButton_OnClicked(object sender, EventArgs e)
         {
        
@@ -68,6 +79,9 @@ namespace GoMemory.Pages
 
         }
 
+        /// <summary>
+        /// Createt the Grid for making guesses
+        /// </summary>
         private void GuessLayout()
         {
             Grid = _sequentialGamePlayViewModel.CreateNewGrid(Grid);
@@ -82,6 +96,7 @@ namespace GoMemory.Pages
             AddTapGestures();
 
         }
+   
         /// <summary>
         /// Add Tap gesture for the Grid Images
         /// </summary>
@@ -153,7 +168,11 @@ namespace GoMemory.Pages
         }
 
 
-
+        /// <summary>
+        /// Reinitialize the game round after a bad choice made
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RetryButton_Clicked(object sender, EventArgs e)
         {
             _sequentialGamePlayViewModel.Retry();

@@ -58,6 +58,11 @@ namespace GoMemory.ViewModels
             };
         }
 
+        /// <summary>
+        /// Adds images for the round to the sequence layout
+        /// </summary>
+        /// <param name="layout"></param>
+        /// <returns></returns>
         public StackLayout PopulateSequenceStackLayout(StackLayout layout)
         {
             for (int i = 0; i < OrderedGame.ToMatchImages.Length; i++)
@@ -76,7 +81,11 @@ namespace GoMemory.ViewModels
         }
       
     
-
+        /// <summary>
+        /// Create a grid containing the image used at this levle of difficulty
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <returns></returns>
         public Grid CreateNewGrid(Grid grid)
         {
             grid = GridHelper.CreateGrid(DifficultySetting.GridRowSize, DifficultySetting.GridColumnSize);

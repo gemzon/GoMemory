@@ -24,8 +24,8 @@ namespace GoMemory.Pages
 
         public WhatYouSeeGamePlayPage(Difficulty difficulty)
         {
+            Title =  "What you see";
             InitializeComponent();
-            Title = "What you see";
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty);
             CreatePageContent();
        
@@ -36,33 +36,37 @@ namespace GoMemory.Pages
         /// </summary>
         private void CreatePageContent()
         {
-            StackLayout.IsVisible = true;
+            
             Failed.IsVisible = false;
             LevelLabel.Text = _whatYouSeeGamePlayViewModel.SetLevelText();
 
+            FlexFrame.MinimumHeightRequest = Application.Current.MainPage.Height * 0.6;
+
+
             AddImagesToselectFlexLayout();
-            NewGrid();
-            Grid = _whatYouSeeGamePlayViewModel.AddGridImages(Grid);
+            
+            Grid = _whatYouSeeGamePlayViewModel.CreateNewGrid(Grid);
             Grid.MinimumWidthRequest = Application.Current.MainPage.Width * 0.5;
             Grid.MinimumWidthRequest = Application.Current.MainPage.Height * 0.6;
             Grid.IsVisible = false;
+
+          
             StackLayout.Children.Add(Grid);
+            AddTapGestures();
 
         }
 
+        /// <summary>
+        /// add Images to remember to a flex layout
+        /// </summary>
         private void AddImagesToselectFlexLayout()
         {
             FlexLayout = _whatYouSeeGamePlayViewModel.CreateSequenceFlexLayout(FlexLayout);
         } 
 
 
-        /// <summary>
-        /// Create image grid 
-        /// </summary>
-        private void NewGrid()
-        {
-            Grid = _whatYouSeeGamePlayViewModel.CreateNewGrid(Grid);
-        }
+       
+           
 
         /// <summary>
         /// Add Tap gesture for the Grid Images
@@ -87,13 +91,8 @@ namespace GoMemory.Pages
         /// <param name="eventArgs"></param>
         private void StartButton_OnClicked(object sender, EventArgs eventArgs)
         {
-
-            Button s = sender as Button;
-            s.IsEnabled = false;
-            FlexLayout.IsVisible = false;
-            Grid.IsVisible = true;
-              Grid =   _whatYouSeeGamePlayViewModel.AddGridImages(Grid);
-            AddTapGestures();
+            ToggleVisibilities();
+           
         }
 
         /// <summary>
@@ -156,24 +155,31 @@ namespace GoMemory.Pages
             next = _whatYouSeeGamePlayViewModel.NextRound();
             if (next)
             {
-                StartButton.IsEnabled = true;
-             //  Grid = _whatYouSeeGamePlayViewModel.ToggleImageClickable(Grid, false);
                 LevelLabel.Text = _whatYouSeeGamePlayViewModel.SetLevelText();
-              Grid = _whatYouSeeGamePlayViewModel.SetMemoriseGrid(Grid);
                 AddImagesToselectFlexLayout();
-                FlexLayout.IsVisible = true;
-                Grid.IsVisible = false;
+                foreach (var image in Grid.Children)
+                {
+                    image.Opacity = 1;
+                    image.IsEnabled = true;
+                }
+               
+                ToggleVisibilities();
             }
             else
             {
                 StackLayout.IsVisible = false;
                 Failed.IsVisible = false;
                 Complete.IsVisible = true;
-
             }
 
         }
 
+        private void ToggleVisibilities()
+        {
+            StartButton.IsVisible = !StartButton.IsVisible ;
+            FlexFrame.IsVisible = !FlexFrame.IsVisible;
+            Grid.IsVisible = !Grid.IsVisible;
+        }
 
         /// <summary>
         /// Sets Game play to retry the current level
@@ -184,6 +190,7 @@ namespace GoMemory.Pages
         {
             _whatYouSeeGamePlayViewModel.Retry();
             NextRound();
+           
             StackLayout.IsVisible = true;
             Failed.IsVisible = false;
         }

@@ -37,13 +37,13 @@ namespace GoMemory.ViewModels
            switch (difficulty)
             {
                 case Difficulty.Easy:
-                    DifficultySetting = new DifficultySetting(4,4,16,15);
+                    DifficultySetting = new DifficultySetting(4,4,16,10);
                     break;
                 case Difficulty.Hard:
-                    DifficultySetting = new DifficultySetting(6, 6, 36, 32);
+                    DifficultySetting = new DifficultySetting(6, 6, 36, 30);
                     break;
                 default:
-                    DifficultySetting = new DifficultySetting(5, 5, 25, 22);
+                    DifficultySetting = new DifficultySetting(5, 5, 25, 20);
                     break;
             }
         }
@@ -85,32 +85,7 @@ namespace GoMemory.ViewModels
             UnorderedGame.ToMatchImages = ImageHelper.ToMatchImagesList(UnorderedGame.MatchsNeeded,UnorderedGame.AllImages);
             UnorderedGame.SelectedImages = new List<Image>();
         }
-
-       /// <summary>
-       /// Set up the to memoriseGrid
-       /// </summary>
-       /// <param name="grid"></param>
-       /// <returns></returns>
-        public Grid SetMemoriseGrid(Grid grid)
-        {
-            foreach (var image  in grid.Children)
-            {
-                image.Opacity = 0.1;
-                Image temp = image as Image;
-                
-                foreach (var matchImage in UnorderedGame.ToMatchImages)
-                {
-                    if (temp.Source == matchImage.Source)
-                    {
-                       temp.Opacity = 1;
-                    }
-                }
-            }
-            return grid;
-        }
-
-
-
+ 
 
         /// <summary>
         /// Create a new GameGrid
@@ -119,6 +94,7 @@ namespace GoMemory.ViewModels
         public Grid CreateNewGrid(Grid grid)
         {
             grid = GridHelper.CreateGrid(DifficultySetting.GridRowSize, DifficultySetting.GridColumnSize);
+            grid = GridHelper.InsertGridImages(grid,UnorderedGame.AllImages,DifficultySetting);
             return grid;
         }
 
@@ -159,22 +135,9 @@ namespace GoMemory.ViewModels
 
      
 
-        /// <summary>
-        /// Insert images into the Grid
-        /// </summary>
-        /// <param name="grid"></param>
-        /// <returns></returns>
-        public Grid AddGridImages(Grid grid)
-        {
-            return GridHelper.InsertGridImages(grid,UnorderedGame.AllImages,DifficultySetting);
-        }
+       
 
     
-
-     
-
-
-
         /// <summary>
         /// Check to see if the number of correct selection is
         /// equal to the total number of correct guesses needed

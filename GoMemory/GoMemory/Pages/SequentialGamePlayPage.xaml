@@ -3,11 +3,12 @@
     x:Class="GoMemory.Pages.SequentialGamePlayPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:helpers="clr-namespace:GoMemory.Helpers;assembly=GoMemory">
+    xmlns:helpers="clr-namespace:GoMemory.Helpers;assembly=GoMemory"
+    Title="{Binding Title}">
     <ContentPage.Padding>
         <OnPlatform x:TypeArguments="Thickness">
-            <On Platform="Android, UWP">0</On>
-            <On Platform="iOS">0,20,0,0</On>
+            <On Platform="Android, UWP">0,10,0,0</On>
+            <On Platform="iOS">0,30,0,0</On>
         </OnPlatform>
     </ContentPage.Padding>
     <ContentPage.Content>

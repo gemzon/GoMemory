@@ -14,12 +14,6 @@ namespace GoMemory.Interfaces
         void InitilizeRound();
         void SetDifficultySettings(Difficulty difficulty);
 
-        void GetDifficultyImages();
-
-        Grid CreateNewGrid(Grid grid);
-
-        Grid AddGridImages(Grid grid);
-
         string SetLevelText();
 
         void Retry();

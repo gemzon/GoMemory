@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using GoMemory.Enums;
+using GoMemory.Interfaces;
 using GoMemory.Models;
 using Xamarin.Forms;
 
 namespace GoMemory.ViewModels
 {
-    class ColourComplexGamePlayViewModel
+    class ColourComplexGamePlayViewModel : BaseViewModel, IGame
     {
 
         public DifficultySetting DifficultySetting { get; private set; }
@@ -42,6 +43,16 @@ namespace GoMemory.ViewModels
                     DifficultySetting = new DifficultySetting(3, 3, 9, 32);
                     break;
             }
+        }
+
+        public string SetLevelText()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Retry()
+        {
+            throw new NotImplementedException();
         }
 
 

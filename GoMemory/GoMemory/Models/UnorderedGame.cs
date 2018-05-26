@@ -14,6 +14,6 @@ namespace GoMemory.Models
         public List<Image> SelectedImages { get; set; }
 
         public int Level { get; set; } 
-        public int MatchsNeeded { get; set; } = 1;
+        public int MatchsNeeded { get; set; } = 2;
     }
 }
