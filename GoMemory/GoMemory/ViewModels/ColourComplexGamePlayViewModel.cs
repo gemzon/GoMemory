@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using GoMemory.Enums;
+using GoMemory.Helpers;
 using GoMemory.Interfaces;
 using GoMemory.Models;
 using Xamarin.Forms;
@@ -18,12 +19,10 @@ namespace GoMemory.ViewModels
         {
             SetDifficultySettings(difficulty);
             ComplexColourGame = new ComplexColourGame(DifficultySetting.MaxSelectable);
-            NextRound();
+           
         }
 
-
-
-
+        
         /// <summary>
         /// Setup game difficulty settings
         /// </summary>
@@ -37,22 +36,31 @@ namespace GoMemory.ViewModels
                     DifficultySetting = new DifficultySetting(1, 3, 3, 10);
                     break;
                 case Difficulty.Hard:
-                    DifficultySetting = new DifficultySetting(2, 3, 6, 20);
+                    DifficultySetting = new DifficultySetting(3, 3, 9, 32);
                     break;
                 default:
-                    DifficultySetting = new DifficultySetting(3, 3, 9, 32);
+                    DifficultySetting = new DifficultySetting(2, 3, 6, 20);
                     break;
             }
         }
 
+
+        /// <summary>
+        /// Retur na string to set the level
+        /// </summary>
+        /// <returns></returns>
         public string SetLevelText()
         {
-            throw new NotImplementedException();
+            return "Level : " + ComplexColourGame.Level;
         }
 
+        /// <summary>
+        /// set values ready to generate the next round values
+        /// </summary>
         public void Retry()
         {
-            throw new NotImplementedException();
+            ComplexColourGame.Level -= 1;
+            ComplexColourGame.MatchsNeeded -= 1;
         }
 
 
@@ -79,27 +87,123 @@ namespace GoMemory.ViewModels
         public void InitilizeRound()
         {
             ComplexColourGame.MatchsNeeded += 1;
-            GenreateRoundToMatchComplexColours();
             ComplexColourGame.SequenceColours = new ComplexColour[ComplexColourGame.MatchsNeeded];
+            GenreateRoundToMatchComplexColours();
+            SetMode();
         }
+        
 
-      
+        /// <summary>
+        /// Populate the stack layout with the sequence of Complexcolors
+        /// </summary>
+        /// <param name="stackLayout"></param>
+        /// <returns></returns>
+        public StackLayout PopulateSequencStackLayout(StackLayout stackLayout)
+        {
+            for (int i = 0; i < ComplexColourGame.SequenceColours.Length; i++)
+            {
+               
+                Label label = new Label
+                {
+                    Text = ComplexColourGame.SequenceColours[i].SpeltColour,
+                    TextColor = ComplexColourGame.SequenceColours[i].TextColour,
+                   
+                    
+                    FontSize = 25,
+                    FontAttributes = FontAttributes.Bold,
+                    Margin = new Thickness(0,2,0,0)
+                };
+
+                stackLayout.Children.Add(label);
+            }
+
+            return stackLayout;
+        }
+        
         /// <summary>
         ///  set the color and text that will be need for the 
         /// round
         /// </summary>
-        private void GenreateRoundToMatchComplexColours()
+        public void GenreateRoundToMatchComplexColours()
         {
             Random rnd = new Random();
-            ComplexColourGame.SequenceColours = new ComplexColour[ComplexColourGame.MatchsNeeded];
-
-            for (int i = 0; i < ComplexColourGame.MatchsNeeded; i++)
+      
+            for (int i = 0; i < ComplexColourGame.SequenceColours.Length; i++)
             {
                 int colourRndIndex = rnd.Next(0, ComplexColourGame.PlayColours.Length);
                 int textRndIndex = rnd.Next(0, ComplexColourGame.PlayColours.Length);
-                ComplexColourGame.SequenceColours[i].BackgroundColour = ComplexColourGame.PlayColours[colourRndIndex];
-                ComplexColourGame.SequenceColours[i].TextColour = ComplexColourGame.PlayColours[textRndIndex];
+                ComplexColour complexColour = new ComplexColour
+                {
+                    SpeltColour = ComplexColourGame.PlayWordColours[colourRndIndex],
+                    TextColour = ComplexColourGame.PlayColours[textRndIndex],
+                };
+                ComplexColourGame.SequenceColours[i] = complexColour;
+
             }
         }
+
+
+        /// <summary>
+        /// randomly set the round mode
+        /// </summary>
+        public void SetMode()
+        {
+            Random rnd = new Random();
+            int num = rnd.Next(1, 2);
+
+            ComplexColourGame.Mode = num == 1 ? Mode.Color : Mode.Text;
+          
+        }
+
+
+        /// <summary>
+        /// Create the grid for the Guessing buttons
+        /// </summary>
+        /// <returns></returns>
+        public Grid GenerateGrid()
+        {
+            Grid grid =  GridHelper.CreateGrid(DifficultySetting.GridRowSize, DifficultySetting.GridColumnSize);
+            grid = AddSelectionButtonsToGrid(grid);
+
+            return grid;
+        }
+
+
+        /// <summary>
+        /// add the guess buttons to the grid
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <returns></returns>
+        private Grid AddSelectionButtonsToGrid(Grid grid)
+        {
+            int index = 0;
+            for (int row = 0; row < DifficultySetting.GridRowSize; row++)
+            {
+                for (int column = 0; column < DifficultySetting.GridColumnSize; column++)
+                {
+                    Button button = new Button
+                    {
+                        Text = ComplexColourGame.PlayWordColours[index],
+                        TextColor =  System.Drawing.Color.FromName(ComplexColourGame.PlayWordColours[index]),
+                        BorderColor = Color.Black,
+                        BackgroundColor = Color.White,
+                        Margin = 5,
+                        FontAttributes = FontAttributes.Bold
+                        
+                    };
+
+                    grid.Children.Add(button, row, column);
+                    
+                    index += 1;
+
+                }
+            }
+
+            return grid;
+        }
+      
+      
+
+
     }
 }

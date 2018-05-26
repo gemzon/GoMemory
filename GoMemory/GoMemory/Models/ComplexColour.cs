@@ -8,6 +8,6 @@ namespace GoMemory.Models
     public class ComplexColour
     {
         public Color TextColour{ get; set; }
-        public Color BackgroundColour { get; set; }    
+        public string SpeltColour { get; set; }    
     }
 }

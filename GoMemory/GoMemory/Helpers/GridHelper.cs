@@ -38,22 +38,7 @@ namespace GoMemory.Helpers
             return Grid;
         }
 
-        /// <summary>
-        /// Toggle the click event of image of the Grid
-        /// </summary>
-        /// <param name="grid"></param>
-        /// <param name="enabled"></param>
-        /// <returns></returns>
-        public static Grid ToggleImageIsEnabled(Grid grid, bool enabled)
-        {
-            foreach (var child in grid.Children)
-            {
-                child.IsEnabled = enabled;
-            }
-            return grid;
-        }
-
-
+     
         /// <summary>
         /// Insert images into the Grid
         /// </summary>
