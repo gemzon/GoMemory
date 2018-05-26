@@ -17,6 +17,7 @@ namespace GoMemory.ViewModels
         {
             SetDifficultySettings(difficulty);
             ComplexColourGame = new ComplexColourGame(DifficultySetting.MaxSelectable);
+            NextRound();
         }
 
 
@@ -68,6 +69,7 @@ namespace GoMemory.ViewModels
         {
             ComplexColourGame.MatchsNeeded += 1;
             SetComplexColourPlayArray();
+            ComplexColourGame.SequenceColours = new ComplexColour[ComplexColourGame.MatchsNeeded];
         }
 
       
@@ -78,15 +80,15 @@ namespace GoMemory.ViewModels
         private void SetComplexColourPlayArray()
         {
             Random rnd = new Random();
-          
-            int count = 0;
-            while (count != DifficultySetting.MaxSelectable)
+            ComplexColourGame.SequenceColours = new ComplexColour[ComplexColourGame.MatchsNeeded];
+
+            for (int i = 0; i < ComplexColourGame.MatchsNeeded; i++)
             {
-                
-
-              
+                int colourRndIndex = rnd.Next(0, ComplexColourGame.PlayColours.Length);
+                int textRndIndex = rnd.Next(0, ComplexColourGame.PlayColours.Length);
+                ComplexColourGame.SequenceColours[i].BackgroundColour = ComplexColourGame.PlayColours[colourRndIndex];
+                ComplexColourGame.SequenceColours[i].TextColour = ComplexColourGame.PlayColours[textRndIndex];
             }
-
         }
     }
 }
