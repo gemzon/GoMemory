@@ -14,7 +14,7 @@ namespace GoMemory.ViewModels
     public class SequentialGamePlayViewModel : BaseViewModel,IGame
     {
         public DifficultySetting DifficultySetting { get; set; }
-        public OrderedGameValues OrderedGameValues { get; set; }
+        public OrderedGame OrderedGame { get; set; }
         public int GuessesMade { get; set; }
         public ImageHelper ImageHelper { get; set; }
 
@@ -53,8 +53,8 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void GetDifficultyImages()
         {
-           OrderedGameValues = new OrderedGameValues {
-               AllImages = ImageHelper.GetImages(DifficultySetting.TotalImagesNeeded)
+           OrderedGame = new OrderedGame {
+               AllImages = ImageHelper.GetImages(DifficultySetting.MaxSelectable)
             };
         }
 
@@ -63,11 +63,11 @@ namespace GoMemory.ViewModels
         public FlexLayout CreateSequenceFlexLayout(FlexLayout flexLayout)
         {
             
-            for (int i = 0; i < OrderedGameValues.ToMatchImages.Length; i++)
+            for (int i = 0; i < OrderedGame.ToMatchImages.Length; i++)
             {
                 Image img = new Image
                 {
-                    Source = OrderedGameValues.ToMatchImages[i].Source,
+                    Source = OrderedGame.ToMatchImages[i].Source,
                    
                     Margin = new Thickness(2)
                 };
@@ -89,7 +89,7 @@ namespace GoMemory.ViewModels
 
         public Grid AddGridImages(Grid grid)
         {
-       return  GridHelper.InsertGridImages(grid, OrderedGameValues.AllImages, DifficultySetting);
+       return  GridHelper.InsertGridImages(grid, OrderedGame.AllImages, DifficultySetting);
 
         }
 
@@ -100,12 +100,12 @@ namespace GoMemory.ViewModels
         /// </summary>
         public bool NextRound()
         {
-            OrderedGameValues.Level += 1;
+            OrderedGame.Level += 1;
            
-            if (OrderedGameValues.Level <= DifficultySetting.MaxLevel)
+            if (OrderedGame.Level <= DifficultySetting.MaxLevel)
             {
                 
-             OrderedGameValues.NumberOfImagesToMatch += 1;
+             OrderedGame.MatchsNeeded += 1;
                 InitilizeRound();
                 return true;
             }
@@ -118,8 +118,8 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void InitilizeRound()
         {
-            OrderedGameValues.ToMatchImages = new Image[OrderedGameValues.NumberOfImagesToMatch];
-            OrderedGameValues.SelectedImages = new Image[OrderedGameValues.NumberOfImagesToMatch];
+            OrderedGame.ToMatchImages = new Image[OrderedGame.MatchsNeeded];
+            OrderedGame.SelectedImages = new Image[OrderedGame.MatchsNeeded];
             
             GenerateToMatchSequence();
             GuessesMade = 0;
@@ -135,18 +135,18 @@ namespace GoMemory.ViewModels
         {
             
             Random rnd = new Random();
-            for (int i = 0; i < OrderedGameValues.ToMatchImages.Length; i++)
+            for (int i = 0; i < OrderedGame.ToMatchImages.Length; i++)
             {
                
-                int randomValue = rnd.Next(0, OrderedGameValues.AllImages.Length);
+                int randomValue = rnd.Next(0, OrderedGame.AllImages.Length);
                 Image img = new Image
                 {
-                    Source = OrderedGameValues.AllImages[randomValue].Source,
+                    Source = OrderedGame.AllImages[randomValue].Source,
                     Aspect = Aspect.Fill,
                     Margin = new Thickness(2)
                    
                 };
-                OrderedGameValues.ToMatchImages[i] = img;
+                OrderedGame.ToMatchImages[i] = img;
             }
         }
 
@@ -159,11 +159,11 @@ namespace GoMemory.ViewModels
         /// <param name="selectedImage"></param>
         public bool CheckSequence(Image selectedImage)
         {
-            OrderedGameValues.SelectedImages[GuessesMade] = selectedImage;
+            OrderedGame.SelectedImages[GuessesMade] = selectedImage;
 
             for (int i = 0; i < GuessesMade+1; i++)
             {
-                if (OrderedGameValues.SelectedImages[i].Source != OrderedGameValues.ToMatchImages[i].Source)
+                if (OrderedGame.SelectedImages[i].Source != OrderedGame.ToMatchImages[i].Source)
                     return false;
                 else
                     continue;
@@ -180,7 +180,7 @@ namespace GoMemory.ViewModels
             /// <returns></returns>
             public string SetLevelText()
         {
-            return "Level : " + OrderedGameValues.Level;
+            return "Level : " + OrderedGame.Level;
         }
 
         /// <summary>
@@ -188,15 +188,15 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void Retry()
         {
-           OrderedGameValues.Level -= 1;
-           OrderedGameValues.NumberOfImagesToMatch -= 1;
+           OrderedGame.Level -= 1;
+           OrderedGame.MatchsNeeded -= 1;
 
 
         }
 
         public bool CheckIsRoundComplete()
         {
-            return GuessesMade == OrderedGameValues.ToMatchImages.Length;
+            return GuessesMade == OrderedGame.ToMatchImages.Length;
         }
         
     }

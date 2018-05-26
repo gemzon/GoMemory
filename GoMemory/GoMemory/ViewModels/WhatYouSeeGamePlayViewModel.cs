@@ -15,7 +15,7 @@ namespace GoMemory.ViewModels
     {
         public DifficultySetting DifficultySetting { get; set; }
         public ImageHelper ImageHelper { get; set; }
-        public UnorderedGameValues UnorderedGameValues { get; set; }
+        public UnorderedGame UnorderedGame { get; set; }
 
 
         public WhatYouSeeGamePlayViewModel(Difficulty difficulty)
@@ -55,7 +55,7 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void GetDifficultyImages()
         {
-            UnorderedGameValues = new UnorderedGameValues {AllImages = ImageHelper.GetImages(DifficultySetting.TotalImagesNeeded)};
+            UnorderedGame = new UnorderedGame {AllImages = ImageHelper.GetImages(DifficultySetting.MaxSelectable)};
    }
 
 
@@ -65,8 +65,8 @@ namespace GoMemory.ViewModels
         /// </summary>
        public bool NextRound()
         {
-            UnorderedGameValues.Level += 1;
-            if (UnorderedGameValues.Level <= DifficultySetting.MaxLevel)
+            UnorderedGame.Level += 1;
+            if (UnorderedGame.Level <= DifficultySetting.MaxLevel)
             {
                 InitilizeRound();
                 return true;
@@ -81,9 +81,9 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void InitilizeRound()
         {
-            UnorderedGameValues.NumberOfImagesToMatch += 1;
-            UnorderedGameValues.ToMatchImages = ImageHelper.ToMatchImagesList(UnorderedGameValues.NumberOfImagesToMatch,UnorderedGameValues.AllImages);
-            UnorderedGameValues.SelectedImages = new List<Image>();
+            UnorderedGame.MatchsNeeded += 1;
+            UnorderedGame.ToMatchImages = ImageHelper.ToMatchImagesList(UnorderedGame.MatchsNeeded,UnorderedGame.AllImages);
+            UnorderedGame.SelectedImages = new List<Image>();
         }
 
        /// <summary>
@@ -98,7 +98,7 @@ namespace GoMemory.ViewModels
                 image.Opacity = 0.1;
                 Image temp = image as Image;
                 
-                foreach (var matchImage in UnorderedGameValues.ToMatchImages)
+                foreach (var matchImage in UnorderedGame.ToMatchImages)
                 {
                     if (temp.Source == matchImage.Source)
                     {
@@ -144,23 +144,23 @@ namespace GoMemory.ViewModels
         public bool CheckSelections(Image selectedImage)
         {
 
-            foreach (var image in UnorderedGameValues.ToMatchImages)
+            foreach (var image in UnorderedGame.ToMatchImages)
             {
                 if (image.Source != selectedImage.Source) continue;
 
-                if (UnorderedGameValues.SelectedImages.Count > 0)
+                if (UnorderedGame.SelectedImages.Count > 0)
                 {
-                    foreach (var img in UnorderedGameValues.SelectedImages)
+                    foreach (var img in UnorderedGame.SelectedImages)
                     {
                         if (img.Source == selectedImage.Source) continue;
-                        UnorderedGameValues.SelectedImages.Add(selectedImage);
+                        UnorderedGame.SelectedImages.Add(selectedImage);
 
                         return true;
                     }
                 }
                 else
                 {
-                    UnorderedGameValues.SelectedImages.Add(selectedImage);
+                    UnorderedGame.SelectedImages.Add(selectedImage);
 
                     return true;
                 }
@@ -188,7 +188,7 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public Grid AddGridImages(Grid grid)
         {
-            return GridHelper.InsertGridImages(grid,UnorderedGameValues.AllImages,DifficultySetting);
+            return GridHelper.InsertGridImages(grid,UnorderedGame.AllImages,DifficultySetting);
         }
 
     
@@ -216,8 +216,8 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public bool CheckIsRoundComplete()
         {
-            return UnorderedGameValues.SelectedImages.Count ==
-                   UnorderedGameValues.ToMatchImages.Count;
+            return UnorderedGame.SelectedImages.Count ==
+                   UnorderedGame.ToMatchImages.Count;
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public string SetLevelText()
         {
-            return "Level : " + UnorderedGameValues.Level;
+            return "Level : " + UnorderedGame.Level;
         }
 
         /// <summary>
@@ -234,8 +234,8 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void Retry()
         {
-            UnorderedGameValues.Level -= 1;
-            UnorderedGameValues.NumberOfImagesToMatch -= 1;
+            UnorderedGame.Level -= 1;
+            UnorderedGame.MatchsNeeded -= 1;
 
         }
     }

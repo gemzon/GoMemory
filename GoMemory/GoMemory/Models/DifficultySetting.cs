@@ -7,7 +7,7 @@ namespace GoMemory.Models
     {
         public int GridRowSize { get; set; }
         public int GridColumnSize { get; set; }
-        public int TotalImagesNeeded { get; set; }
+        public int MaxSelectable { get; set; }
         public int MaxLevel { get; set; }
      
 
@@ -16,15 +16,15 @@ namespace GoMemory.Models
         /// </summary>
         /// <param name="gridColumnSize"></param>
         /// <param name="gridRowSize"></param>
-        /// <param name="totalImagesNeeded"></param>
+        /// <param name="maxSelectable"></param>
         /// <param name="maxLevel"></param>
         public DifficultySetting(int gridColumnSize, int gridRowSize,
-                                     int totalImagesNeeded, int maxLevel)
+                                     int maxSelectable, int maxLevel)
         {
 
             GridColumnSize = gridColumnSize;
             GridRowSize = gridRowSize;
-            TotalImagesNeeded = totalImagesNeeded;
+            MaxSelectable = maxSelectable;
             MaxLevel = maxLevel;
 
         }
