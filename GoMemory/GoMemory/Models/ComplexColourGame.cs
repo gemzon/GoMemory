@@ -15,10 +15,11 @@ namespace GoMemory.Models
         public string[] PlayWordColours { get; set; }
         public Color[] PlayColours { get; set; }
         public ComplexColour[] SequenceColours { get; set; }
-        public ComplexColour[] SelectedColours { get; set; }
+        public object[] SelectedColours { get; set; }
+        public string[] SelectedWordColours { get; set; }
         public Mode Mode { get; set; }
-        public int Level { get; set; }
-        public int MatchsNeeded { get; set; } = 14;
+        public int Level { get; set; } 
+        public int MatchsNeeded { get; set; } = 1;
 
 
         public ComplexColourGame(int maxSelectable)

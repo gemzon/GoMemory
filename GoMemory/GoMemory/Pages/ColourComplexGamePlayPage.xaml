@@ -50,11 +50,13 @@
                 <Label Style="{StaticResource LargeBlueTextLabel}" Text="Your Guesses" />
                 <Frame x:Name="Frame" BorderColor="Black">
                     <StackLayout
-                        x:Name="SelectedImageStackLayout"
+                        x:Name="SelectedStackLayout"
                         Margin="0"
                         Padding="2"
                         Orientation="Horizontal" />
                 </Frame>
+                <Label x:Name="ModeLabel" Style="{StaticResource LargeBlueTextLabel}" />
+
                 <Grid x:Name="Grid" />
             </StackLayout>
 

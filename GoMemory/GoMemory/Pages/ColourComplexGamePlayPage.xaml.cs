@@ -17,7 +17,7 @@ namespace GoMemory.Pages
 	    public ColourComplexGamePlayPage(Difficulty difficulty)
 	    {
 	        InitializeComponent();
-	        Title = "ComplexColour";
+	        Title = "ColourComplex";
             _colourComplexGamePlayViewModel = new ColourComplexGamePlayViewModel(difficulty);
 GuessLayout();
 	        NextRound();
@@ -36,15 +36,18 @@ GuessLayout();
 	        if (next)
 	        {
 
-	            //StackLayout.IsVisible = true;
-	            //PlayLayout.IsVisible = false;
-	            //Failed.IsVisible = false;
-	            SequenceStackLayout = _colourComplexGamePlayViewModel.PopulateSequencStackLayout(SequenceStackLayout);
+                StackLayout.IsVisible = true;
+                PlayLayout.IsVisible = false;
+                Failed.IsVisible = false;
+                SelectedStackLayout.Children.Clear();
+                SequenceStackLayout = _colourComplexGamePlayViewModel.PopulateSequencStackLayout(SequenceStackLayout);
 	            LevelLabel.Text = _colourComplexGamePlayViewModel.SetLevelText();
 	            Content = StackLayout;
 	        }
 	        else
 	        {
+	            StackLayout.IsVisible = false;
+	            PlayLayout.IsVisible = false;
 	            DifficultyCompleted();
 	        }
 
@@ -69,10 +72,9 @@ GuessLayout();
 	    {
 
 	        SequenceStackLayout.Children.Clear();
-	      
 	        StackLayout.IsVisible = false;
 	        PlayLayout.IsVisible = true;
-
+	        ModeLabel.Text = _colourComplexGamePlayViewModel.SetMode();
 	        Content = PlayLayout;
 
 	    }
@@ -88,10 +90,90 @@ GuessLayout();
 	        Grid.HeightRequest = Application.Current.MainPage.Height * 0.6;
 
 	        PlayLayout.Children.Add(Grid);
-	    
+	    AddGuessButtonClickHandlers();
 
 	    }
 
+
+	    private void AddGuessButtonClickHandlers()
+	    {
+	        foreach (var child in Grid.Children)
+	        {
+	            if (child is Button btn) btn.Clicked += OnTapped;
+	        }
+	    }
+
+
+	    /// <summary>
+	    /// Handles the clicking of a button once guessing phase has started
+	    /// </summary>
+	    /// <param name="sender"></param>
+	    /// <param name="ev"></param>
+	    private void OnTapped(object sender, EventArgs ev)
+	    {
+	        if (IsBusy)
+	        {
+	            return;
+	        }
+
+	        IsBusy = true;
+bool found =false;
+	        try
+	        {
+	            Button btn = sender as Button;
+	            
+	            if (_colourComplexGamePlayViewModel.ComplexColourGame.Mode == Mode.Text)
+	            {
+	                found = _colourComplexGamePlayViewModel.CheckSequenceText(btn.Text);
+	            }
+	            else if (_colourComplexGamePlayViewModel.ComplexColourGame.Mode == Mode.Color)
+	            {
+	                found = _colourComplexGamePlayViewModel.CheckSequenceColour(btn.TextColor);
+	            
+	        }
+                if (found)
+	            {
+	                Label label = new Label
+	                {
+	                    Text = btn.Text,
+	                    TextColor = System.Drawing.Color.FromName(btn.Text),
+	                    FontSize = 25,
+	                    FontAttributes = FontAttributes.Bold,
+	                    Margin = new Thickness(0, 2, 5, 0)
+	                };
+
+                    if (SelectedStackLayout.Children.Count > 2)
+	                {
+	                    SelectedStackLayout.Children.RemoveAt(0);
+	                }
+	                SelectedStackLayout.Children.Add(label);
+	            }
+	            else
+	            {
+	                Failed.IsVisible = true;
+	                SequenceStackLayout.Children.Clear();
+	                Content = Failed;
+
+	            }
+	            if (_colourComplexGamePlayViewModel.CheckIsRoundComplete())
+	            {
+
+	                NextRound();
+	            }
+
+
+	        }
+	        catch (Exception e)
+	        {
+	            Console.WriteLine(e);
+	            throw;
+	        }
+	        finally
+	        {
+	            IsBusy = false;
+	        }
+
+	    }
 
 
         /// <summary>
@@ -107,7 +189,7 @@ GuessLayout();
 	        PlayLayout.IsVisible = false;
 	        Content = StackLayout;
 
-	     //   NextRound();
+	        NextRound();
 	    }
     }
 }

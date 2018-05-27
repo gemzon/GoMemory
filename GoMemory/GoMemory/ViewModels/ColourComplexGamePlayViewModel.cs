@@ -14,6 +14,7 @@ namespace GoMemory.ViewModels
 
         public DifficultySetting DifficultySetting { get; private set; }
         public ComplexColourGame ComplexColourGame { get; set; }
+        public int GuessesMade { get; set; } = 0;
 
         public ColourComplexGamePlayViewModel(Difficulty difficulty)
         {
@@ -87,6 +88,7 @@ namespace GoMemory.ViewModels
         public void InitilizeRound()
         {
             ComplexColourGame.MatchsNeeded += 1;
+            GuessesMade = 0;
             ComplexColourGame.SequenceColours = new ComplexColour[ComplexColourGame.MatchsNeeded];
             GenreateRoundToMatchComplexColours();
             SetMode();
@@ -146,15 +148,72 @@ namespace GoMemory.ViewModels
         /// <summary>
         /// randomly set the round mode
         /// </summary>
-        public void SetMode()
+        public string SetMode()
         {
             Random rnd = new Random();
             int num = rnd.Next(1, 2);
 
-            ComplexColourGame.Mode = num == 1 ? Mode.Color : Mode.Text;
-          
+          ComplexColourGame.Mode = num == 1 ? Mode.Color : Mode.Text;
+           
+            if (ComplexColourGame.Mode == Mode.Text)
+            {
+                ComplexColourGame.SelectedWordColours = new string[ComplexColourGame.MatchsNeeded];
+                return "Mode : Words";
+            }
+            ComplexColourGame.SelectedColours = new object[ComplexColourGame.MatchsNeeded];
+
+            return "Mode : Text Colour";
+
         }
 
+
+        /// <summary>
+        /// Check if the selected button text match the correct 
+        /// mode  colour
+        /// must be in correct order
+        /// </summary>
+        /// <param name="colourSelected"></param>
+        public bool CheckSequenceText(string colourSelected)
+        {
+           
+         ComplexColourGame.SelectedWordColours[GuessesMade] = colourSelected;
+         
+            for (int i = 0; i < ComplexColourGame.SelectedWordColours.Length; i++)
+            {
+              if  (ComplexColourGame.SelectedWordColours[i] == null)
+                break;
+                    if ( ComplexColourGame.SelectedWordColours[i] !=
+                        ComplexColourGame.SequenceColours[i].SpeltColour)
+                        return false;
+             
+
+            }
+
+            GuessesMade += 1;
+            return true;
+        }
+        /// <summary>
+        /// Check if the selected button text match the correct 
+        /// mode  colour
+        /// must be in correct order
+        /// </summary>
+        /// <param name="textColour"></param>
+        public bool CheckSequenceColour(Color textColour)
+        {
+            
+             ComplexColourGame.SelectedColours[GuessesMade] = textColour;
+         
+            for (int i = 0; i < ComplexColourGame.SelectedColours.Length; i++)
+            {
+                if (ComplexColourGame.SelectedColours[i] == null)
+                    break;
+                if ((Color)ComplexColourGame.SelectedColours[i] !=
+                        ComplexColourGame.SequenceColours[i].TextColour)
+                        return false;
+            }
+            GuessesMade += 1;
+            return true;
+        }
 
         /// <summary>
         /// Create the grid for the Guessing buttons
@@ -201,9 +260,11 @@ namespace GoMemory.ViewModels
 
             return grid;
         }
-      
-      
 
 
+        public bool CheckIsRoundComplete()
+        {
+            return GuessesMade == ComplexColourGame.MatchsNeeded;
+        }
     }
 }
