@@ -8,6 +8,7 @@ using GoMemory.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+
 namespace GoMemory.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -28,28 +29,12 @@ namespace GoMemory.Pages
 
         private async void Button_OnClicked(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
-            GameType gametype = new GameType();
-            if (btn == null)
+            if (!(sender is Button btn))
             {
                 return;
             }
 
-            if (btn.Text == "What You See")
-            {
-                gametype.Style = PlayStyle.WhatYouSeeGame;
-            }
-            else if(btn.Text == "Colour Complex")
-            {
-                gametype.Style = PlayStyle.ColourComplexGame;
-            }
-            else if(btn.Text == "Sequential")
-            {
-                gametype.Style = PlayStyle.SequentialGame;
-            }
-
-            gametype.Title = btn.Text;
-            await Navigation.PushAsync(new GameLandingPage(gametype));
+            await Navigation.PushAsync(new GameLandingPage(btn.Text));
         }
     }
 }

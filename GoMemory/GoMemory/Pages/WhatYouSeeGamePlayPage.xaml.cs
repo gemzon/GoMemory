@@ -13,25 +13,36 @@ using GoMemory.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+
 namespace GoMemory.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WhatYouSeeGamePlayPage : ContentPage
     {
         readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel;
-
+        public GameStat GameStat;
         public Grid Grid;
         public static Timer EndLevelTimer;
 
 
-        public WhatYouSeeGamePlayPage(Difficulty difficulty)
+        public WhatYouSeeGamePlayPage(Difficulty difficulty,string playStyle)
         {
             Title =  "What you see";
+            GameStat = new GameStat
+            {
+                Difficulty = difficulty,
+                PlayStyle = playStyle
+            };
+           
             InitializeComponent();
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty);
             CreatePageContent();
        
         }
+
+       
+
+
 
         /// <summary>
         /// Create the initial layout of the page
@@ -131,7 +142,9 @@ namespace GoMemory.Pages
 
                 if (_whatYouSeeGamePlayViewModel.CheckIsRoundComplete())
                 {
-                    
+                    GameStat.Level = _whatYouSeeGamePlayViewModel.UnorderedGame.Level;
+
+                    App.StatRepository.UpadateGameStat(GameStat);
                     NextRound();
                 }
             }

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GoMemory.Enums;
+using GoMemory.Models;
 using GoMemory.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
 
 namespace GoMemory.Pages
 {
@@ -14,10 +16,16 @@ namespace GoMemory.Pages
 	public partial class ColourComplexGamePlayPage : ContentPage
 	{
 	    readonly ColourComplexGamePlayViewModel _colourComplexGamePlayViewModel;
-	    public ColourComplexGamePlayPage(Difficulty difficulty)
+	    private GameStat GameStat;
+	    public ColourComplexGamePlayPage(Difficulty difficulty,string playStyle)
 	    {
 	        InitializeComponent();
 	        Title = "ColourComplex";
+	        GameStat = new GameStat
+	        {
+	            Difficulty = difficulty,
+	            PlayStyle = playStyle
+	        };
             _colourComplexGamePlayViewModel = new ColourComplexGamePlayViewModel(difficulty);
 GuessLayout();
 	        NextRound();
@@ -25,11 +33,13 @@ GuessLayout();
 
 	    }
 
-	    /// <summary>
-	    /// intiate the visibility of elemetns and 
-	    /// changes the page content
-	    /// </summary>
-	    public void NextRound()
+	 
+
+        /// <summary>
+        /// intiate the visibility of elemetns and 
+        /// changes the page content
+        /// </summary>
+        public void NextRound()
 	    {
 	        bool next;
 	        next = _colourComplexGamePlayViewModel.NextRound();
@@ -157,8 +167,18 @@ bool found =false;
 	            }
 	            if (_colourComplexGamePlayViewModel.CheckIsRoundComplete())
 	            {
-
-	                NextRound();
+	                try
+	                {
+                        GameStat.Level = _colourComplexGamePlayViewModel.ComplexColourGame.Level ;
+	                    App.StatRepository.UpadateGameStat(GameStat);
+	                }
+	                catch (Exception e)
+	                {
+	                    Console.WriteLine(e);
+	                    throw;
+	                }
+	               
+                    NextRound();
 	            }
 
 

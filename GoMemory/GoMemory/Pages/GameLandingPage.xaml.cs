@@ -9,19 +9,20 @@ using GoMemory.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+
 namespace GoMemory.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GameLandingPage : ContentPage
     {
-        public GameType GameType { get; set; }
+        public string PlayStyle { get; set; }
 
 
-        public GameLandingPage(GameType gameType)
+        public GameLandingPage(string playStyle)
         {
             InitializeComponent();
-            Title = gameType.Title;
-            GameType = gameType;
+            
+            PlayStyle = playStyle;
         }
 
         public void ResumeBtn_OnClicked(object sender, EventArgs e)
@@ -31,12 +32,12 @@ namespace GoMemory.Pages
 
         public async void StatsBtn_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new StatsPage(GameType));
+            await Navigation.PushAsync(new StatsPage(PlayStyle));
         }
 
         public async void RulesBtn_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new RulesPage(GameType));
+            await Navigation.PushAsync(new RulesPage(PlayStyle));
         }
 
         public void Difficulty_OnClicked(object sender, EventArgs e)
@@ -61,17 +62,17 @@ namespace GoMemory.Pages
 
         public async void SetGamePlay(Difficulty difficulty)
         {
-            if (GameType.Style == PlayStyle.WhatYouSeeGame)
+            if (PlayStyle == "What you see")
             {
-                await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty));
+                await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty,PlayStyle));
             }
-            else if (GameType.Style == PlayStyle.ColourComplexGame)
+            else if (PlayStyle == "Colour Complex")
             {
-                await Navigation.PushAsync(new ColourComplexGamePlayPage (difficulty));
+                await Navigation.PushAsync(new ColourComplexGamePlayPage (difficulty,PlayStyle));
             }
             else
             {
-                await Navigation.PushAsync(new SequentialGamePlayPage(difficulty));
+                await Navigation.PushAsync(new SequentialGamePlayPage(difficulty,PlayStyle));
             }
         }
 

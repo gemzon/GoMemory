@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using GoMemory.Enums;
 using GoMemory.Helpers;
+using GoMemory.Models;
 using GoMemory.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
 
 namespace GoMemory.Pages
 {
@@ -15,17 +17,24 @@ namespace GoMemory.Pages
     public partial class SequentialGamePlayPage : ContentPage
     {
         private readonly SequentialGamePlayViewModel _sequentialGamePlayViewModel;
-
-        public SequentialGamePlayPage(Difficulty difficulty)
+        private GameStat GameStat;
+        public SequentialGamePlayPage(Difficulty difficulty,string playStyle)
         {
             InitializeComponent();
             Title =  "Sequential";
+            GameStat = new GameStat
+            {
+                Difficulty = difficulty,
+                PlayStyle = playStyle
+            };
             _sequentialGamePlayViewModel = new SequentialGamePlayViewModel(difficulty);
        
             NextRound();
            
            GuessLayout();
         }
+
+      
 
         /// <summary>
         /// intiate the visibility of elemetns and 
@@ -117,7 +126,7 @@ namespace GoMemory.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="ev"></param>
-        private void OnTapped(object sender, EventArgs ev)
+        private  void OnTapped(object sender, EventArgs ev)
         {
             if (IsBusy)
             {
@@ -149,7 +158,18 @@ namespace GoMemory.Pages
                 }
                 if (_sequentialGamePlayViewModel.CheckIsRoundComplete())
                 {
-
+                   
+                    try
+                    {
+                    GameStat.Level = _sequentialGamePlayViewModel.OrderedGame.Level ;
+                    App.StatRepository.UpadateGameStat(GameStat);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                   
                     NextRound();
                 }
 

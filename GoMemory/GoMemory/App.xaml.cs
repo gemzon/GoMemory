@@ -1,4 +1,7 @@
 using System;
+using GoMemory.DataAccess;
+using GoMemory.Interfaces;
+using GoMemory.Models;
 using GoMemory.Pages;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
@@ -10,18 +13,19 @@ namespace GoMemory
 {
 	public partial class App : Application
 	{
-	    public App()
-	    {
-	        InitializeComponent();
+        public static IStatRepository StatRepository { get; private set; }
+	    //public App()
+	    //{
+	    //    InitializeComponent();
 
-	        MainPage = new NavigationPage(new HomePage());
-	    }
+	    //    MainPage = new NavigationPage(new HomePage());
+	    //}
 
 
         public App(string dbPath)
 		{
 			InitializeComponent();
-
+            StatRepository = new StatRepository(dbPath);
 		    MainPage = new NavigationPage(new HomePage());
         }
 

@@ -16,16 +16,19 @@ namespace GoMemory.ViewModels
         public DifficultySetting DifficultySetting { get; set; }
         public ImageHelper ImageHelper { get; set; }
         public UnorderedGame UnorderedGame { get; set; }
-
+     
 
         public WhatYouSeeGamePlayViewModel(Difficulty difficulty)
         {
+          
             SetDifficultySettings(difficulty);
             ImageHelper = new ImageHelper();
             GetDifficultyImages();
+
             NextRound();
         }
 
+       
 
         /// <summary>
         /// Setup game difficulty settings
@@ -65,6 +68,7 @@ namespace GoMemory.ViewModels
         /// </summary>
        public bool NextRound()
         {
+            
             UnorderedGame.Level += 1;
             if (UnorderedGame.Level <= DifficultySetting.MaxLevel)
             {
@@ -81,6 +85,7 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void InitilizeRound()
         {
+
             UnorderedGame.MatchsNeeded += 1;
             UnorderedGame.ToMatchImages = ImageHelper.ToMatchImagesList(UnorderedGame.MatchsNeeded,UnorderedGame.AllImages);
             UnorderedGame.SelectedImages = new List<Image>();
@@ -147,6 +152,7 @@ namespace GoMemory.ViewModels
         {
             return UnorderedGame.SelectedImages.Count ==
                    UnorderedGame.ToMatchImages.Count;
+          
         }
 
         /// <summary>
@@ -163,6 +169,7 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void Retry()
         {
+           
             UnorderedGame.Level -= 1;
             UnorderedGame.MatchsNeeded -= 1;
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GoMemory.Enums;
 using GoMemory.Helpers;
 using GoMemory.Models;
 using GoMemory.ViewModels;
@@ -15,11 +16,11 @@ namespace GoMemory.Pages
 	public partial class RulesPage : ContentPage
 	{
 	    private  RulesViewModel _rulesViewModel;
-		public RulesPage (GameType gameType)
+		public RulesPage (string playStyle)
 		{
 			InitializeComponent ();
-		    BindingContext = _rulesViewModel = new RulesViewModel(gameType);
-		    Title = _rulesViewModel.GameType.Title + " Rules";
+		    BindingContext = _rulesViewModel = new RulesViewModel(playStyle);
+		    Title = _rulesViewModel.PlayStyle + " Rules";
            
 		}
 	}
