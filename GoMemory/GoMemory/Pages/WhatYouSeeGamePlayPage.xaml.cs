@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Input;
 using GoMemory.Enums;
 using GoMemory.Helpers;
@@ -20,6 +21,7 @@ namespace GoMemory.Pages
         readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel;
 
         public Grid Grid;
+        public static Timer EndLevelTimer;
 
 
         public WhatYouSeeGamePlayPage(Difficulty difficulty)
@@ -129,6 +131,7 @@ namespace GoMemory.Pages
 
                 if (_whatYouSeeGamePlayViewModel.CheckIsRoundComplete())
                 {
+                    
                     NextRound();
                 }
             }
@@ -144,6 +147,8 @@ namespace GoMemory.Pages
 
         }
 
+
+      
 
         /// <summary>
         /// Intiates next Level of play or signals game completed 

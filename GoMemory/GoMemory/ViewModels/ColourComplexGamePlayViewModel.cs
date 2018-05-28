@@ -151,7 +151,7 @@ namespace GoMemory.ViewModels
         public string SetMode()
         {
             Random rnd = new Random();
-            int num = rnd.Next(1, 2);
+            int num = rnd.Next(0, 2);
 
           ComplexColourGame.Mode = num == 1 ? Mode.Color : Mode.Text;
            
@@ -162,7 +162,7 @@ namespace GoMemory.ViewModels
             }
             ComplexColourGame.SelectedColours = new object[ComplexColourGame.MatchsNeeded];
 
-            return "Mode : Text Colour";
+            return "Mode :  Colour";
 
         }
 

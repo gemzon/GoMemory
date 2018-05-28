@@ -63,12 +63,12 @@ namespace GoMemory.Models
             Colours = new List<Color>()
             {
                 Color.Blue,
-                Color.SaddleBrown,
-                Color.DarkRed, 
-                Color.DimGray, 
+                Color.Brown,
+                Color.Red, 
+                Color.Gray, 
                 Color.Green, 
                 Color.Orange, 
-                Color.DeepPink, 
+                Color.Pink, 
                 Color.Purple, 
                 Color.Teal
             };

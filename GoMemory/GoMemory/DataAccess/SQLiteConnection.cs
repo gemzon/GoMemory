@@ -1,9 +1,14 @@
 ﻿using SQLite;
 
-namespace GoMemory.Interfaces
+namespace GoMemory.DataAccess
 {
-   public interface ISQLiteConnection
+   public class SqLiteConnection 
    {
-       SQLiteAsyncConnection GetConnection();
-   }
+      private readonly SQLiteAsyncConnection _conn;
+
+       public SqLiteConnection(string dbPath)
+       {
+           _conn = new SQLiteAsyncConnection(dbPath);
+       }
+    }
 }
