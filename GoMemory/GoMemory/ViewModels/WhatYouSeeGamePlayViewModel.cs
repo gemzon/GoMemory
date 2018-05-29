@@ -16,15 +16,19 @@ namespace GoMemory.ViewModels
         public DifficultySetting DifficultySetting { get; set; }
         public ImageHelper ImageHelper { get; set; }
         public UnorderedGame UnorderedGame { get; set; }
-     
+        
 
-        public WhatYouSeeGamePlayViewModel(Difficulty difficulty)
+        public WhatYouSeeGamePlayViewModel(Difficulty difficulty,ResumeModel resume)
         {
           
             SetDifficultySettings(difficulty);
             ImageHelper = new ImageHelper();
             GetDifficultyImages();
-
+            if (resume != null)
+            {
+                UnorderedGame.Level = resume.Level;
+                UnorderedGame.MatchsNeeded = resume.MatchesNeeded;
+            }
             NextRound();
         }
 

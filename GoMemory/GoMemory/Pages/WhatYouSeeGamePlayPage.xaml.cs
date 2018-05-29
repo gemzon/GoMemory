@@ -25,17 +25,16 @@ namespace GoMemory.Pages
         public static Timer EndLevelTimer;
 
 
-        public WhatYouSeeGamePlayPage(Difficulty difficulty,string playStyle)
+        public WhatYouSeeGamePlayPage(Difficulty difficulty,string playStyle,ResumeModel resumeModel)
         {
+            InitializeComponent();
             Title =  "What you see";
             GameStat = new GameStat
             {
                 Difficulty = difficulty,
                 PlayStyle = playStyle
             };
-           
-            InitializeComponent();
-            _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty);
+            _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty,resumeModel);
             CreatePageContent();
        
         }
@@ -144,7 +143,7 @@ namespace GoMemory.Pages
                 {
                     GameStat.Level = _whatYouSeeGamePlayViewModel.UnorderedGame.Level;
 
-                    App.StatRepository.UpadateGameStat(GameStat);
+                    App.StatRepository.UpdateGameStat(GameStat);
                     NextRound();
                 }
             }

@@ -21,12 +21,11 @@ namespace GoMemory.DataAccess
             AsyncConnection = new SQLiteAsyncConnection(dbPath);
             SyncConnection = new SQLiteConnection(dbPath);
             AsyncConnection.CreateTableAsync<GameStat>();
+            AsyncConnection.CreateTableAsync<ResumeModel>();
         }
 
-        public async void UpadateGameStat(GameStat gameStat)
+        public async void UpdateGameStat(GameStat gameStat)
         {
-
-
             if (gameStat.Level == 0)
             {
                 return;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GoMemory.Enums;
+using GoMemory.Helpers;
 using GoMemory.Models;
 using GoMemory.ViewModels;
 using Xamarin.Forms;
@@ -16,13 +17,28 @@ namespace GoMemory.Pages
     public partial class GameLandingPage : ContentPage
     {
         public string PlayStyle { get; set; }
-
+        public ResumeModel ResumeModel { get; set; }
 
         public GameLandingPage(string playStyle)
         {
             InitializeComponent();
             Title = playStyle;
             PlayStyle = playStyle;
+            CheckResume();
+        }
+
+        /// <summary>
+        /// check to see if there is a saved game
+        /// </summary>
+        public void CheckResume()
+        {
+            ResumeModel = new ResumeModel();
+            ResumeModel = ResumeHelper.CheckResume(PlayStyle);
+            if (ResumeModel != null)
+            {
+                ResumeBtn.IsEnabled = true;
+            }
+
         }
 
         public void ResumeBtn_OnClicked(object sender, EventArgs e)
@@ -60,19 +76,19 @@ namespace GoMemory.Pages
 
         }
 
-        public async void SetGamePlay(Difficulty difficulty)
+        public async void SetGamePlay(Difficulty difficulty,ResumeModel resume = null)
         {
             if (PlayStyle == "What you see")
             {
-                await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty,PlayStyle));
+                await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty,PlayStyle,resume));
             }
             else if (PlayStyle == "Colour Complex")
             {
-                await Navigation.PushAsync(new ColourComplexGamePlayPage (difficulty,PlayStyle));
+                await Navigation.PushAsync(new ColourComplexGamePlayPage (difficulty,PlayStyle,resume));
             }
             else
             {
-                await Navigation.PushAsync(new SequentialGamePlayPage(difficulty,PlayStyle));
+                await Navigation.PushAsync(new SequentialGamePlayPage(difficulty,PlayStyle,resume));
             }
         }
 

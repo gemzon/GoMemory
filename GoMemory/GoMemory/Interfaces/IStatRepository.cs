@@ -7,7 +7,7 @@ namespace GoMemory.Interfaces
 {
     public interface IStatRepository
     {
-        void UpadateGameStat(GameStat gameStat);
+        void UpdateGameStat(GameStat gameStat);
         List<GameStat> GetGameStats(string playStyle);
     }
 }

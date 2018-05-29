@@ -17,7 +17,8 @@ namespace GoMemory.Pages
 	{
 	    readonly ColourComplexGamePlayViewModel _colourComplexGamePlayViewModel;
 	    private GameStat GameStat;
-	    public ColourComplexGamePlayPage(Difficulty difficulty,string playStyle)
+	   
+	    public ColourComplexGamePlayPage(Difficulty difficulty,string playStyle,ResumeModel resume)
 	    {
 	        InitializeComponent();
 	        Title = "ColourComplex";
@@ -26,7 +27,9 @@ namespace GoMemory.Pages
 	            Difficulty = difficulty,
 	            PlayStyle = playStyle
 	        };
-            _colourComplexGamePlayViewModel = new ColourComplexGamePlayViewModel(difficulty);
+        
+	       
+            _colourComplexGamePlayViewModel = new ColourComplexGamePlayViewModel(difficulty,resume);
 GuessLayout();
 	        NextRound();
             
@@ -170,7 +173,7 @@ bool found =false;
 	                try
 	                {
                         GameStat.Level = _colourComplexGamePlayViewModel.ComplexColourGame.Level ;
-	                    App.StatRepository.UpadateGameStat(GameStat);
+	                    App.StatRepository.UpdateGameStat(GameStat);
 	                }
 	                catch (Exception e)
 	                {

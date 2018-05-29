@@ -16,11 +16,16 @@ namespace GoMemory.ViewModels
         public ComplexColourGame ComplexColourGame { get; set; }
         public int GuessesMade { get; set; } = 0;
 
-        public ColourComplexGamePlayViewModel(Difficulty difficulty)
+        public ColourComplexGamePlayViewModel(Difficulty difficulty,ResumeModel resume)
         {
             SetDifficultySettings(difficulty);
             ComplexColourGame = new ComplexColourGame(DifficultySetting.MaxSelectable);
-           
+            if (resume != null)
+            {
+                ComplexColourGame.Level = resume.Level;
+                ComplexColourGame.MatchsNeeded = resume.MatchesNeeded;
+            }
+
         }
 
         

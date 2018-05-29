@@ -14,6 +14,8 @@ namespace GoMemory
 	public partial class App : Application
 	{
         public static IStatRepository StatRepository { get; private set; }
+
+	    public static  IResumeRepository ResumeRepository { get; private set; }
 	    //public App()
 	    //{
 	    //    InitializeComponent();
@@ -26,6 +28,7 @@ namespace GoMemory
 		{
 			InitializeComponent();
             StatRepository = new StatRepository(dbPath);
+            ResumeRepository = new ResumeRepository(dbPath);
 		    MainPage = new NavigationPage(new HomePage());
         }
 

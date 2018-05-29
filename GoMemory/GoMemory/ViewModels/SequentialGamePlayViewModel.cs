@@ -18,11 +18,16 @@ namespace GoMemory.ViewModels
         public int GuessesMade { get; set; }
         public ImageHelper ImageHelper { get; set; }
 
-        public SequentialGamePlayViewModel(Difficulty difficulty)
+        public SequentialGamePlayViewModel(Difficulty difficulty,ResumeModel resume)
         {
             SetDifficultySettings(difficulty);
             ImageHelper = new ImageHelper();
             GetDifficultyImages();
+            if (resume != null)
+            {
+                OrderedGame.Level = resume.Level;
+                OrderedGame.MatchsNeeded = resume.MatchesNeeded;
+            }
             GuessesMade = 0;
         }
 

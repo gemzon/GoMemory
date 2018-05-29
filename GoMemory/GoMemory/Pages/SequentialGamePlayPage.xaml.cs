@@ -18,7 +18,7 @@ namespace GoMemory.Pages
     {
         private readonly SequentialGamePlayViewModel _sequentialGamePlayViewModel;
         private GameStat GameStat;
-        public SequentialGamePlayPage(Difficulty difficulty,string playStyle)
+        public SequentialGamePlayPage(Difficulty difficulty,string playStyle,ResumeModel resume)
         {
             InitializeComponent();
             Title =  "Sequential";
@@ -27,7 +27,7 @@ namespace GoMemory.Pages
                 Difficulty = difficulty,
                 PlayStyle = playStyle
             };
-            _sequentialGamePlayViewModel = new SequentialGamePlayViewModel(difficulty);
+            _sequentialGamePlayViewModel = new SequentialGamePlayViewModel(difficulty,resume);
        
             NextRound();
            
@@ -162,7 +162,7 @@ namespace GoMemory.Pages
                     try
                     {
                     GameStat.Level = _sequentialGamePlayViewModel.OrderedGame.Level ;
-                    App.StatRepository.UpadateGameStat(GameStat);
+                    App.StatRepository.UpdateGameStat(GameStat);
                     }
                     catch (Exception e)
                     {
