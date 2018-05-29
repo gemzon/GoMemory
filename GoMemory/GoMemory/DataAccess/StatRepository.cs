@@ -14,12 +14,13 @@ namespace GoMemory.DataAccess
     public class StatRepository : IStatRepository
     {
 
-        private readonly SQLiteAsyncConnection _conn;
-
+        public readonly SQLiteAsyncConnection AsyncConnection;
+        public SQLiteConnection SyncConnection;
         public StatRepository(string dbPath)
         {
-            _conn = new SQLiteAsyncConnection(dbPath);
-            _conn.CreateTableAsync<GameStat>();
+            AsyncConnection = new SQLiteAsyncConnection(dbPath);
+            SyncConnection = new SQLiteConnection(dbPath);
+            AsyncConnection.CreateTableAsync<GameStat>();
         }
 
         public async void UpadateGameStat(GameStat gameStat)
@@ -34,7 +35,7 @@ namespace GoMemory.DataAccess
             GameStat stat;
             try
             {
-                stat = await _conn.Table<GameStat>().FirstOrDefaultAsync(g => g.PlayStyle == gameStat.PlayStyle &&
+                stat = await AsyncConnection.Table<GameStat>().FirstOrDefaultAsync(g => g.PlayStyle == gameStat.PlayStyle &&
                                                                                     g.Difficulty == gameStat.Difficulty);
             }
             catch (Exception e)
@@ -51,7 +52,7 @@ namespace GoMemory.DataAccess
 
             try
             {
-                await _conn.InsertOrReplaceAsync(gameStat);
+                await AsyncConnection.InsertOrReplaceAsync(gameStat);
             }
             catch (Exception e)
             {
@@ -61,17 +62,9 @@ namespace GoMemory.DataAccess
 
         }
 
-        public async Task<List<GameStat>> GetGameStats(string playStyle)
+        public List<GameStat> GetGameStats(string playStyle)
         {
-            try
-            {
-                return await _conn.Table<GameStat>().Where(g => g.PlayStyle == playStyle).ToListAsync();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            return   SyncConnection.Table<GameStat>().Where(g => g.PlayStyle == playStyle).ToList();
         }
     }
 }

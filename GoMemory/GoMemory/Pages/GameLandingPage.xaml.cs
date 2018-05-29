@@ -21,7 +21,7 @@ namespace GoMemory.Pages
         public GameLandingPage(string playStyle)
         {
             InitializeComponent();
-            
+            Title = playStyle;
             PlayStyle = playStyle;
         }
 

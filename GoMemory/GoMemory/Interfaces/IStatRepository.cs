@@ -8,6 +8,6 @@ namespace GoMemory.Interfaces
     public interface IStatRepository
     {
         void UpadateGameStat(GameStat gameStat);
-        Task<List<GameStat>> GetGameStats(string playStyle);
+        List<GameStat> GetGameStats(string playStyle);
     }
 }
