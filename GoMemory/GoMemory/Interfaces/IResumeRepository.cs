@@ -1,4 +1,5 @@
-﻿using GoMemory.Models;
+﻿using System.Threading.Tasks;
+using GoMemory.Models;
 using SQLite;
 
 namespace GoMemory.Interfaces
@@ -6,7 +7,7 @@ namespace GoMemory.Interfaces
     public interface IResumeRepository
     {
         void UpdateGameResume(ResumeModel resumeModel);
-        ResumeModel GetResumeModel(string playStyle);
+        Task<ResumeModel> GetResumeModel(string playStyle);
 
         void RemoveResumeModel(string playStyle);
     }

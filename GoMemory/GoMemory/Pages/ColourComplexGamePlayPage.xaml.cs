@@ -133,7 +133,8 @@ GuessLayout();
 bool found =false;
 	        try
 	        {
-	            Button btn = sender as Button;
+	            Grid.IsEnabled = false;
+                Button btn = sender as Button;
 	            
 	            if (_colourComplexGamePlayViewModel.ComplexColourGame.Mode == Mode.Text)
 	            {
@@ -193,7 +194,8 @@ bool found =false;
 	        }
 	        finally
 	        {
-	            IsBusy = false;
+	            Grid.IsEnabled = true;
+                IsBusy = false;
 	        }
 
 	    }

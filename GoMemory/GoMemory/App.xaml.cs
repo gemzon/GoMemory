@@ -1,5 +1,6 @@
 using System;
 using GoMemory.DataAccess;
+using GoMemory.Helpers;
 using GoMemory.Interfaces;
 using GoMemory.Models;
 using GoMemory.Pages;
@@ -16,14 +17,10 @@ namespace GoMemory
         public static IStatRepository StatRepository { get; private set; }
 
 	    public static  IResumeRepository ResumeRepository { get; private set; }
-	    //public App()
-	    //{
-	    //    InitializeComponent();
 
-	    //    MainPage = new NavigationPage(new HomePage());
-	    //}
+	    
 
-
+                
         public App(string dbPath)
 		{
 			InitializeComponent();
@@ -47,7 +44,7 @@ namespace GoMemory
 
 		protected override void OnResume ()
 		{
-			// Handle when your app resumes
-		}
+		    
+        }
 	}
 }

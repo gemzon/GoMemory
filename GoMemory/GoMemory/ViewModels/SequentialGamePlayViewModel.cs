@@ -18,6 +18,7 @@ namespace GoMemory.ViewModels
         public int GuessesMade { get; set; }
         public ImageHelper ImageHelper { get; set; }
 
+        public ResumeModel ResumeModel { get; set; }
         public SequentialGamePlayViewModel(Difficulty difficulty,ResumeModel resume)
         {
             SetDifficultySettings(difficulty);
@@ -27,6 +28,15 @@ namespace GoMemory.ViewModels
             {
                 OrderedGame.Level = resume.Level;
                 OrderedGame.MatchsNeeded = resume.MatchesNeeded;
+                ResumeModel = resume;
+            }
+            else
+            {
+                ResumeModel = new ResumeModel
+                {
+                    PlayStyle = "Sequential",
+                    Difficulty = difficulty,
+                };
             }
             GuessesMade = 0;
         }
@@ -51,6 +61,8 @@ namespace GoMemory.ViewModels
                     break;
             }
         }
+
+
 
         /// <summary>
         /// Retrieve the image need for the selection Grid and for
@@ -117,12 +129,14 @@ namespace GoMemory.ViewModels
            
             if (OrderedGame.Level <= DifficultySetting.MaxLevel)
             {
-                
-             OrderedGame.MatchsNeeded += 1;
+                ResumeModel.Level = OrderedGame.Level - 1;
+                ResumeModel.MatchesNeeded = OrderedGame.MatchsNeeded;
+                ResumeHelper.SetResume(ResumeModel);
+                OrderedGame.MatchsNeeded += 1;
                 InitilizeRound();
                 return true;
             }
-
+            ResumeHelper.RemoveResume(ResumeModel.PlayStyle);
             return false;
         }
 

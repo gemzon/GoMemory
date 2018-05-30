@@ -15,6 +15,7 @@ namespace GoMemory.ViewModels
         public DifficultySetting DifficultySetting { get; private set; }
         public ComplexColourGame ComplexColourGame { get; set; }
         public int GuessesMade { get; set; } = 0;
+        public ResumeModel ResumeModel { get; set; }
 
         public ColourComplexGamePlayViewModel(Difficulty difficulty,ResumeModel resume)
         {
@@ -24,6 +25,15 @@ namespace GoMemory.ViewModels
             {
                 ComplexColourGame.Level = resume.Level;
                 ComplexColourGame.MatchsNeeded = resume.MatchesNeeded;
+                ResumeModel = resume;
+            }
+            else
+            {
+                ResumeModel = new ResumeModel
+                {
+                    PlayStyle = "Colour Complex",
+                    Difficulty = difficulty,
+                };
             }
 
         }
@@ -79,10 +89,15 @@ namespace GoMemory.ViewModels
             ComplexColourGame.Level += 1;
             if (ComplexColourGame.Level <= DifficultySetting.MaxLevel)
             {
+                ResumeModel.Level = ComplexColourGame.Level - 1;
+                ResumeModel.MatchesNeeded = ComplexColourGame.MatchsNeeded;
+                ResumeHelper.SetResume(ResumeModel);
+
                 InitilizeRound();
                 return true;
             }
 
+            ResumeHelper.RemoveResume(ResumeModel.PlayStyle);
             return false;
         }
 

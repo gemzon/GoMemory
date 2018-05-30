@@ -44,7 +44,7 @@ namespace GoMemory.DataAccess
             }
 
 
-            if (stat == null || gameStat.Level <= stat.Level)
+            if (stat != null && gameStat.Level <= stat.Level)
             {
                 return;
             }

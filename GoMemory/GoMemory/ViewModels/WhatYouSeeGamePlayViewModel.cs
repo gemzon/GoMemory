@@ -93,10 +93,11 @@ namespace GoMemory.ViewModels
                 return true;
             }
 
+            ResumeHelper.RemoveResume(ResumeModel.PlayStyle);
             return false;
         }
 
-
+     
         /// <summary>
         /// IntilizeRound settings
         /// </summary>

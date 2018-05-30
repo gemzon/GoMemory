@@ -11,14 +11,14 @@ namespace GoMemory.DataAccess
     public class ResumeRepository : IResumeRepository
     {
 
-        public SQLiteAsyncConnection AsyncConnection;
-        public SQLiteConnection Conn;
+        public SQLiteAsyncConnection Conn;
+       
         public ResumeRepository(string dbPath)
         {
 
-            Conn = new SQLiteConnection(dbPath);
-            AsyncConnection = new SQLiteAsyncConnection(dbPath);
-            AsyncConnection.CreateTableAsync<ResumeModel>();
+        
+           Conn= new SQLiteAsyncConnection(dbPath);
+            Conn.CreateTableAsync<ResumeModel>();
            
         }
 
@@ -31,7 +31,7 @@ namespace GoMemory.DataAccess
       
             try
             {
-               await AsyncConnection.InsertOrReplaceAsync(resumeModel);
+               await Conn.InsertOrReplaceAsync(resumeModel);
                
             }
             catch (Exception e)
@@ -46,7 +46,7 @@ namespace GoMemory.DataAccess
         {
             try
             {
-                Conn.Table<ResumeModel>().Delete(g => g.PlayStyle == playStyle);
+                Conn.Table<ResumeModel>().DeleteAsync(g => g.PlayStyle == playStyle);
             }
             catch (Exception e)
             {
@@ -56,12 +56,12 @@ namespace GoMemory.DataAccess
             
         }
 
-        public ResumeModel GetResumeModel(string playStyle)
+        public async Task<ResumeModel> GetResumeModel(string playStyle)
         {
             ResumeModel resume = null;
             try
             {
-                resume = Conn.Table<ResumeModel>().FirstOrDefault(g => g.PlayStyle == playStyle);
+                resume = await Conn.Table<ResumeModel>().FirstOrDefaultAsync(g => g.PlayStyle == playStyle);
         
             }
             catch (Exception e)

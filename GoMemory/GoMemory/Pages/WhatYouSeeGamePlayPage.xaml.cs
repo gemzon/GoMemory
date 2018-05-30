@@ -124,6 +124,7 @@ namespace GoMemory.Pages
             bool found;
             try
             {
+                Grid.IsEnabled = false;
                 Image img = sender as Image;
                 found = _whatYouSeeGamePlayViewModel.CheckSelections(img);
                 if (found)
@@ -133,11 +134,13 @@ namespace GoMemory.Pages
                         img.Opacity = 0.5;
                         img.IsEnabled = false;
                     }
+                  
                 }
                 else
                 {
                     StackLayout.IsVisible = false;
                     Failed.IsVisible = true;
+
                 }
 
                 if (_whatYouSeeGamePlayViewModel.CheckIsRoundComplete())
@@ -145,7 +148,9 @@ namespace GoMemory.Pages
                     GameStat.Level = _whatYouSeeGamePlayViewModel.UnorderedGame.Level;
 
                     App.StatRepository.UpdateGameStat(GameStat);
+                  
                     NextRound();
+                   
                 }
             }
             catch (Exception e)
@@ -155,6 +160,7 @@ namespace GoMemory.Pages
             }
             finally
             {
+                Grid.IsEnabled = true;
                 IsBusy = false;
             }
 
@@ -185,6 +191,7 @@ namespace GoMemory.Pages
             }
             else
             {
+
                 StackLayout.IsVisible = false;
                 Failed.IsVisible = false;
                 Complete.IsVisible = true;

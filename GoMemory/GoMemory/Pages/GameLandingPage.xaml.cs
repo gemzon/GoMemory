@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GoMemory.Enums;
+﻿using GoMemory.Enums;
 using GoMemory.Helpers;
 using GoMemory.Models;
-using GoMemory.ViewModels;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,15 +19,21 @@ namespace GoMemory.Pages
             InitializeComponent();
             Title = playStyle;
             PlayStyle = playStyle;
+        
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
             CheckResume();
         }
 
         /// <summary>
         /// check to see if there is a saved game
         /// </summary>
-        public void CheckResume()
+        public async void CheckResume()
         {
-            ResumeModel = ResumeHelper.CheckResume(PlayStyle);
+            ResumeModel = await ResumeHelper.CheckResume(PlayStyle) ;
             if (ResumeModel != null)
             {
                 ResumeBtn.IsEnabled = true;

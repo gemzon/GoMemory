@@ -137,6 +137,7 @@ namespace GoMemory.Pages
             bool found;
             try
             {
+                Grid.IsEnabled = false;
                 Image img = sender as Image;
                 found = _sequentialGamePlayViewModel.CheckSequence(img);
                 if (found)
@@ -182,6 +183,7 @@ namespace GoMemory.Pages
             }
             finally
             {
+                Grid.IsEnabled = true;
                 IsBusy = false;
             }
 
