@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using GoMemory.Interfaces;
 using GoMemory.Models;
 using SQLite;
@@ -18,36 +19,20 @@ namespace GoMemory.DataAccess
             Conn = new SQLiteConnection(dbPath);
             AsyncConnection = new SQLiteAsyncConnection(dbPath);
             AsyncConnection.CreateTableAsync<ResumeModel>();
-            AsyncConnection = null;
+           
         }
 
-        public  void UpdateGameResume(ResumeModel resumeModel)
+        public async void UpdateGameResume(ResumeModel resumeModel)
         {
             if (resumeModel.Level == 0)
             {
                 return;
             }
-
-            ResumeModel resume;
+      
             try
             {
-                resume = Conn.Table<ResumeModel>().FirstOrDefault(g =>g.PlayStyle == resumeModel.PlayStyle );
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-
-
-            if (resume== null)
-            {
-                return;
-            }
-
-            try
-            {
-                Conn.InsertOrReplace(resume);
+               await AsyncConnection.InsertOrReplaceAsync(resumeModel);
+               
             }
             catch (Exception e)
             {
@@ -61,7 +46,7 @@ namespace GoMemory.DataAccess
         {
             try
             {
-Conn.Table<ResumeModel>().Delete(g => g.PlayStyle == playStyle);
+                Conn.Table<ResumeModel>().Delete(g => g.PlayStyle == playStyle);
             }
             catch (Exception e)
             {
@@ -76,7 +61,7 @@ Conn.Table<ResumeModel>().Delete(g => g.PlayStyle == playStyle);
             ResumeModel resume = null;
             try
             {
-   resume = Conn.Table<ResumeModel>().FirstOrDefault(g => g.PlayStyle == playStyle);
+                resume = Conn.Table<ResumeModel>().FirstOrDefault(g => g.PlayStyle == playStyle);
         
             }
             catch (Exception e)

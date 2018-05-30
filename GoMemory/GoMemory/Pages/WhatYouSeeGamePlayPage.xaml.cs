@@ -34,6 +34,7 @@ namespace GoMemory.Pages
                 Difficulty = difficulty,
                 PlayStyle = playStyle
             };
+        
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty,resumeModel);
             CreatePageContent();
        

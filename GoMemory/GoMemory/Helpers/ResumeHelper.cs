@@ -13,15 +13,9 @@ namespace GoMemory.Helpers
             return App.ResumeRepository.GetResumeModel(playStyle);
         }
 
-        public static void SetResume(string playstyle, int level, int matchsNeeded,Difficulty difficulty)
+        public static void SetResume(ResumeModel resumeModel)
         {
-            ResumeModel resumeModel = new ResumeModel
-            {
-                Difficulty = difficulty,
-                PlayStyle = playstyle,
-                Level = level,
-                MatchesNeeded = matchsNeeded
-            };
+           
             App.ResumeRepository.UpdateGameResume(resumeModel);
         }
 

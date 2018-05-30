@@ -32,18 +32,17 @@ namespace GoMemory.Pages
         /// </summary>
         public void CheckResume()
         {
-            ResumeModel = new ResumeModel();
             ResumeModel = ResumeHelper.CheckResume(PlayStyle);
             if (ResumeModel != null)
             {
                 ResumeBtn.IsEnabled = true;
+              
             }
-
         }
 
         public void ResumeBtn_OnClicked(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+           SetGamePlay(ResumeModel.Difficulty,ResumeModel);
         }
 
         public async void StatsBtn_OnClicked(object sender, EventArgs e)
@@ -78,12 +77,14 @@ namespace GoMemory.Pages
 
         public async void SetGamePlay(Difficulty difficulty,ResumeModel resume = null)
         {
-            if (PlayStyle == "What you see")
+          if (PlayStyle == "What you see")
             {
-                await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty,PlayStyle,resume));
+               
+                await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty, PlayStyle, resume));
             }
             else if (PlayStyle == "Colour Complex")
             {
+           
                 await Navigation.PushAsync(new ColourComplexGamePlayPage (difficulty,PlayStyle,resume));
             }
             else

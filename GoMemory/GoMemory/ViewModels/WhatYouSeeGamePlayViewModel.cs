@@ -16,7 +16,7 @@ namespace GoMemory.ViewModels
         public DifficultySetting DifficultySetting { get; set; }
         public ImageHelper ImageHelper { get; set; }
         public UnorderedGame UnorderedGame { get; set; }
-        
+        public  ResumeModel ResumeModel { get; set; }
 
         public WhatYouSeeGamePlayViewModel(Difficulty difficulty,ResumeModel resume)
         {
@@ -28,7 +28,17 @@ namespace GoMemory.ViewModels
             {
                 UnorderedGame.Level = resume.Level;
                 UnorderedGame.MatchsNeeded = resume.MatchesNeeded;
+                ResumeModel = resume;
             }
+            else
+            {
+                ResumeModel = new ResumeModel
+                {
+                    PlayStyle = "What you see",
+                    Difficulty = difficulty,
+                };
+            }
+
             NextRound();
         }
 
@@ -76,6 +86,9 @@ namespace GoMemory.ViewModels
             UnorderedGame.Level += 1;
             if (UnorderedGame.Level <= DifficultySetting.MaxLevel)
             {
+                ResumeModel.Level = UnorderedGame.Level - 1;
+                ResumeModel.MatchesNeeded = UnorderedGame.MatchsNeeded;
+                ResumeHelper.SetResume(ResumeModel);
                 InitilizeRound();
                 return true;
             }
