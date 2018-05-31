@@ -124,7 +124,15 @@ namespace GoMemory.ViewModels
         {
             for (int i = 0; i < ComplexColourGame.SequenceColours.Length; i++)
             {
-               
+                StackLayout st = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal
+                };
+                Label itemnumber = new Label
+                {
+                    Text = (i + 1) + ". "
+                };
+            
                 Label label = new Label
                 {
                     Text = ComplexColourGame.SequenceColours[i].SpeltColour,
@@ -135,8 +143,10 @@ namespace GoMemory.ViewModels
                     FontAttributes = FontAttributes.Bold,
                     Margin = new Thickness(0,2,0,0)
                 };
-
-                stackLayout.Children.Add(label);
+   
+                st.Children.Add(itemnumber);
+                st.Children.Add(label);
+                stackLayout.Children.Add(st);
             }
 
             return stackLayout;
@@ -178,11 +188,11 @@ namespace GoMemory.ViewModels
             if (ComplexColourGame.Mode == Mode.Text)
             {
                 ComplexColourGame.SelectedWordColours = new string[ComplexColourGame.MatchsNeeded];
-                return "Mode : Words";
+                return "Mode : Colour Spelling";
             }
             ComplexColourGame.SelectedColours = new object[ComplexColourGame.MatchsNeeded];
 
-            return "Mode :  Colour";
+            return "Mode : Word Colouring";
 
         }
 

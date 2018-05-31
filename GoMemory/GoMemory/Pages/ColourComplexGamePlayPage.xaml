@@ -24,7 +24,9 @@
                         Text="Go !" />
                 </StackLayout>
                 <Label Style="{StaticResource LargeDarkBlueTextLabel}" Text="Your Sequence" />
-                <ScrollView x:Name="SequenceScrollView">
+                <BoxView HeightRequest="2" WidthRequest="250"  HorizontalOptions="CenterAndExpand" BackgroundColor="Black"></BoxView>
+
+<ScrollView x:Name="SequenceScrollView">
                     <StackLayout x:Name="SequenceStackLayout" />
                 </ScrollView>
 
@@ -55,9 +57,11 @@
                         Padding="2"
                         Orientation="Horizontal" />
                 </Frame>
-                <Label x:Name="ModeLabel" Style="{StaticResource LargeBlueTextLabel}" />
-
-                <Grid x:Name="Grid" />
+                <Frame BackgroundColor="DarkOrange" >
+<Label x:Name="ModeLabel" Style="{StaticResource LargeBlueTextLabel}" TextColor="White"/>
+                </Frame>
+                
+<Grid x:Name="Grid" />
             </StackLayout>
 
         </StackLayout>

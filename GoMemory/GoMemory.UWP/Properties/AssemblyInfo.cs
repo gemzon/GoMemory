@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("GoMemory.UWP")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Simple fuss free way of improving and maintaining your memory")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("ToDoProductions")]
 [assembly: AssemblyProduct("GoMemory.UWP")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]

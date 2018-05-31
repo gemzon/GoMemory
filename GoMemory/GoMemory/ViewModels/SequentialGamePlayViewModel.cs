@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net.Mime;
 using System.Text;
 using GoMemory.Enums;
@@ -84,14 +85,23 @@ namespace GoMemory.ViewModels
         {
             for (int i = 0; i < OrderedGame.ToMatchImages.Length; i++)
             {
+                StackLayout st = new StackLayout
+                {
+                    Orientation = StackOrientation.Horizontal
+                };
+                Label itemnumber = new Label
+                {
+                    Text = (i + 1) + ". "
+                };
                 Image img = new Image
                 {
                     Source = OrderedGame.ToMatchImages[i].Source,
 
                     Margin = new Thickness(2)
                 };
-
-                layout.Children.Add(img);
+                st.Children.Add(itemnumber);
+                st.Children.Add(img);
+                layout.Children.Add(st);
             }
 
             return layout;

@@ -30,8 +30,8 @@ namespace GoMemory.Pages
             _sequentialGamePlayViewModel = new SequentialGamePlayViewModel(difficulty,resume);
        
             NextRound();
-           
-           GuessLayout();
+
+            GuessLayout();
         }
 
       
@@ -137,7 +137,7 @@ namespace GoMemory.Pages
             bool found;
             try
             {
-                Grid.IsEnabled = false;
+                
                 Image img = sender as Image;
                 found = _sequentialGamePlayViewModel.CheckSequence(img);
                 if (found)
@@ -170,7 +170,8 @@ namespace GoMemory.Pages
                         Console.WriteLine(e);
                         throw;
                     }
-                   
+
+                    SequenceStackLayout.Children.Clear();
                     NextRound();
                 }
 
@@ -183,7 +184,7 @@ namespace GoMemory.Pages
             }
             finally
             {
-                Grid.IsEnabled = true;
+              
                 IsBusy = false;
             }
 
