@@ -30,7 +30,7 @@ namespace GoMemory.Droid
             base.OnResume();
             Task startupWork = new Task(() =>
             {
-                Task.Delay(3000);
+                Task.Delay(2000);
             });
             startupWork.ContinueWith(t =>
             {
