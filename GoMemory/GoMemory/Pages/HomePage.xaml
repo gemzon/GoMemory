@@ -24,11 +24,19 @@
             <Button
                 Clicked="Button_OnClicked"
                 Style="{StaticResource GoldenRodButton}"
-                Text="Colour Complex" />
+                Text="Sequential" />
+
+            <Label
+                Margin="0,20,0,0"
+                FontAttributes="Bold"
+                FontSize="Medium"
+                HorizontalOptions="Center"
+                Text="Advanced Play" />
             <Button
                 Clicked="Button_OnClicked"
                 Style="{StaticResource GoldenRodButton}"
-                Text="Sequential" />
+                Text="Colour Complex" />
+
 
         </StackLayout>
     </ContentPage.Content>

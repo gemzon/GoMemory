@@ -204,6 +204,7 @@ namespace GoMemory.Pages
             StartButton.IsVisible = !StartButton.IsVisible ;
             FlexFrame.IsVisible = !FlexFrame.IsVisible;
             Grid.IsVisible = !Grid.IsVisible;
+            memolabel.IsVisible = !memolabel.IsVisible;
         }
 
         /// <summary>

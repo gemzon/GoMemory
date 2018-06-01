@@ -25,6 +25,7 @@
                         Text="Go !" />
                 </StackLayout>
                 <Label
+                    x:Name="memolabel"
                     Margin="0,5,0,0"
                     Style="{StaticResource LargeDarkBlueTextLabel}"
                     Text="MEMORIZE THESE" />

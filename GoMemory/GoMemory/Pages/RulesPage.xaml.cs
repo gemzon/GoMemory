@@ -21,6 +21,18 @@ namespace GoMemory.Pages
 			InitializeComponent ();
 		    BindingContext = _rulesViewModel = new RulesViewModel(playStyle);
 		    Title = _rulesViewModel.PlayStyle + " Rules";
+		    switch (playStyle)
+		    {
+		        case "What you see":
+		            WhatYouSee.IsVisible = true;
+		            break;
+		        case "Sequential":
+		            Sequential.IsVisible = true;
+		            break;
+		        case "Colour Complex":
+		            ColourComplex.IsVisible = true;
+		            break;
+		    }
            
 		}
 	}

@@ -5,14 +5,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\colourcomplexmemorize.PNG" />
     <None Remove="Images\complete.png" />
     <None Remove="Images\gameover.png" />
+    <None Remove="Images\selectionrecallcolour.PNG" />
+    <None Remove="Images\sequentialGuess.PNG" />
+    <None Remove="Images\sequentialrecall.PNG" />
+    <None Remove="Images\whatyousseeguess.PNG" />
+    <None Remove="Images\whatyousseememorize.PNG" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\colourcomplexmemorize.PNG" />
     <EmbeddedResource Include="Images\complete.png" />
     <EmbeddedResource Include="Images\gameover.png" />
+    <EmbeddedResource Include="Images\selectionrecallcolour.PNG" />
+    <EmbeddedResource Include="Images\sequentialGuess.PNG" />
+    <EmbeddedResource Include="Images\sequentialrecall.PNG" />
     <EmbeddedResource Include="Images\thinking.png" />
+    <EmbeddedResource Include="Images\whatyousseeguess.png" />
+    <EmbeddedResource Include="Images\whatyousseememorize.PNG" />
   </ItemGroup>
 
   <ItemGroup>

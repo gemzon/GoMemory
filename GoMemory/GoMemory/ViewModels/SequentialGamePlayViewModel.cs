@@ -87,7 +87,9 @@ namespace GoMemory.ViewModels
             {
                 StackLayout st = new StackLayout
                 {
-                    Orientation = StackOrientation.Horizontal
+                    Orientation = StackOrientation.Horizontal,
+                   
+                    
                 };
                 Label itemnumber = new Label
                 {
@@ -102,6 +104,7 @@ namespace GoMemory.ViewModels
                 st.Children.Add(itemnumber);
                 st.Children.Add(img);
                 layout.Children.Add(st);
+                
             }
 
             return layout;

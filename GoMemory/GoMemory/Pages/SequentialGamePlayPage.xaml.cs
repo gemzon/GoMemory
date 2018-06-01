@@ -94,6 +94,7 @@ namespace GoMemory.Pages
         private void GuessLayout()
         {
             Grid = _sequentialGamePlayViewModel.CreateNewGrid(Grid);
+          
             WidthRequest = Application.Current.MainPage.Width - 10;
             HeightRequest = Application.Current.MainPage.Height * 0.6;
             Frame.WidthRequest = Application.Current.MainPage.Width * 0.7;

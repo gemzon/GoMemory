@@ -24,10 +24,14 @@
                         Text="Go !" />
                 </StackLayout>
                 <Label Style="{StaticResource LargeDarkBlueTextLabel}" Text="Your Sequence" />
-                <BoxView HeightRequest="2" WidthRequest="250"  HorizontalOptions="CenterAndExpand" BackgroundColor="Black"></BoxView>
-                <ScrollView x:Name="SequenceScrollView">
+                <BoxView
+                    BackgroundColor="Black"
+                    HeightRequest="2"
+                    HorizontalOptions="CenterAndExpand"
+                    WidthRequest="250" />
+                <ScrollView x:Name="SequenceScrollView" HorizontalOptions="Center">
 
-                    <StackLayout x:Name="SequenceStackLayout" />
+                    <StackLayout x:Name="SequenceStackLayout" HorizontalOptions="Center" />
 
                 </ScrollView>
 
