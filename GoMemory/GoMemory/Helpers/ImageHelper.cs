@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using GoMemory.Models;
 using Xamarin.Forms;
 
 namespace GoMemory.Helpers
@@ -12,7 +8,7 @@ namespace GoMemory.Helpers
     public class ImageHelper
     {
         private readonly Image[] _images;
-     
+
         public ImageHelper()
         {
 
@@ -35,7 +31,7 @@ namespace GoMemory.Helpers
 
             _images = new[]
             {
-                
+
                 new Image{Source = folder +    "apple.png"},
                 new Image{Source = folder +  "beer.png"},
                 new Image{Source = folder +  "bell.png"},
@@ -77,7 +73,7 @@ namespace GoMemory.Helpers
         }
 
 
-    
+
 
 
         /// <summary>
@@ -88,7 +84,7 @@ namespace GoMemory.Helpers
         /// </returns>
         public Image[] GetImages(int totalImages)
         {
-           Image[] shuffled =  ShuffleCollection(_images);
+            Image[] shuffled = ShuffleCollection(_images);
             Image[] unsorted = new Image[totalImages];
             for (int i = 0; i < unsorted.Length; i++)
             {
@@ -114,7 +110,7 @@ namespace GoMemory.Helpers
                 unsorted[i] = unsorted[randomIndex];
                 unsorted[randomIndex] = temp;
             }
-            return  unsorted;
+            return unsorted;
         }
 
 
@@ -125,30 +121,30 @@ namespace GoMemory.Helpers
         /// <returns>
         /// Array of Image
         /// </returns>
-        public List<Image> ToMatchImagesList(int numberOfImagesNeeded,Image[] images)
+        public List<Image> ToMatchImagesList(int numberOfImagesNeeded, Image[] images)
         {
 
-           
-         
 
-                List<Image> matchImages = new List<Image>();
 
-                Random rnd = new Random();
 
-                int count = 0;
-                while (count != numberOfImagesNeeded)
-                {
-                    Image selectedImage = images[rnd.Next(0, images.Length)];
-                    if (matchImages.Contains(selectedImage)) continue;
-                    matchImages.Add(selectedImage);
-                    count++;
+            List<Image> matchImages = new List<Image>();
 
-                }
+            Random rnd = new Random();
+
+            int count = 0;
+            while (count != numberOfImagesNeeded)
+            {
+                Image selectedImage = images[rnd.Next(0, images.Length)];
+                if (matchImages.Contains(selectedImage)) continue;
+                matchImages.Add(selectedImage);
+                count++;
+
+            }
 
             return matchImages;
         }
 
-        public Image[] ToMatchImagesArray(Image[]selectFromImages )
+        public Image[] ToMatchImagesArray(Image[] selectFromImages)
         {
             Random rnd = new Random();
             int maxIndex = selectFromImages.Length;
@@ -157,7 +153,7 @@ namespace GoMemory.Helpers
             {
                 Image selectedImage = selectFromImages[rnd.Next(0, maxIndex)];
                 if (matchImages.Contains(selectedImage)) continue;
-                matchImages[i] =selectedImage;
+                matchImages[i] = selectedImage;
             }
             return matchImages;
 

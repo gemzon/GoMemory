@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using GoMemory.Enums;
-using GoMemory.Models;
+﻿using GoMemory.Models;
+using System.Collections.Generic;
 
 namespace GoMemory.Interfaces
 {

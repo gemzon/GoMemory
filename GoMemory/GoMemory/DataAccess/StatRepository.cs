@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using GoMemory.DataAccess;
-using GoMemory.Enums;
-using GoMemory.Interfaces;
+﻿using GoMemory.Interfaces;
 using GoMemory.Models;
 using SQLite;
+using System;
+using System.Collections.Generic;
 
 namespace GoMemory.DataAccess
 {
@@ -63,7 +60,7 @@ namespace GoMemory.DataAccess
 
         public List<GameStat> GetGameStats(string playStyle)
         {
-            return   SyncConnection.Table<GameStat>().Where(g => g.PlayStyle == playStyle).ToList();
+            return SyncConnection.Table<GameStat>().Where(g => g.PlayStyle == playStyle).ToList();
         }
     }
 }

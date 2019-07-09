@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GoMemory.Models;
+﻿using GoMemory.Models;
 using Xamarin.Forms;
 
 namespace GoMemory.Helpers
@@ -14,16 +11,16 @@ namespace GoMemory.Helpers
         /// <param name="rowSize"></param>
         /// <param name="columSize"></param>
         /// <returns></returns>
-        public static Grid CreateGrid(int rowSize,int columSize)
+        public static Grid CreateGrid(int rowSize, int columSize)
         {
-          Grid Grid =   new Grid
-          {
-              Margin = new Thickness(0,10,0,0),
-              ColumnSpacing = 1,
-              RowSpacing = 1,
-              HorizontalOptions = LayoutOptions.FillAndExpand,
-              VerticalOptions = LayoutOptions.FillAndExpand,
-          };
+            Grid Grid = new Grid
+            {
+                Margin = new Thickness(0, 10, 0, 0),
+                ColumnSpacing = 1,
+                RowSpacing = 1,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+            };
 
 
             for (int i = 0; i < rowSize; i++)
@@ -38,13 +35,13 @@ namespace GoMemory.Helpers
             return Grid;
         }
 
-     
+
         /// <summary>
         /// Insert images into the Grid
         /// </summary>
         /// <param name="grid"></param>
         /// <returns></returns>
-        public static Grid InsertGridImages(Grid grid,Image[] images,DifficultySetting difficultySetting)
+        public static Grid InsertGridImages(Grid grid, Image[] images, DifficultySetting difficultySetting)
         {
             if (grid.Children.Count != 0)
             {

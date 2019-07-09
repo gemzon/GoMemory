@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GoMemory.Enums;
-using GoMemory.Models;
-using GoMemory.ViewModels;
+﻿using GoMemory.Enums;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,30 +10,30 @@ namespace GoMemory.Pages
     {
         public string PlayStyle { get; set; }
 
-        public StatsPage (string  playStyle)
+        public StatsPage(string playStyle)
         {
-            InitializeComponent ();
- 
+            InitializeComponent();
+
             PlayStyle = playStyle;
             Title = " Stats";
             GetStats();
-        
+
         }
 
 
         public void GetStats()
         {
 
-            var templist =  App.StatRepository.GetGameStats(PlayStyle);
-            
+            var templist = App.StatRepository.GetGameStats(PlayStyle);
+
             foreach (var d in templist)
             {
-          //    if (d == null) continue;
+                //    if (d == null) continue;
                 switch (d.Difficulty)
                 {
                     case Difficulty.Easy:
                         EasyLabel.Text = d.Level.ToString();
-                    
+
                         break;
                     case Difficulty.Normal:
                         NormalLabel.Text = d.Level.ToString();
@@ -52,7 +45,7 @@ namespace GoMemory.Pages
                         throw new ArgumentOutOfRangeException();
                 }
             }
-            }
+        }
 
     }
 }

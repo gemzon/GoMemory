@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GoMemory.Interfaces;
+﻿using GoMemory.Interfaces;
 using Xamarin.Forms;
 
 namespace GoMemory.Models

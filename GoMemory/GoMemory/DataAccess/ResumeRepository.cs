@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using GoMemory.Interfaces;
+﻿using GoMemory.Interfaces;
 using GoMemory.Models;
 using SQLite;
+using System;
+using System.Threading.Tasks;
 
 namespace GoMemory.DataAccess
 {
@@ -12,14 +10,14 @@ namespace GoMemory.DataAccess
     {
 
         public SQLiteAsyncConnection Conn;
-       
+
         public ResumeRepository(string dbPath)
         {
 
-        
-           Conn= new SQLiteAsyncConnection(dbPath);
+
+            Conn = new SQLiteAsyncConnection(dbPath);
             Conn.CreateTableAsync<ResumeModel>();
-           
+
         }
 
         public async void UpdateGameResume(ResumeModel resumeModel)
@@ -28,11 +26,11 @@ namespace GoMemory.DataAccess
             {
                 return;
             }
-      
+
             try
             {
-               await Conn.InsertOrReplaceAsync(resumeModel);
-               
+                await Conn.InsertOrReplaceAsync(resumeModel);
+
             }
             catch (Exception e)
             {
@@ -53,7 +51,7 @@ namespace GoMemory.DataAccess
                 Console.WriteLine(e);
                 throw;
             }
-            
+
         }
 
         public async Task<ResumeModel> GetResumeModel(string playStyle)
@@ -62,7 +60,7 @@ namespace GoMemory.DataAccess
             try
             {
                 resume = await Conn.Table<ResumeModel>().FirstOrDefaultAsync(g => g.PlayStyle == playStyle);
-        
+
             }
             catch (Exception e)
             {

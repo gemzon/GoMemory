@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GoMemory.Enums;
-using GoMemory.Helpers;
+﻿using GoMemory.Enums;
 using GoMemory.Models;
 using GoMemory.ViewModels;
+using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,23 +13,23 @@ namespace GoMemory.Pages
     {
         private readonly SequentialGamePlayViewModel _sequentialGamePlayViewModel;
         private GameStat GameStat;
-        public SequentialGamePlayPage(Difficulty difficulty,string playStyle,ResumeModel resume)
+        public SequentialGamePlayPage(Difficulty difficulty, string playStyle, ResumeModel resume)
         {
             InitializeComponent();
-            Title =  "Sequential";
+            Title = "Sequential";
             GameStat = new GameStat
             {
                 Difficulty = difficulty,
                 PlayStyle = playStyle
             };
-            _sequentialGamePlayViewModel = new SequentialGamePlayViewModel(difficulty,resume);
-       
+            _sequentialGamePlayViewModel = new SequentialGamePlayViewModel(difficulty, resume);
+
             NextRound();
 
             GuessLayout();
         }
 
-      
+
 
         /// <summary>
         /// intiate the visibility of elemetns and 
@@ -78,7 +73,7 @@ namespace GoMemory.Pages
         /// <param name="e"></param>
         private void StartButton_OnClicked(object sender, EventArgs e)
         {
-       
+
             SequenceStackLayout.Children.Clear();
             SelectedImageStackLayout.Children.Clear();
             StackLayout.IsVisible = false;
@@ -94,7 +89,7 @@ namespace GoMemory.Pages
         private void GuessLayout()
         {
             Grid = _sequentialGamePlayViewModel.CreateNewGrid(Grid);
-          
+
             WidthRequest = Application.Current.MainPage.Width - 10;
             HeightRequest = Application.Current.MainPage.Height * 0.6;
             Frame.WidthRequest = Application.Current.MainPage.Width * 0.7;
@@ -106,7 +101,7 @@ namespace GoMemory.Pages
             AddTapGestures();
 
         }
-   
+
         /// <summary>
         /// Add Tap gesture for the Grid Images
         /// </summary>
@@ -127,7 +122,7 @@ namespace GoMemory.Pages
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="ev"></param>
-        private  void OnTapped(object sender, EventArgs ev)
+        private void OnTapped(object sender, EventArgs ev)
         {
             if (IsBusy)
             {
@@ -138,7 +133,7 @@ namespace GoMemory.Pages
             bool found;
             try
             {
-                
+
                 Image img = sender as Image;
                 found = _sequentialGamePlayViewModel.CheckSequence(img);
                 if (found)
@@ -160,11 +155,11 @@ namespace GoMemory.Pages
                 }
                 if (_sequentialGamePlayViewModel.CheckIsRoundComplete())
                 {
-                   
+
                     try
                     {
-                    GameStat.Level = _sequentialGamePlayViewModel.OrderedGame.Level ;
-                    App.StatRepository.UpdateGameStat(GameStat);
+                        GameStat.Level = _sequentialGamePlayViewModel.OrderedGame.Level;
+                        App.StatRepository.UpdateGameStat(GameStat);
                     }
                     catch (Exception e)
                     {
@@ -185,7 +180,7 @@ namespace GoMemory.Pages
             }
             finally
             {
-              
+
                 IsBusy = false;
             }
 
@@ -200,7 +195,7 @@ namespace GoMemory.Pages
         private void RetryButton_Clicked(object sender, EventArgs e)
         {
             _sequentialGamePlayViewModel.Retry();
-         
+
             StackLayout.IsVisible = true;
             Failed.IsVisible = false;
             PlayLayout.IsVisible = false;

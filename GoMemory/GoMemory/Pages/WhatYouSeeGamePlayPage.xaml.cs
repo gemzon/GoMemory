@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows.Input;
-using GoMemory.Enums;
-using GoMemory.Helpers;
+﻿using GoMemory.Enums;
 using GoMemory.Models;
 using GoMemory.ViewModels;
+using System;
+using System.Timers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -25,22 +18,22 @@ namespace GoMemory.Pages
         public static Timer EndLevelTimer;
 
 
-        public WhatYouSeeGamePlayPage(Difficulty difficulty,string playStyle,ResumeModel resumeModel)
+        public WhatYouSeeGamePlayPage(Difficulty difficulty, string playStyle, ResumeModel resumeModel)
         {
             InitializeComponent();
-            Title =  "What you see";
+            Title = "What you see";
             GameStat = new GameStat
             {
                 Difficulty = difficulty,
                 PlayStyle = playStyle
             };
-        
-            _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty,resumeModel);
+
+            _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty, resumeModel);
             CreatePageContent();
-       
+
         }
 
-       
+
 
 
 
@@ -49,7 +42,7 @@ namespace GoMemory.Pages
         /// </summary>
         private void CreatePageContent()
         {
-            
+
             Failed.IsVisible = false;
             LevelLabel.Text = _whatYouSeeGamePlayViewModel.SetLevelText();
 
@@ -57,13 +50,13 @@ namespace GoMemory.Pages
 
 
             AddImagesToselectFlexLayout();
-            
+
             Grid = _whatYouSeeGamePlayViewModel.CreateNewGrid(Grid);
             Grid.MinimumWidthRequest = Application.Current.MainPage.Width * 0.5;
             Grid.MinimumWidthRequest = Application.Current.MainPage.Height * 0.6;
             Grid.IsVisible = false;
 
-          
+
             StackLayout.Children.Add(Grid);
             AddTapGestures();
 
@@ -75,11 +68,11 @@ namespace GoMemory.Pages
         private void AddImagesToselectFlexLayout()
         {
             FlexLayout = _whatYouSeeGamePlayViewModel.CreateSequenceFlexLayout(FlexLayout);
-        } 
+        }
 
 
-       
-           
+
+
 
         /// <summary>
         /// Add Tap gesture for the Grid Images
@@ -105,7 +98,7 @@ namespace GoMemory.Pages
         private void StartButton_OnClicked(object sender, EventArgs eventArgs)
         {
             ToggleVisibilities();
-           
+
         }
 
         /// <summary>
@@ -134,7 +127,7 @@ namespace GoMemory.Pages
                         img.Opacity = 0.5;
                         img.IsEnabled = false;
                     }
-                  
+
                 }
                 else
                 {
@@ -148,9 +141,9 @@ namespace GoMemory.Pages
                     GameStat.Level = _whatYouSeeGamePlayViewModel.UnorderedGame.Level;
 
                     App.StatRepository.UpdateGameStat(GameStat);
-                  
+
                     NextRound();
-                   
+
                 }
             }
             catch (Exception e)
@@ -167,7 +160,7 @@ namespace GoMemory.Pages
         }
 
 
-      
+
 
         /// <summary>
         /// Intiates next Level of play or signals game completed 
@@ -186,7 +179,7 @@ namespace GoMemory.Pages
                     image.Opacity = 1;
                     image.IsEnabled = true;
                 }
-               
+
                 ToggleVisibilities();
             }
             else
@@ -201,7 +194,7 @@ namespace GoMemory.Pages
 
         private void ToggleVisibilities()
         {
-            StartButton.IsVisible = !StartButton.IsVisible ;
+            StartButton.IsVisible = !StartButton.IsVisible;
             FlexFrame.IsVisible = !FlexFrame.IsVisible;
             Grid.IsVisible = !Grid.IsVisible;
             memolabel.IsVisible = !memolabel.IsVisible;
@@ -216,7 +209,7 @@ namespace GoMemory.Pages
         {
             _whatYouSeeGamePlayViewModel.Retry();
             NextRound();
-           
+
             StackLayout.IsVisible = true;
             Failed.IsVisible = false;
         }

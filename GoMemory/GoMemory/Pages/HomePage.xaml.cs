@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GoMemory.Enums;
-using GoMemory.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,16 +8,16 @@ namespace GoMemory.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HomePage : ContentPage
     {
-        #if __IOS__
+#if __IOS__
 
                 Padding = new Thickness(0, 20, 0, 0);
 
-        #endif
+#endif
         public HomePage()
         {
             InitializeComponent();
             Title = "Go Memory";
-           
+
         }
 
 

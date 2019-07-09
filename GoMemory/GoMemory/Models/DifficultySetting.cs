@@ -1,7 +1,4 @@
-﻿using GoMemory.Enums;
-using GoMemory.Interfaces;
-
-namespace GoMemory.Models
+﻿namespace GoMemory.Models
 {
     public class DifficultySetting
     {
@@ -9,7 +6,7 @@ namespace GoMemory.Models
         public int GridColumnSize { get; set; }
         public int MaxSelectable { get; set; }
         public int MaxLevel { get; set; }
-     
+
 
         /// <summary>
         /// Setup Difficulty Setting object

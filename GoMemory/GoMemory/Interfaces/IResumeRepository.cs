@@ -1,6 +1,5 @@
-﻿using System.Threading.Tasks;
-using GoMemory.Models;
-using SQLite;
+﻿using GoMemory.Models;
+using System.Threading.Tasks;
 
 namespace GoMemory.Interfaces
 {

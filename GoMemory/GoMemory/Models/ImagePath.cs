@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GoMemory.Models
+﻿namespace GoMemory.Models
 {
     public class ImagePath
     {
         public string Path { get; set; }
-        public string Name { get; set; }    
+        public string Name { get; set; }
     }
 }

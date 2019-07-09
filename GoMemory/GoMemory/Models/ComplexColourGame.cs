@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GoMemory.Enums;
+﻿using GoMemory.Enums;
 using GoMemory.Interfaces;
+using System;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace GoMemory.Models
@@ -18,15 +17,15 @@ namespace GoMemory.Models
         public object[] SelectedColours { get; set; }
         public string[] SelectedWordColours { get; set; }
         public Mode Mode { get; set; }
-        public int Level { get; set; } 
+        public int Level { get; set; }
         public int MatchsNeeded { get; set; } = 1;
 
 
         public ComplexColourGame(int maxSelectable)
         {
-           ColoursArray();
+            ColoursArray();
             WordColorsArray();
-          PlayColours = new Color[maxSelectable];
+            PlayColours = new Color[maxSelectable];
             PlayWordColours = new string[maxSelectable];
 
             GenerateColors();
@@ -37,8 +36,8 @@ namespace GoMemory.Models
         private void GenerateColors()
         {
             Random rnd = new Random();
-        
-            for (int i = 0; i< PlayColours.Length; i++)
+
+            for (int i = 0; i < PlayColours.Length; i++)
             {
                 int index = rnd.Next(0, Colours.Count);
                 PlayColours[i] = Colours[index];
@@ -64,12 +63,12 @@ namespace GoMemory.Models
             {
                 Color.Blue,
                 Color.Brown,
-                Color.Red, 
-                Color.Gray, 
-                Color.Green, 
-                Color.Orange, 
-                Color.Pink, 
-                Color.Purple, 
+                Color.Red,
+                Color.Gray,
+                Color.Green,
+                Color.Orange,
+                Color.Pink,
+                Color.Purple,
                 Color.Teal
             };
         }
@@ -90,7 +89,7 @@ namespace GoMemory.Models
             };
         }
 
-       
+
     }
 
 

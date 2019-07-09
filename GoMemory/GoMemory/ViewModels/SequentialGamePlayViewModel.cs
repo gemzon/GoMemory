@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Net.Mime;
-using System.Text;
-using GoMemory.Enums;
+﻿using GoMemory.Enums;
 using GoMemory.Helpers;
 using GoMemory.Interfaces;
 using GoMemory.Models;
+using System;
 using Xamarin.Forms;
 
 namespace GoMemory.ViewModels
 {
-    public class SequentialGamePlayViewModel : BaseViewModel,IGame
+    public class SequentialGamePlayViewModel : BaseViewModel, IGame
     {
         public DifficultySetting DifficultySetting { get; set; }
         public OrderedGame OrderedGame { get; set; }
@@ -20,7 +15,7 @@ namespace GoMemory.ViewModels
         public ImageHelper ImageHelper { get; set; }
 
         public ResumeModel ResumeModel { get; set; }
-        public SequentialGamePlayViewModel(Difficulty difficulty,ResumeModel resume)
+        public SequentialGamePlayViewModel(Difficulty difficulty, ResumeModel resume)
         {
             SetDifficultySettings(difficulty);
             ImageHelper = new ImageHelper();
@@ -71,8 +66,9 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void GetDifficultyImages()
         {
-           OrderedGame = new OrderedGame {
-               AllImages = ImageHelper.GetImages(DifficultySetting.MaxSelectable)
+            OrderedGame = new OrderedGame
+            {
+                AllImages = ImageHelper.GetImages(DifficultySetting.MaxSelectable)
             };
         }
 
@@ -88,8 +84,8 @@ namespace GoMemory.ViewModels
                 StackLayout st = new StackLayout
                 {
                     Orientation = StackOrientation.Horizontal,
-                   
-                    
+
+
                 };
                 Label itemnumber = new Label
                 {
@@ -104,13 +100,13 @@ namespace GoMemory.ViewModels
                 st.Children.Add(itemnumber);
                 st.Children.Add(img);
                 layout.Children.Add(st);
-                
+
             }
 
             return layout;
         }
-      
-    
+
+
         /// <summary>
         /// Create a grid containing the image used at this levle of difficulty
         /// </summary>
@@ -120,14 +116,14 @@ namespace GoMemory.ViewModels
         {
             grid = GridHelper.CreateGrid(DifficultySetting.GridRowSize, DifficultySetting.GridColumnSize);
             grid = AddGridImages(grid);
-     
 
-           return grid;
+
+            return grid;
         }
 
         public Grid AddGridImages(Grid grid)
         {
-       return  GridHelper.InsertGridImages(grid, OrderedGame.AllImages, DifficultySetting);
+            return GridHelper.InsertGridImages(grid, OrderedGame.AllImages, DifficultySetting);
 
         }
 
@@ -139,7 +135,7 @@ namespace GoMemory.ViewModels
         public bool NextRound()
         {
             OrderedGame.Level += 1;
-           
+
             if (OrderedGame.Level <= DifficultySetting.MaxLevel)
             {
                 ResumeModel.Level = OrderedGame.Level - 1;
@@ -160,12 +156,12 @@ namespace GoMemory.ViewModels
         {
             OrderedGame.ToMatchImages = new Image[OrderedGame.MatchsNeeded];
             OrderedGame.SelectedImages = new Image[OrderedGame.MatchsNeeded];
-            
+
             GenerateToMatchSequence();
             GuessesMade = 0;
         }
 
-       
+
 
 
         /// <summary>
@@ -173,18 +169,18 @@ namespace GoMemory.ViewModels
         /// </summary>
         private void GenerateToMatchSequence()
         {
-            
+
             Random rnd = new Random();
             for (int i = 0; i < OrderedGame.ToMatchImages.Length; i++)
             {
-               
+
                 int randomValue = rnd.Next(0, OrderedGame.AllImages.Length);
                 Image img = new Image
                 {
                     Source = OrderedGame.AllImages[randomValue].Source,
                     Aspect = Aspect.Fill,
                     Margin = new Thickness(2)
-                   
+
                 };
                 OrderedGame.ToMatchImages[i] = img;
             }
@@ -201,7 +197,7 @@ namespace GoMemory.ViewModels
         {
             OrderedGame.SelectedImages[GuessesMade] = selectedImage;
 
-            for (int i = 0; i < GuessesMade+1; i++)
+            for (int i = 0; i < GuessesMade + 1; i++)
             {
                 if (OrderedGame.SelectedImages[i].Source != OrderedGame.ToMatchImages[i].Source)
                     return false;
@@ -215,10 +211,10 @@ namespace GoMemory.ViewModels
 
 
         /// <summary>
-            /// Set a Labels text to the current level
-            /// </summary>
-            /// <returns></returns>
-            public string SetLevelText()
+        /// Set a Labels text to the current level
+        /// </summary>
+        /// <returns></returns>
+        public string SetLevelText()
         {
             return "Level : " + OrderedGame.Level;
         }
@@ -228,8 +224,8 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void Retry()
         {
-           OrderedGame.Level -= 1;
-           OrderedGame.MatchsNeeded -= 1;
+            OrderedGame.Level -= 1;
+            OrderedGame.MatchsNeeded -= 1;
 
 
         }
@@ -238,6 +234,6 @@ namespace GoMemory.ViewModels
         {
             return GuessesMade == OrderedGame.ToMatchImages.Length;
         }
-        
+
     }
 }

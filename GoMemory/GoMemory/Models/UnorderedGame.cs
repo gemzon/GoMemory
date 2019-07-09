@@ -1,8 +1,5 @@
-﻿using System;
+﻿using GoMemory.Interfaces;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using GoMemory.Interfaces;
 using Xamarin.Forms;
 
 namespace GoMemory.Models
@@ -13,7 +10,7 @@ namespace GoMemory.Models
         public List<Image> ToMatchImages { get; set; }
         public List<Image> SelectedImages { get; set; }
 
-        public int Level { get; set; } 
+        public int Level { get; set; }
         public int MatchsNeeded { get; set; } = 2;
     }
 }

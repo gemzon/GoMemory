@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GoMemory.Enums;
-using GoMemory.Models;
-
-namespace GoMemory.ViewModels
+﻿namespace GoMemory.ViewModels
 {
     public class RulesViewModel
     {

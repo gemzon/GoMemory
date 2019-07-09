@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using GoMemory.Models;
 using System.Threading.Tasks;
-using GoMemory.Enums;
-using GoMemory.Models;
 
 namespace GoMemory.Helpers
 {
@@ -14,15 +10,15 @@ namespace GoMemory.Helpers
             return await App.ResumeRepository.GetResumeModel(playStyle);
         }
 
-        public static  void SetResume(ResumeModel resumeModel)
+        public static void SetResume(ResumeModel resumeModel)
         {
-           
-         App.ResumeRepository.UpdateGameResume(resumeModel);
+
+            App.ResumeRepository.UpdateGameResume(resumeModel);
         }
 
         public static void RemoveResume(string playstyle)
         {
-        App.ResumeRepository.RemoveResumeModel(playstyle);
+            App.ResumeRepository.RemoveResumeModel(playstyle);
         }
     }
 }

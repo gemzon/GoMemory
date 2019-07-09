@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Mime;
-using System.Text;
-using GoMemory.Enums;
-using GoMemory.Models;
-using Xamarin.Forms;
+﻿using GoMemory.Enums;
 
 namespace GoMemory.Interfaces
 {

@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Resources;
-using System.Text;
-using GoMemory.Enums;
+﻿using GoMemory.Enums;
 using GoMemory.Helpers;
 using GoMemory.Interfaces;
 using GoMemory.Models;
+using System.Collections.Generic;
 using Xamarin.Forms;
 
 namespace GoMemory.ViewModels
 {
-    public class WhatYouSeeGamePlayViewModel : BaseViewModel,IGame
+    public class WhatYouSeeGamePlayViewModel : BaseViewModel, IGame
     {
         public DifficultySetting DifficultySetting { get; set; }
         public ImageHelper ImageHelper { get; set; }
         public UnorderedGame UnorderedGame { get; set; }
-        public  ResumeModel ResumeModel { get; set; }
+        public ResumeModel ResumeModel { get; set; }
 
-        public WhatYouSeeGamePlayViewModel(Difficulty difficulty,ResumeModel resume)
+        public WhatYouSeeGamePlayViewModel(Difficulty difficulty, ResumeModel resume)
         {
-          
+
             SetDifficultySettings(difficulty);
             ImageHelper = new ImageHelper();
             GetDifficultyImages();
@@ -42,7 +38,7 @@ namespace GoMemory.ViewModels
             NextRound();
         }
 
-       
+
 
         /// <summary>
         /// Setup game difficulty settings
@@ -51,10 +47,10 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public void SetDifficultySettings(Difficulty difficulty)
         {
-           switch (difficulty)
+            switch (difficulty)
             {
                 case Difficulty.Easy:
-                    DifficultySetting = new DifficultySetting(4,4,16,10);
+                    DifficultySetting = new DifficultySetting(4, 4, 16, 10);
                     break;
                 case Difficulty.Hard:
                     DifficultySetting = new DifficultySetting(6, 6, 36, 30);
@@ -72,17 +68,17 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void GetDifficultyImages()
         {
-            UnorderedGame = new UnorderedGame {AllImages = ImageHelper.GetImages(DifficultySetting.MaxSelectable)};
-   }
+            UnorderedGame = new UnorderedGame { AllImages = ImageHelper.GetImages(DifficultySetting.MaxSelectable) };
+        }
 
 
         /// <summary>
         /// Determinees if max level for difficulty is reached if not
         /// next round is intilized
         /// </summary>
-       public bool NextRound()
+        public bool NextRound()
         {
-            
+
             UnorderedGame.Level += 1;
             if (UnorderedGame.Level <= DifficultySetting.MaxLevel)
             {
@@ -97,7 +93,7 @@ namespace GoMemory.ViewModels
             return false;
         }
 
-     
+
         /// <summary>
         /// IntilizeRound settings
         /// </summary>
@@ -105,10 +101,10 @@ namespace GoMemory.ViewModels
         {
 
             UnorderedGame.MatchsNeeded += 1;
-            UnorderedGame.ToMatchImages = ImageHelper.ToMatchImagesList(UnorderedGame.MatchsNeeded,UnorderedGame.AllImages);
+            UnorderedGame.ToMatchImages = ImageHelper.ToMatchImagesList(UnorderedGame.MatchsNeeded, UnorderedGame.AllImages);
             UnorderedGame.SelectedImages = new List<Image>();
         }
- 
+
 
         /// <summary>
         /// Create a new GameGrid
@@ -117,11 +113,11 @@ namespace GoMemory.ViewModels
         public Grid CreateNewGrid(Grid grid)
         {
             grid = GridHelper.CreateGrid(DifficultySetting.GridRowSize, DifficultySetting.GridColumnSize);
-            grid = GridHelper.InsertGridImages(grid,UnorderedGame.AllImages,DifficultySetting);
+            grid = GridHelper.InsertGridImages(grid, UnorderedGame.AllImages, DifficultySetting);
             return grid;
         }
 
-        
+
         /// <summary>
         /// Check if the selected image is contain within 
         /// the list of image that are needed to be matched
@@ -153,14 +149,14 @@ namespace GoMemory.ViewModels
             }
 
             return false;
-           
+
         }
 
-     
 
-       
 
-    
+
+
+
         /// <summary>
         /// Check to see if the number of correct selection is
         /// equal to the total number of correct guesses needed
@@ -170,7 +166,7 @@ namespace GoMemory.ViewModels
         {
             return UnorderedGame.SelectedImages.Count ==
                    UnorderedGame.ToMatchImages.Count;
-          
+
         }
 
         /// <summary>
@@ -187,7 +183,7 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void Retry()
         {
-           
+
             UnorderedGame.Level -= 1;
             UnorderedGame.MatchsNeeded -= 1;
 
@@ -211,4 +207,4 @@ namespace GoMemory.ViewModels
             return flexLayout;
         }
     }
-    }
+}

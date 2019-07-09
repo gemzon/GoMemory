@@ -19,7 +19,7 @@ namespace GoMemory.Pages
             InitializeComponent();
             Title = playStyle;
             PlayStyle = playStyle;
-        
+
         }
 
         protected override void OnAppearing()
@@ -33,17 +33,17 @@ namespace GoMemory.Pages
         /// </summary>
         public async void CheckResume()
         {
-            ResumeModel = await ResumeHelper.CheckResume(PlayStyle) ;
+            ResumeModel = await ResumeHelper.CheckResume(PlayStyle);
             if (ResumeModel != null)
             {
                 ResumeBtn.IsEnabled = true;
-              
+
             }
         }
 
         public void ResumeBtn_OnClicked(object sender, EventArgs e)
         {
-           SetGamePlay(ResumeModel.Difficulty,ResumeModel);
+            SetGamePlay(ResumeModel.Difficulty, ResumeModel);
         }
 
         public async void StatsBtn_OnClicked(object sender, EventArgs e)
@@ -76,21 +76,21 @@ namespace GoMemory.Pages
 
         }
 
-        public async void SetGamePlay(Difficulty difficulty,ResumeModel resume = null)
+        public async void SetGamePlay(Difficulty difficulty, ResumeModel resume = null)
         {
-          if (PlayStyle == "What you see")
+            if (PlayStyle == "What you see")
             {
-               
+
                 await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty, PlayStyle, resume));
             }
             else if (PlayStyle == "Colour Complex")
             {
-           
-                await Navigation.PushAsync(new ColourComplexGamePlayPage (difficulty,PlayStyle,resume));
+
+                await Navigation.PushAsync(new ColourComplexGamePlayPage(difficulty, PlayStyle, resume));
             }
             else
             {
-                await Navigation.PushAsync(new SequentialGamePlayPage(difficulty,PlayStyle,resume));
+                await Navigation.PushAsync(new SequentialGamePlayPage(difficulty, PlayStyle, resume));
             }
         }
 
