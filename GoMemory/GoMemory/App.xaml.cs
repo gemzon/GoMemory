@@ -1,8 +1,7 @@
 using GoMemory.DataAccess;
 using GoMemory.Interfaces;
 using GoMemory.Pages;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -28,10 +27,7 @@ namespace GoMemory
 
         protected override void OnStart()
         {
-            AppCenter.Start("uwp=" +
-                            "android=" +
-                            "ios=",
-                typeof(Analytics));
+          
         }
 
         protected override void OnSleep()

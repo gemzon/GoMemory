@@ -174,6 +174,8 @@ namespace GoMemory.Pages
                     }
                     catch (Exception e)
                     {
+                        //TODO: throw the exception and handle it properly idiot !!
+
                         Console.WriteLine(e);
                         throw;
                     }
@@ -185,6 +187,7 @@ namespace GoMemory.Pages
             }
             catch (Exception e)
             {
+                //TODO: throw the exception and handle it properly idiot !!
                 Console.WriteLine(e);
                 throw;
             }
