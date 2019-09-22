@@ -13,14 +13,14 @@ namespace GoMemory.Pages
     {
         private readonly SequentialGamePlayViewModel _sequentialGamePlayViewModel;
         private GameStat GameStat;
-        public SequentialGamePlayPage(Difficulty difficulty, string playStyle, ResumeModel resume)
+        public SequentialGamePlayPage(Difficulty difficulty, GameType gameType, ResumeModel resume)
         {
             InitializeComponent();
             Title = "Sequential";
             GameStat = new GameStat
             {
                 Difficulty = difficulty,
-                PlayStyle = playStyle
+                GameType = gameType
             };
             _sequentialGamePlayViewModel = new SequentialGamePlayViewModel(difficulty, resume);
 

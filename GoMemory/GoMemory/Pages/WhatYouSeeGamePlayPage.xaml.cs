@@ -18,14 +18,14 @@ namespace GoMemory.Pages
         public static Timer EndLevelTimer;
 
 
-        public WhatYouSeeGamePlayPage(Difficulty difficulty, string playStyle, ResumeModel resumeModel)
+        public WhatYouSeeGamePlayPage(Difficulty difficulty, GameType gameType, ResumeModel resumeModel)
         {
             InitializeComponent();
             Title = "What you see";
             GameStat = new GameStat
             {
                 Difficulty = difficulty,
-                PlayStyle = playStyle
+                GameType = gameType
             };
 
             _whatYouSeeGamePlayViewModel = new WhatYouSeeGamePlayViewModel(difficulty, resumeModel);

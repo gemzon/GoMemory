@@ -14,14 +14,14 @@ namespace GoMemory.Pages
         readonly ColourComplexGamePlayViewModel _colourComplexGamePlayViewModel;
         private GameStat GameStat;
 
-        public ColourComplexGamePlayPage(Difficulty difficulty, string playStyle, ResumeModel resume)
+        public ColourComplexGamePlayPage(Difficulty difficulty, GameType gameType, ResumeModel resume)
         {
             InitializeComponent();
             Title = "ColourComplex";
             GameStat = new GameStat
             {
                 Difficulty = difficulty,
-                PlayStyle = playStyle
+                GameType = gameType
             };
 
 

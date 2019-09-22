@@ -8,13 +8,13 @@ namespace GoMemory.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StatsPage : ContentPage
     {
-        public string PlayStyle { get; set; }
+        public GameType GameType{ get; set; }
 
-        public StatsPage(string playStyle)
+        public StatsPage(GameType gameType)
         {
             InitializeComponent();
 
-            PlayStyle = playStyle;
+            GameType = gameType;
             Title = " Stats";
             GetStats();
 
@@ -24,7 +24,7 @@ namespace GoMemory.Pages
         public void GetStats()
         {
 
-            var templist = App.StatRepository.GetGameStats(PlayStyle);
+            var templist = App.StatRepository.GetGameStats(GameType);
 
             foreach (var d in templist)
             {

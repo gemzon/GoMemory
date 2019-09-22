@@ -1,4 +1,5 @@
-﻿using GoMemory.Enums;
+﻿using GoMemory.DataAccess;
+using GoMemory.Enums;
 using GoMemory.Helpers;
 using GoMemory.Interfaces;
 using GoMemory.Models;
@@ -47,18 +48,11 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public void SetDifficultySettings(Difficulty difficulty)
         {
-            switch (difficulty)
-            {
-                case Difficulty.Easy:
-                    DifficultySetting = new DifficultySetting(4, 4, 16, 10);
-                    break;
-                case Difficulty.Hard:
-                    DifficultySetting = new DifficultySetting(6, 6, 36, 30);
-                    break;
-                default:
-                    DifficultySetting = new DifficultySetting(5, 5, 25, 20);
-                    break;
-            }
+
+            DifficultySetting = SettingsData.SetDifficultyParmeters()
+                .Find(x => x.GameType.Equals(GameType.Guess) &&
+                    x.Difficulty.Equals(difficulty));
+        
         }
 
 

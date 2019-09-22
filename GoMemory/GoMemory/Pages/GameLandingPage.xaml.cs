@@ -46,17 +46,26 @@ namespace GoMemory.Pages
             SetGamePlay(ResumeModel.Difficulty, ResumeModel);
         }
 
+        //todo fix properly
         public async void StatsBtn_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new StatsPage(PlayStyle));
+            await Navigation.PushAsync(new StatsPage(GameType.Guess));
         }
 
+
+        //todo fix properly
         public async void RulesBtn_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new RulesPage(PlayStyle));
         }
 
-        public void Difficulty_OnClicked(object sender, EventArgs e)
+
+        /// <summary>
+        /// setting the difficulty of  the games
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void SetGame_OnClicked(object sender, EventArgs e)
         {
             Button clickedButton = sender as Button;
 
@@ -76,25 +85,29 @@ namespace GoMemory.Pages
 
         }
 
+
+        //set game play style
         public async void SetGamePlay(Difficulty difficulty, ResumeModel resume = null)
         {
             if (PlayStyle == "What you see")
             {
 
-                await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty, PlayStyle, resume));
+                await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty,GameType.Guess , resume));
             }
             else if (PlayStyle == "Colour Complex")
             {
 
-                await Navigation.PushAsync(new ColourComplexGamePlayPage(difficulty, PlayStyle, resume));
+                await Navigation.PushAsync(new ColourComplexGamePlayPage(difficulty, GameType.ColourComplex, resume));
             }
             else
             {
-                await Navigation.PushAsync(new SequentialGamePlayPage(difficulty, PlayStyle, resume));
+                await Navigation.PushAsync(new SequentialGamePlayPage(difficulty, GameType.Sequential, resume));
             }
         }
 
+        private void Button_Clicked(object sender, EventArgs e)
+        {
 
-
+        }
     }
 }

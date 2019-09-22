@@ -1,7 +1,8 @@
 using GoMemory.DataAccess;
 using GoMemory.Interfaces;
+using GoMemory.Models;
 using GoMemory.Pages;
-
+using System.Collections.Generic;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,7 +15,7 @@ namespace GoMemory
 
         public static IResumeRepository ResumeRepository { get; private set; }
 
-
+        public  IList<DifficultySetting> DifficultySettings;
 
 
         public App(string dbPath)
@@ -22,6 +23,7 @@ namespace GoMemory
             InitializeComponent();
             StatRepository = new StatRepository(dbPath);
             ResumeRepository = new ResumeRepository(dbPath);
+            DifficultySettings = SettingsData.SetDifficultyParmeters();
             MainPage = new NavigationPage(new HomePage());
         }
 

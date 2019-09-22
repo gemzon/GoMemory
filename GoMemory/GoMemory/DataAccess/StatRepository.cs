@@ -1,4 +1,5 @@
-﻿using GoMemory.Interfaces;
+﻿using GoMemory.Enums;
+using GoMemory.Interfaces;
 using GoMemory.Models;
 using SQLite;
 using System;
@@ -31,8 +32,9 @@ namespace GoMemory.DataAccess
             GameStat stat;
             try
             {
-                stat = await AsyncConnection.Table<GameStat>().FirstOrDefaultAsync(g => g.PlayStyle == gameStat.PlayStyle &&
-                                                                                    g.Difficulty == gameStat.Difficulty);
+                stat = await AsyncConnection.Table<GameStat>()
+                    .FirstOrDefaultAsync(g => g.GameType == gameStat.GameType &&
+                    g.Difficulty == gameStat.Difficulty);
             }
             catch (Exception e)
             {
@@ -58,9 +60,9 @@ namespace GoMemory.DataAccess
 
         }
 
-        public List<GameStat> GetGameStats(string playStyle)
+        public List<GameStat> GetGameStats(GameType gameType)
         {
-            return SyncConnection.Table<GameStat>().Where(g => g.PlayStyle == playStyle).ToList();
+            return SyncConnection.Table<GameStat>().Where(g => g.GameType == gameType).ToList();
         }
     }
 }

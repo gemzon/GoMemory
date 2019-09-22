@@ -9,7 +9,7 @@ namespace GoMemory.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        public string PlayStyle { get; set; }
+        public GameType GameType { get; set; }
         public int Level { get; set; }
         public Difficulty Difficulty { get; set; }
 
