@@ -1,4 +1,5 @@
 ﻿using GoMemory.Enums;
+using GoMemory.Helpers;
 using GoMemory.Models;
 using GoMemory.ViewModels;
 using System;
@@ -13,7 +14,7 @@ namespace GoMemory.Pages
     public partial class WhatYouSeeGamePlayPage : ContentPage
     {
         readonly WhatYouSeeGamePlayViewModel _whatYouSeeGamePlayViewModel;
-        public GameStat GameStat;
+        public GameStatus GameStatus;
         public Grid Grid;
         public static Timer EndLevelTimer;
 
@@ -22,7 +23,7 @@ namespace GoMemory.Pages
         {
             InitializeComponent();
             Title = "What you see";
-            GameStat = new GameStat
+            GameStatus = new GameStatus
             {
                 Difficulty = difficulty,
                 GameType = gameType
@@ -32,9 +33,6 @@ namespace GoMemory.Pages
             CreatePageContent();
 
         }
-
-
-
 
 
         /// <summary>
@@ -70,10 +68,6 @@ namespace GoMemory.Pages
             FlexLayout = _whatYouSeeGamePlayViewModel.CreateSequenceFlexLayout(FlexLayout);
         }
 
-
-
-
-
         /// <summary>
         /// Add Tap gesture for the Grid Images
         /// </summary>
@@ -86,18 +80,6 @@ namespace GoMemory.Pages
                 tapGestureRecognizer.Tapped += OnTapped;
                 image.GestureRecognizers.Add(tapGestureRecognizer);
             }
-
-        }
-
-        /// <summary>
-        /// When player is ready to recall images 
-        /// coordinates the start of the guessing  phase
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="eventArgs"></param>
-        private void StartButton_OnClicked(object sender, EventArgs eventArgs)
-        {
-            ToggleVisibilities();
 
         }
 
@@ -138,9 +120,8 @@ namespace GoMemory.Pages
 
                 if (_whatYouSeeGamePlayViewModel.CheckIsRoundComplete())
                 {
-                    GameStat.Level = _whatYouSeeGamePlayViewModel.UnorderedGame.Level;
-
-                    App.StatRepository.UpdateGameStat(GameStat);
+                    GameStatus.Level = _whatYouSeeGamePlayViewModel.UnorderedGame.Level;
+                    UpdateStatusHelper.UpdateStatus(GameStatus);
 
                     NextRound();
 
@@ -159,11 +140,15 @@ namespace GoMemory.Pages
 
         }
 
+        private void StartButton_OnClicked(object sender, EventArgs eventArgs)
+        {
+            ToggleVisibilities();
 
+        }
 
 
         /// <summary>
-        /// Intiates next Level of play or signals game completed 
+        /// Initiates next Level of play or signals game completed 
         /// 
         /// </summary>
         public void NextRound()
@@ -200,20 +185,14 @@ namespace GoMemory.Pages
             memolabel.IsVisible = !memolabel.IsVisible;
         }
 
-        /// <summary>
-        /// Sets Game play to retry the current level
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="eventArgs"></param>
         private void RetryButton_Clicked(object sender, EventArgs eventArgs)
         {
             _whatYouSeeGamePlayViewModel.Retry();
             NextRound();
 
+            //TODO refactor 
             StackLayout.IsVisible = true;
             Failed.IsVisible = false;
         }
-
-
     }
 }

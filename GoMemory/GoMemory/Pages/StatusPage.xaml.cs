@@ -6,25 +6,25 @@ using Xamarin.Forms.Xaml;
 namespace GoMemory.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class StatsPage : ContentPage
+    public partial class StatusPage : ContentPage
     {
         public GameType GameType{ get; set; }
 
-        public StatsPage(GameType gameType)
+        public StatusPage(GameType gameType)
         {
             InitializeComponent();
 
             GameType = gameType;
             Title = " Stats";
-            GetStats();
+            GetStatus();
 
         }
 
 
-        public void GetStats()
+        public void GetStatus()
         {
 
-            var templist = App.StatRepository.GetGameStats(GameType);
+            var templist = App.StatusRepository.GetGameStatus(GameType);
 
             foreach (var d in templist)
             {

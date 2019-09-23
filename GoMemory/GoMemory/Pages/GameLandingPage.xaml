@@ -44,8 +44,8 @@
                         Style="{StaticResource GoldenRodButton}"
                         Text="Resume" />
                     <Button
-                        x:Name="StatsBtn"
-                        Clicked="StatsBtn_OnClicked"
+                        x:Name="StatusBtn"
+                        Clicked="StatusBtn_OnClicked"
                         Style="{StaticResource GoldenRodButton}"
                         Text="Stats" />
                     <Button

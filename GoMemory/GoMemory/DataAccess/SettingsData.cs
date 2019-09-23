@@ -2,17 +2,16 @@
 using GoMemory.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GoMemory.DataAccess
 {
     public static class SettingsData
     {
-   
-        public static List<DifficultySetting> SetDifficultyParmeters()
+
+        public static List<DifficultySetting> CreateDifficultySettings()
         {
             List<DifficultySetting> DifficultySettings = new List<DifficultySetting>();
-      
+
             DifficultySettings.Add(new DifficultySetting
             {
                 GameType = GameType.Guess,
@@ -104,6 +103,13 @@ namespace GoMemory.DataAccess
             });
 
             return DifficultySettings;
+        }
+
+        public static DifficultySetting SetCurrentDifficulty(GameType gameType, Difficulty difficulty)
+        {
+            return CreateDifficultySettings()
+                           .Find(x => x.GameType.Equals(gameType) &&
+                               x.Difficulty.Equals(difficulty));
         }
     }
 }

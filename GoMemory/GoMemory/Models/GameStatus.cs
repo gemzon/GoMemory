@@ -3,8 +3,8 @@ using SQLite;
 
 namespace GoMemory.Models
 {
-    [Table("Gamestat")]
-    public class GameStat
+    [Table("GameStatus")]
+    public class GameStatus
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

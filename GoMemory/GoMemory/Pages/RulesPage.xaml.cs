@@ -12,7 +12,7 @@ namespace GoMemory.Pages
         {
             InitializeComponent();
             BindingContext = _rulesViewModel = new RulesViewModel(playStyle);
-            Title = _rulesViewModel.PlayStyle + " Rules";
+            Title =  $"{_rulesViewModel.PlayStyle } Rules";
             switch (playStyle)
             {
                 case "What you see":

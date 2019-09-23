@@ -1,13 +1,13 @@
-﻿using GoMemory.Models;
-using System.Threading.Tasks;
+﻿using GoMemory.Enums;
+using GoMemory.Models;
 
 namespace GoMemory.Interfaces
 {
     public interface IResumeRepository
     {
         void UpdateGameResume(ResumeModel resumeModel);
-        Task<ResumeModel> GetResumeModel(string playStyle);
+        ResumeModel GetResumeModel(GameType gameType);
 
-        void RemoveResumeModel(string playStyle);
+        void RemoveResumeModel(GameType gameType);
     }
 }

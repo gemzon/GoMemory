@@ -1,4 +1,5 @@
 ﻿using GoMemory.Enums;
+using GoMemory.Helpers;
 using GoMemory.Models;
 using GoMemory.ViewModels;
 using System;
@@ -12,30 +13,27 @@ namespace GoMemory.Pages
     public partial class ColourComplexGamePlayPage : ContentPage
     {
         readonly ColourComplexGamePlayViewModel _colourComplexGamePlayViewModel;
-        private GameStat GameStat;
+        private GameStatus GameStatus;
 
         public ColourComplexGamePlayPage(Difficulty difficulty, GameType gameType, ResumeModel resume)
         {
             InitializeComponent();
             Title = "ColourComplex";
-            GameStat = new GameStat
+            GameStatus = new GameStatus
             {
                 Difficulty = difficulty,
                 GameType = gameType
             };
 
-
             _colourComplexGamePlayViewModel = new ColourComplexGamePlayViewModel(difficulty, resume);
             GuessLayout();
             NextRound();
-
-
         }
 
 
 
         /// <summary>
-        /// intiate the visibility of elemetns and 
+        /// initiate the visibility of elements and 
         /// changes the page content
         /// </summary>
         public void NextRound()
@@ -49,7 +47,7 @@ namespace GoMemory.Pages
                 PlayLayout.IsVisible = false;
                 Failed.IsVisible = false;
                 SelectedStackLayout.Children.Clear();
-                SequenceStackLayout = _colourComplexGamePlayViewModel.PopulateSequencStackLayout(SequenceStackLayout);
+                SequenceStackLayout = _colourComplexGamePlayViewModel.PopulateSequenceStackLayout(SequenceStackLayout);
                 LevelLabel.Text = _colourComplexGamePlayViewModel.SetLevelText();
                 Content = StackLayout;
             }
@@ -59,33 +57,14 @@ namespace GoMemory.Pages
                 PlayLayout.IsVisible = false;
                 DifficultyCompleted();
             }
-
-
         }
 
         /// <summary>
-        /// Make visible to difficuly completeImage
+        /// Make visible to difficulty completeImage
         /// </summary>
         private void DifficultyCompleted()
         {
             Complete.IsVisible = true;
-        }
-
-        /// <summary>
-        /// Trigger the trigger the visiblity of view and chgange to 
-        /// pages content assignmnet
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void StartButton_OnClicked(object sender, EventArgs e)
-        {
-
-            SequenceStackLayout.Children.Clear();
-            StackLayout.IsVisible = false;
-            PlayLayout.IsVisible = true;
-            ModeLabel.Text = _colourComplexGamePlayViewModel.SetMode();
-            Content = PlayLayout;
-
         }
 
         private void GuessLayout()
@@ -102,7 +81,16 @@ namespace GoMemory.Pages
             AddGuessButtonClickHandlers();
 
         }
+        private void StartButton_OnClicked(object sender, EventArgs e)
+        {
 
+            SequenceStackLayout.Children.Clear();
+            StackLayout.IsVisible = false;
+            PlayLayout.IsVisible = true;
+            ModeLabel.Text = _colourComplexGamePlayViewModel.SetMode();
+            Content = PlayLayout;
+
+        }
 
         private void AddGuessButtonClickHandlers()
         {
@@ -167,18 +155,9 @@ namespace GoMemory.Pages
                 }
                 if (_colourComplexGamePlayViewModel.CheckIsRoundComplete())
                 {
-                    try
-                    {
-                        GameStat.Level = _colourComplexGamePlayViewModel.ComplexColourGame.Level;
-                        App.StatRepository.UpdateGameStat(GameStat);
-                    }
-                    catch (Exception e)
-                    {
-                        //TODO: throw the exception and handle it properly idiot !!
 
-                        Console.WriteLine(e);
-                        throw;
-                    }
+                    GameStatus.Level = _colourComplexGamePlayViewModel.ComplexColourGame.Level;
+                    UpdateStatusHelper.UpdateStatus(GameStatus);
 
                     NextRound();
                 }
@@ -199,15 +178,11 @@ namespace GoMemory.Pages
 
         }
 
-
-        /// <summary>
-        /// Reinitialize the game round after a bad choice made
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void RetryButton_Clicked(object sender, EventArgs e)
         {
             _colourComplexGamePlayViewModel.Retry();
+
+            //Todo extract reduce duplication
             StackLayout.IsVisible = true;
             Failed.IsVisible = false;
             PlayLayout.IsVisible = false;

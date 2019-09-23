@@ -1,4 +1,5 @@
 ﻿using GoMemory.Enums;
+using GoMemory.Helpers;
 using GoMemory.Models;
 using GoMemory.ViewModels;
 using System;
@@ -12,12 +13,12 @@ namespace GoMemory.Pages
     public partial class SequentialGamePlayPage : ContentPage
     {
         private readonly SequentialGamePlayViewModel _sequentialGamePlayViewModel;
-        private GameStat GameStat;
+        private GameStatus GameStat;
         public SequentialGamePlayPage(Difficulty difficulty, GameType gameType, ResumeModel resume)
         {
             InitializeComponent();
             Title = "Sequential";
-            GameStat = new GameStat
+            GameStat = new GameStatus
             {
                 Difficulty = difficulty,
                 GameType = gameType
@@ -32,7 +33,7 @@ namespace GoMemory.Pages
 
 
         /// <summary>
-        /// intiate the visibility of elemetns and 
+        /// initiate the visibility of elements and 
         /// changes the page content
         /// </summary>
         public void NextRound()
@@ -57,20 +58,6 @@ namespace GoMemory.Pages
 
         }
 
-        /// <summary>
-        /// Make visible to difficuly completeImage
-        /// </summary>
-        private void DifficultyCompleted()
-        {
-            Complete.IsVisible = true;
-        }
-
-        /// <summary>
-        /// Trigger the trigger the visiblity of view and chgange to 
-        /// pages content assignmnet
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void StartButton_OnClicked(object sender, EventArgs e)
         {
 
@@ -84,7 +71,15 @@ namespace GoMemory.Pages
         }
 
         /// <summary>
-        /// Createt the Grid for making guesses
+        /// Make visible to difficult completeImage
+        /// </summary>
+        private void DifficultyCompleted()
+        {
+            Complete.IsVisible = true;
+        }
+
+        /// <summary>
+        /// Create the Grid for making guesses
         /// </summary>
         private void GuessLayout()
         {
@@ -155,18 +150,8 @@ namespace GoMemory.Pages
                 }
                 if (_sequentialGamePlayViewModel.CheckIsRoundComplete())
                 {
-
-                    try
-                    {
-                        GameStat.Level = _sequentialGamePlayViewModel.OrderedGame.Level;
-                        App.StatRepository.UpdateGameStat(GameStat);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
-                    }
-
+                    GameStat.Level = _sequentialGamePlayViewModel.OrderedGame.Level;
+                    UpdateStatusHelper.UpdateStatus(GameStat);
                     SequenceStackLayout.Children.Clear();
                     NextRound();
                 }
@@ -186,12 +171,6 @@ namespace GoMemory.Pages
 
         }
 
-
-        /// <summary>
-        /// Reinitialize the game round after a bad choice made
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void RetryButton_Clicked(object sender, EventArgs e)
         {
             _sequentialGamePlayViewModel.Retry();

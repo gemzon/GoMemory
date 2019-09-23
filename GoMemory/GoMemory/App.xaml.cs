@@ -11,7 +11,7 @@ namespace GoMemory
 {
     public partial class App : Application
     {
-        public static IStatRepository StatRepository { get; private set; }
+        public static IStatusRepository StatusRepository { get; private set; }
 
         public static IResumeRepository ResumeRepository { get; private set; }
 
@@ -21,9 +21,9 @@ namespace GoMemory
         public App(string dbPath)
         {
             InitializeComponent();
-            StatRepository = new StatRepository(dbPath);
+            StatusRepository = new StatusRepository(dbPath);
             ResumeRepository = new ResumeRepository(dbPath);
-            DifficultySettings = SettingsData.SetDifficultyParmeters();
+            DifficultySettings = SettingsData.CreateDifficultySettings();
             MainPage = new NavigationPage(new HomePage());
         }
 

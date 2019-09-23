@@ -43,18 +43,13 @@ namespace GoMemory.Helpers
         /// <returns></returns>
         public static Grid InsertGridImages(Grid grid, Image[] images, DifficultySetting difficultySetting)
         {
-            if (grid.Children.Count != 0)
-            {
-                grid.Children.Clear();
-            }
-
+            grid.Children.Clear();
 
             int imagecount = 0;
             for (int row = 0; row < difficultySetting.GridRowSize; row++)
             {
                 for (int column = 0; column < difficultySetting.GridColumnSize; column++)
                 {
-
                     Image image = new Image
                     {
                         Source = images[imagecount].Source,
@@ -64,11 +59,9 @@ namespace GoMemory.Helpers
 
                     grid.Children.Add(image, row, column);
 
-
                     imagecount += 1;
                 }
             }
-
             return grid;
         }
     }

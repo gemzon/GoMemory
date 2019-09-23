@@ -8,25 +8,25 @@ namespace GoMemory.Models
 {
     public class ComplexColourGame : ILevel
     {
-        public List<Color> Colours { get; set; }
-        public List<string> WordColours { get; set; }
+        public List<Color> Colors { get; set; }
+        public List<string> WordColors { get; set; }
 
-        public string[] PlayWordColours { get; set; }
-        public Color[] PlayColours { get; set; }
-        public ComplexColour[] SequenceColours { get; set; }
-        public object[] SelectedColours { get; set; }
-        public string[] SelectedWordColours { get; set; }
+        public string[] PlayWordColors { get; set; }
+        public Color[] PlayColors { get; set; }
+        public ComplexColour[] SequenceColors { get; set; }
+        public object[] SelectedColors { get; set; }
+        public string[] SelectedWordColors { get; set; }
         public Mode Mode { get; set; }
         public int Level { get; set; }
-        public int MatchsNeeded { get; set; } = 1;
+        public int MatchesNeeded { get; set; } = 1;
 
 
         public ComplexColourGame(int maxSelectable)
         {
             ColoursArray();
             WordColorsArray();
-            PlayColours = new Color[maxSelectable];
-            PlayWordColours = new string[maxSelectable];
+            PlayColors = new Color[maxSelectable];
+            PlayWordColors = new string[maxSelectable];
 
             GenerateColors();
             GenerateWordColors();
@@ -37,11 +37,11 @@ namespace GoMemory.Models
         {
             Random rnd = new Random();
 
-            for (int i = 0; i < PlayColours.Length; i++)
+            for (int i = 0; i < PlayColors.Length; i++)
             {
-                int index = rnd.Next(0, Colours.Count);
-                PlayColours[i] = Colours[index];
-                Colours.RemoveAt(index);
+                int index = rnd.Next(0, Colors.Count);
+                PlayColors[i] = Colors[index];
+                Colors.RemoveAt(index);
             }
         }
 
@@ -49,17 +49,17 @@ namespace GoMemory.Models
         {
             Random rnd = new Random();
 
-            for (int i = 0; i < PlayWordColours.Length; i++)
+            for (int i = 0; i < PlayWordColors.Length; i++)
             {
-                int index = rnd.Next(0, WordColours.Count);
-                PlayWordColours[i] = WordColours[index];
-                WordColours.RemoveAt(index);
+                int index = rnd.Next(0, WordColors.Count);
+                PlayWordColors[i] = WordColors[index];
+                WordColors.RemoveAt(index);
             }
         }
 
         private void ColoursArray()
         {
-            Colours = new List<Color>()
+            Colors = new List<Color>()
             {
                 Color.Blue,
                 Color.Brown,
@@ -75,7 +75,7 @@ namespace GoMemory.Models
 
         private void WordColorsArray()
         {
-            WordColours = new List<string>
+            WordColors = new List<string>
             {
                 "Blue",
                 "Brown",

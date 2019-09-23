@@ -1,4 +1,5 @@
-﻿using GoMemory.Enums;
+﻿using GoMemory.DataAccess;
+using GoMemory.Enums;
 using GoMemory.Helpers;
 using GoMemory.Interfaces;
 using GoMemory.Models;
@@ -17,48 +18,28 @@ namespace GoMemory.ViewModels
         public ResumeModel ResumeModel { get; set; }
         public SequentialGamePlayViewModel(Difficulty difficulty, ResumeModel resume)
         {
-            SetDifficultySettings(difficulty);
+            DifficultySetting = SettingsData.SetCurrentDifficulty(GameType.Guess, difficulty);
+
             ImageHelper = new ImageHelper();
             GetDifficultyImages();
+
+            //TODO refactor to own class
             if (resume != null)
             {
                 OrderedGame.Level = resume.Level;
-                OrderedGame.MatchsNeeded = resume.MatchesNeeded;
+                OrderedGame.MatchesNeeded = resume.MatchesNeeded;
                 ResumeModel = resume;
             }
             else
             {
                 ResumeModel = new ResumeModel
                 {
-                    PlayStyle = "Sequential",
+                    GameType = GameType.Sequential,
                     Difficulty = difficulty,
                 };
             }
             GuessesMade = 0;
         }
-
-        /// <summary>
-        /// Setup game difficulty settings
-        /// </summary>
-        /// <param name="difficulty"></param>
-        /// <returns></returns>
-        public void SetDifficultySettings(Difficulty difficulty)
-        {
-            switch (difficulty)
-            {
-                case Difficulty.Easy:
-                    DifficultySetting = DifficultyHelper.SetDifficulty(2, 2, 4, 10);
-                    break;
-                case Difficulty.Normal:
-                    DifficultySetting = DifficultyHelper.SetDifficulty(3, 3, 9, 20);
-                    break;
-                case Difficulty.Hard:
-                    DifficultySetting = DifficultyHelper.SetDifficulty(4, 4, 16, 30);
-                    break;
-            }
-        }
-
-
 
         /// <summary>
         /// Retrieve the image need for the selection Grid and for
@@ -89,7 +70,7 @@ namespace GoMemory.ViewModels
                 };
                 Label itemnumber = new Label
                 {
-                    Text = (i + 1) + ". "
+                    Text = $"{(i + 1)} . "
                 };
                 Image img = new Image
                 {
@@ -108,7 +89,7 @@ namespace GoMemory.ViewModels
 
 
         /// <summary>
-        /// Create a grid containing the image used at this levle of difficulty
+        /// Create a grid containing the image used at this level of difficulty
         /// </summary>
         /// <param name="grid"></param>
         /// <returns></returns>
@@ -129,8 +110,8 @@ namespace GoMemory.ViewModels
 
 
         /// <summary>
-        /// Determinees if max level for difficulty is reached if not
-        /// next round is intilized
+        /// Determines if max level for difficulty is reached if not
+        /// next round is initialized
         /// </summary>
         public bool NextRound()
         {
@@ -139,23 +120,23 @@ namespace GoMemory.ViewModels
             if (OrderedGame.Level <= DifficultySetting.MaxLevel)
             {
                 ResumeModel.Level = OrderedGame.Level - 1;
-                ResumeModel.MatchesNeeded = OrderedGame.MatchsNeeded;
+                ResumeModel.MatchesNeeded = OrderedGame.MatchesNeeded;
                 ResumeHelper.SetResume(ResumeModel);
-                OrderedGame.MatchsNeeded += 1;
-                InitilizeRound();
+                OrderedGame.MatchesNeeded += 1;
+                InitializeRound();
                 return true;
             }
-            ResumeHelper.RemoveResume(ResumeModel.PlayStyle);
+            ResumeHelper.RemoveResume(ResumeModel.GameType);
             return false;
         }
 
         /// <summary>
-        /// IntilizeRound settings
+        /// InitializeRound settings
         /// </summary>
-        public void InitilizeRound()
+        public void InitializeRound()
         {
-            OrderedGame.ToMatchImages = new Image[OrderedGame.MatchsNeeded];
-            OrderedGame.SelectedImages = new Image[OrderedGame.MatchsNeeded];
+            OrderedGame.ToMatchImages = new Image[OrderedGame.MatchesNeeded];
+            OrderedGame.SelectedImages = new Image[OrderedGame.MatchesNeeded];
 
             GenerateToMatchSequence();
             GuessesMade = 0;
@@ -165,7 +146,7 @@ namespace GoMemory.ViewModels
 
 
         /// <summary>
-        /// Generate the sequence that needs to be matched can have mulitple images of the same type
+        /// Generate the sequence that needs to be matched can have multiple images of the same type
         /// </summary>
         private void GenerateToMatchSequence()
         {
@@ -216,7 +197,7 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public string SetLevelText()
         {
-            return "Level : " + OrderedGame.Level;
+            return $"Level : {OrderedGame.Level}";
         }
 
         /// <summary>
@@ -225,7 +206,7 @@ namespace GoMemory.ViewModels
         public void Retry()
         {
             OrderedGame.Level -= 1;
-            OrderedGame.MatchsNeeded -= 1;
+            OrderedGame.MatchesNeeded -= 1;
 
 
         }

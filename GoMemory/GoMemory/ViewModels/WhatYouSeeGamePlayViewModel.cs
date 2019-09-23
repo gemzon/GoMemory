@@ -15,60 +15,53 @@ namespace GoMemory.ViewModels
         public UnorderedGame UnorderedGame { get; set; }
         public ResumeModel ResumeModel { get; set; }
 
+        private int CorrectSelections;
+
+
         public WhatYouSeeGamePlayViewModel(Difficulty difficulty, ResumeModel resume)
         {
-
-            SetDifficultySettings(difficulty);
+            DifficultySetting = SettingsData.SetCurrentDifficulty(GameType.Guess, difficulty);
             ImageHelper = new ImageHelper();
-            GetDifficultyImages();
+            SetGameImages();        
+            CheckIfResume(difficulty, resume);
+            NextRound();
+        }
+
+        //TODO move out to own class
+        private void CheckIfResume(Difficulty difficulty, ResumeModel resume)
+        {
             if (resume != null)
             {
                 UnorderedGame.Level = resume.Level;
-                UnorderedGame.MatchsNeeded = resume.MatchesNeeded;
+                UnorderedGame.MatchesNeeded = resume.MatchesNeeded;
                 ResumeModel = resume;
             }
             else
             {
                 ResumeModel = new ResumeModel
                 {
-                    PlayStyle = "What you see",
+                    GameType = GameType.Guess,
                     Difficulty = difficulty,
                 };
             }
-
-            NextRound();
         }
 
-
-
-        /// <summary>
-        /// Setup game difficulty settings
-        /// </summary>
-        /// <param name="difficulty"></param>
-        /// <returns></returns>
-        public void SetDifficultySettings(Difficulty difficulty)
-        {
-
-            DifficultySetting = SettingsData.SetDifficultyParmeters()
-                .Find(x => x.GameType.Equals(GameType.Guess) &&
-                    x.Difficulty.Equals(difficulty));
-        
-        }
 
 
         /// <summary>
         /// Retrieve collection of image
         /// amount depends on difficulty setting
         /// </summary>
-        public void GetDifficultyImages()
+        public void SetGameImages()
         {
             UnorderedGame = new UnorderedGame { AllImages = ImageHelper.GetImages(DifficultySetting.MaxSelectable) };
+
         }
 
 
         /// <summary>
-        /// Determinees if max level for difficulty is reached if not
-        /// next round is intilized
+        /// Determines if max level for difficulty is reached if not
+        /// next round is initialized
         /// </summary>
         public bool NextRound()
         {
@@ -77,25 +70,26 @@ namespace GoMemory.ViewModels
             if (UnorderedGame.Level <= DifficultySetting.MaxLevel)
             {
                 ResumeModel.Level = UnorderedGame.Level - 1;
-                ResumeModel.MatchesNeeded = UnorderedGame.MatchsNeeded;
+                //todo pull directly from App.DifficultSettings
+                ResumeModel.MatchesNeeded = UnorderedGame.MatchesNeeded;
                 ResumeHelper.SetResume(ResumeModel);
-                InitilizeRound();
+                InitializeRound();
                 return true;
             }
 
-            ResumeHelper.RemoveResume(ResumeModel.PlayStyle);
+            ResumeHelper.RemoveResume(ResumeModel.GameType);
             return false;
         }
 
 
         /// <summary>
-        /// IntilizeRound settings
+        /// InitializeRound settings
         /// </summary>
-        public void InitilizeRound()
+        public void InitializeRound()
         {
-
-            UnorderedGame.MatchsNeeded += 1;
-            UnorderedGame.ToMatchImages = ImageHelper.ToMatchImagesList(UnorderedGame.MatchsNeeded, UnorderedGame.AllImages);
+            CorrectSelections = 0;
+            UnorderedGame.MatchesNeeded += 1;
+            UnorderedGame.ToMatchImages = ImageHelper.ToMatchImagesList(UnorderedGame.MatchesNeeded, UnorderedGame.AllImages);
             UnorderedGame.SelectedImages = new List<Image>();
         }
 
@@ -119,37 +113,17 @@ namespace GoMemory.ViewModels
         /// <param name="selectedImage"></param>
         public bool CheckSelections(Image selectedImage)
         {
-
             foreach (var image in UnorderedGame.ToMatchImages)
             {
-                if (image.Source != selectedImage.Source) continue;
-
-                if (UnorderedGame.SelectedImages.Count > 0)
+                if (image.Source == selectedImage.Source)
                 {
-                    foreach (var img in UnorderedGame.SelectedImages)
-                    {
-                        if (img.Source == selectedImage.Source) continue;
-                        UnorderedGame.SelectedImages.Add(selectedImage);
-
-                        return true;
-                    }
-                }
-                else
-                {
-                    UnorderedGame.SelectedImages.Add(selectedImage);
-
+                    CorrectSelections++;
                     return true;
                 }
             }
 
             return false;
-
         }
-
-
-
-
-
 
         /// <summary>
         /// Check to see if the number of correct selection is
@@ -158,8 +132,7 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public bool CheckIsRoundComplete()
         {
-            return UnorderedGame.SelectedImages.Count ==
-                   UnorderedGame.ToMatchImages.Count;
+            return CorrectSelections == UnorderedGame.ToMatchImages.Length;
 
         }
 
@@ -169,7 +142,7 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public string SetLevelText()
         {
-            return "Level : " + UnorderedGame.Level;
+            return $"Level : {UnorderedGame.Level}";
         }
 
         /// <summary>
@@ -179,19 +152,18 @@ namespace GoMemory.ViewModels
         {
 
             UnorderedGame.Level -= 1;
-            UnorderedGame.MatchsNeeded -= 1;
+            UnorderedGame.MatchesNeeded -= 1;
 
         }
 
         public FlexLayout CreateSequenceFlexLayout(FlexLayout flexLayout)
         {
             flexLayout.Children.Clear();
-            for (int i = 0; i < UnorderedGame.ToMatchImages.Count; i++)
+            for (int i = 0; i < UnorderedGame.ToMatchImages.Length; i++)
             {
                 Image img = new Image
                 {
                     Source = UnorderedGame.ToMatchImages[i].Source,
-
                     Margin = new Thickness(2)
                 };
 

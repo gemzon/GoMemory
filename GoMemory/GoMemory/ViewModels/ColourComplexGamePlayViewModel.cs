@@ -1,4 +1,5 @@
-﻿using GoMemory.Enums;
+﻿using GoMemory.DataAccess;
+using GoMemory.Enums;
 using GoMemory.Helpers;
 using GoMemory.Interfaces;
 using GoMemory.Models;
@@ -17,19 +18,22 @@ namespace GoMemory.ViewModels
 
         public ColourComplexGamePlayViewModel(Difficulty difficulty, ResumeModel resume)
         {
-            SetDifficultySettings(difficulty);
+            DifficultySetting = SettingsData.SetCurrentDifficulty(GameType.Guess, difficulty);
+
+
+            //TODO refactor out to own class
             ComplexColourGame = new ComplexColourGame(DifficultySetting.MaxSelectable);
             if (resume != null)
             {
                 ComplexColourGame.Level = resume.Level;
-                ComplexColourGame.MatchsNeeded = resume.MatchesNeeded;
+                ComplexColourGame.MatchesNeeded = resume.MatchesNeeded;
                 ResumeModel = resume;
             }
             else
             {
                 ResumeModel = new ResumeModel
                 {
-                    PlayStyle = "Colour Complex",
+                    GameType = GameType.ColourComplex,
                     Difficulty = difficulty,
                 };
             }
@@ -37,35 +41,15 @@ namespace GoMemory.ViewModels
         }
 
 
-        /// <summary>
-        /// Setup game difficulty settings
-        /// </summary>
-        /// <param name="difficulty"></param>
-        /// <returns></returns>
-        public void SetDifficultySettings(Difficulty difficulty)
-        {
-            switch (difficulty)
-            {
-                case Difficulty.Easy:
-                    DifficultySetting = DifficultyHelper.SetDifficulty(1, 3, 3, 10);
-                    break;
-                case Difficulty.Hard:
-                    DifficultySetting = DifficultyHelper.SetDifficulty(3, 3, 9, 32);
-                    break;
-                default:
-                    DifficultySetting = DifficultyHelper.SetDifficulty(2, 3, 6, 20);
-                    break;
-            }
-        }
 
 
         /// <summary>
-        /// Retur na string to set the level
+        /// Return a string to set the level
         /// </summary>
         /// <returns></returns>
         public string SetLevelText()
         {
-            return "Level : " + ComplexColourGame.Level;
+            return $"Level : ComplexColourGame.Level";
         }
 
         /// <summary>
@@ -74,13 +58,13 @@ namespace GoMemory.ViewModels
         public void Retry()
         {
             ComplexColourGame.Level -= 1;
-            ComplexColourGame.MatchsNeeded -= 1;
+            ComplexColourGame.MatchesNeeded -= 1;
         }
 
 
         /// <summary>
-        /// Determinees if max level for difficulty is reached if not
-        /// next round is intilized
+        /// Determiners if max level for difficulty is reached if not
+        /// next round is initialized
         /// </summary>
         public bool NextRound()
         {
@@ -88,39 +72,39 @@ namespace GoMemory.ViewModels
             if (ComplexColourGame.Level <= DifficultySetting.MaxLevel)
             {
                 ResumeModel.Level = ComplexColourGame.Level - 1;
-                ResumeModel.MatchesNeeded = ComplexColourGame.MatchsNeeded;
+                ResumeModel.MatchesNeeded = ComplexColourGame.MatchesNeeded;
                 ResumeHelper.SetResume(ResumeModel);
 
-                InitilizeRound();
+                InitializeRound();
                 return true;
             }
 
-            ResumeHelper.RemoveResume(ResumeModel.PlayStyle);
+            ResumeHelper.RemoveResume(ResumeModel.GameType);
             return false;
         }
 
 
         /// <summary>
-        /// IntilizeRound settings
+        /// InitializeRound settings
         /// </summary>
-        public void InitilizeRound()
+        public void InitializeRound()
         {
-            ComplexColourGame.MatchsNeeded += 1;
+            ComplexColourGame.MatchesNeeded += 1;
             GuessesMade = 0;
-            ComplexColourGame.SequenceColours = new ComplexColour[ComplexColourGame.MatchsNeeded];
-            GenreateRoundToMatchComplexColours();
+            ComplexColourGame.SequenceColors = new ComplexColour[ComplexColourGame.MatchesNeeded];
+            GenerateRoundToMatchComplexColors();
             SetMode();
         }
 
 
         /// <summary>
-        /// Populate the stack layout with the sequence of Complexcolors
+        /// Populate the stack layout with the sequence of Complex colors
         /// </summary>
         /// <param name="stackLayout"></param>
         /// <returns></returns>
-        public StackLayout PopulateSequencStackLayout(StackLayout stackLayout)
+        public StackLayout PopulateSequenceStackLayout(StackLayout stackLayout)
         {
-            for (int i = 0; i < ComplexColourGame.SequenceColours.Length; i++)
+            for (int i = 0; i < ComplexColourGame.SequenceColors.Length; i++)
             {
                 StackLayout st = new StackLayout
                 {
@@ -128,13 +112,13 @@ namespace GoMemory.ViewModels
                 };
                 Label itemnumber = new Label
                 {
-                    Text = (i + 1) + ". "
+                    Text = $"{(i + 1)} . "
                 };
 
                 Label label = new Label
                 {
-                    Text = ComplexColourGame.SequenceColours[i].SpeltColour,
-                    TextColor = ComplexColourGame.SequenceColours[i].TextColour,
+                    Text = ComplexColourGame.SequenceColors[i].SpeltColour,
+                    TextColor = ComplexColourGame.SequenceColors[i].TextColour,
 
 
                     FontSize = 25,
@@ -154,20 +138,20 @@ namespace GoMemory.ViewModels
         ///  set the color and text that will be need for the 
         /// round
         /// </summary>
-        public void GenreateRoundToMatchComplexColours()
+        public void GenerateRoundToMatchComplexColors()
         {
             Random rnd = new Random();
 
-            for (int i = 0; i < ComplexColourGame.SequenceColours.Length; i++)
+            for (int i = 0; i < ComplexColourGame.SequenceColors.Length; i++)
             {
-                int colourRndIndex = rnd.Next(0, ComplexColourGame.PlayColours.Length);
-                int textRndIndex = rnd.Next(0, ComplexColourGame.PlayColours.Length);
+                int colourRndIndex = rnd.Next(0, ComplexColourGame.PlayColors.Length);
+                int textRndIndex = rnd.Next(0, ComplexColourGame.PlayColors.Length);
                 ComplexColour complexColour = new ComplexColour
                 {
-                    SpeltColour = ComplexColourGame.PlayWordColours[colourRndIndex],
-                    TextColour = ComplexColourGame.PlayColours[textRndIndex],
+                    SpeltColour = ComplexColourGame.PlayWordColors[colourRndIndex],
+                    TextColour = ComplexColourGame.PlayColors[textRndIndex],
                 };
-                ComplexColourGame.SequenceColours[i] = complexColour;
+                ComplexColourGame.SequenceColors[i] = complexColour;
 
             }
         }
@@ -185,12 +169,12 @@ namespace GoMemory.ViewModels
 
             if (ComplexColourGame.Mode == Mode.Text)
             {
-                ComplexColourGame.SelectedWordColours = new string[ComplexColourGame.MatchsNeeded];
+                ComplexColourGame.SelectedWordColors = new string[ComplexColourGame.MatchesNeeded];
                 return "Mode : Colour Spelling";
             }
-            ComplexColourGame.SelectedColours = new object[ComplexColourGame.MatchsNeeded];
+            ComplexColourGame.SelectedColors = new object[ComplexColourGame.MatchesNeeded];
 
-            return "Mode : Word Colouring";
+            return "Mode : Word Coloring";
 
         }
 
@@ -204,15 +188,19 @@ namespace GoMemory.ViewModels
         public bool CheckSequenceText(string colourSelected)
         {
 
-            ComplexColourGame.SelectedWordColours[GuessesMade] = colourSelected;
+            ComplexColourGame.SelectedWordColors[GuessesMade] = colourSelected;
 
-            for (int i = 0; i < ComplexColourGame.SelectedWordColours.Length; i++)
+            for (int i = 0; i < ComplexColourGame.SelectedWordColors.Length; i++)
             {
-                if (ComplexColourGame.SelectedWordColours[i] == null)
+                if (ComplexColourGame.SelectedWordColors[i] == null)
                     break;
-                if (ComplexColourGame.SelectedWordColours[i] !=
-                    ComplexColourGame.SequenceColours[i].SpeltColour)
+
+                if(String.Compare(ComplexColourGame.SelectedWordColors[i],
+                    ComplexColourGame.SequenceColors[i].SpeltColour) == 0 )
                     return false;
+                //if(ComplexColourGame.SelectedWordColors[i] !=
+                //    ComplexColourGame.SequenceColors[i].SpeltColour)                    ;
+                 
 
 
             }
@@ -229,14 +217,14 @@ namespace GoMemory.ViewModels
         public bool CheckSequenceColour(Color textColour)
         {
 
-            ComplexColourGame.SelectedColours[GuessesMade] = textColour;
+            ComplexColourGame.SelectedColors[GuessesMade] = textColour;
 
-            for (int i = 0; i < ComplexColourGame.SelectedColours.Length; i++)
+            for (int i = 0; i < ComplexColourGame.SelectedColors.Length; i++)
             {
-                if (ComplexColourGame.SelectedColours[i] == null)
+                if (ComplexColourGame.SelectedColors[i] == null)
                     break;
-                if ((Color)ComplexColourGame.SelectedColours[i] !=
-                        ComplexColourGame.SequenceColours[i].TextColour)
+                if ((Color)ComplexColourGame.SelectedColors[i] !=
+                        ComplexColourGame.SequenceColors[i].TextColour)
                     return false;
             }
             GuessesMade += 1;
@@ -270,8 +258,8 @@ namespace GoMemory.ViewModels
                 {
                     Button button = new Button
                     {
-                        Text = ComplexColourGame.PlayWordColours[index],
-                        TextColor = System.Drawing.Color.FromName(ComplexColourGame.PlayWordColours[index]),
+                        Text = ComplexColourGame.PlayWordColors[index],
+                        TextColor = System.Drawing.Color.FromName(ComplexColourGame.PlayWordColors[index]),
                         BorderColor = Color.Black,
                         BackgroundColor = Color.White,
                         Margin = 5,
@@ -292,7 +280,7 @@ namespace GoMemory.ViewModels
 
         public bool CheckIsRoundComplete()
         {
-            return GuessesMade == ComplexColourGame.MatchsNeeded;
+            return GuessesMade == ComplexColourGame.MatchesNeeded;
         }
     }
 }
