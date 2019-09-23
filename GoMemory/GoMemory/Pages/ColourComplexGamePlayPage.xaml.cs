@@ -12,7 +12,7 @@ namespace GoMemory.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ColourComplexGamePlayPage : ContentPage
     {
-        readonly ColourComplexGamePlayViewModel _colourComplexGamePlayViewModel;
+        readonly ColorComplexGamePlayViewModel _colourComplexGamePlayViewModel;
         private GameStatus GameStatus;
 
         public ColourComplexGamePlayPage(Difficulty difficulty, GameType gameType, ResumeModel resume)
@@ -25,7 +25,7 @@ namespace GoMemory.Pages
                 GameType = gameType
             };
 
-            _colourComplexGamePlayViewModel = new ColourComplexGamePlayViewModel(difficulty, resume);
+            _colourComplexGamePlayViewModel = new ColorComplexGamePlayViewModel(difficulty, resume);
             GuessLayout();
             NextRound();
         }
@@ -120,11 +120,11 @@ namespace GoMemory.Pages
                 Grid.IsEnabled = false;
                 Button btn = sender as Button;
 
-                if (_colourComplexGamePlayViewModel.ComplexColourGame.Mode == Mode.Text)
+                if (_colourComplexGamePlayViewModel.ComplexColorGame.Mode == Mode.Text)
                 {
                     found = _colourComplexGamePlayViewModel.CheckSequenceText(btn.Text);
                 }
-                else if (_colourComplexGamePlayViewModel.ComplexColourGame.Mode == Mode.Color)
+                else if (_colourComplexGamePlayViewModel.ComplexColorGame.Mode == Mode.Color)
                 {
                     found = _colourComplexGamePlayViewModel.CheckSequenceColour(btn.TextColor);
 
@@ -156,7 +156,7 @@ namespace GoMemory.Pages
                 if (_colourComplexGamePlayViewModel.CheckIsRoundComplete())
                 {
 
-                    GameStatus.Level = _colourComplexGamePlayViewModel.ComplexColourGame.Level;
+                    GameStatus.Level = _colourComplexGamePlayViewModel.ComplexColorGame.Level;
                     UpdateStatusHelper.UpdateStatus(GameStatus);
 
                     NextRound();
