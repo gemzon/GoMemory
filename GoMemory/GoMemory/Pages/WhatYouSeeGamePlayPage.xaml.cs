@@ -51,7 +51,7 @@ namespace GoMemory.Pages
 
             Grid = _whatYouSeeGamePlayViewModel.CreateNewGrid(Grid);
             Grid.MinimumWidthRequest = Application.Current.MainPage.Width * 0.5;
-            Grid.MinimumWidthRequest = Application.Current.MainPage.Height * 0.6;
+            Grid.MinimumHeightRequest = Application.Current.MainPage.Height * 0.6;
             Grid.IsVisible = false;
 
 
@@ -73,6 +73,7 @@ namespace GoMemory.Pages
         /// </summary>
         public void AddTapGestures()
         {
+            //Todo refactor to separate class to handle tap gestures
             foreach (var view in Grid.Children)
             {
                 Image image = view as Image;
@@ -120,7 +121,7 @@ namespace GoMemory.Pages
 
                 if (_whatYouSeeGamePlayViewModel.CheckIsRoundComplete())
                 {
-                    GameStatus.Level = _whatYouSeeGamePlayViewModel.UnorderedGame.Level;
+                    GameStatus.Level = _whatYouSeeGamePlayViewModel.GameModel.Level;
                     UpdateStatusHelper.UpdateStatus(GameStatus);
 
                     NextRound();
@@ -129,6 +130,7 @@ namespace GoMemory.Pages
             }
             catch (Exception e)
             {
+                //todo look at what might fail and how to handle
                 Console.WriteLine(e);
                 throw;
             }

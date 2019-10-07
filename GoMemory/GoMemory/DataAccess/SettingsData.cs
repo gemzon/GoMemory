@@ -76,8 +76,8 @@ namespace GoMemory.DataAccess
             {
                 GameType = GameType.ColourComplex,
                 Difficulty = Difficulty.Easy,
-                GridRowSize = 1,
-                GridColumnSize = 3,
+                GridRowSize = 3,
+                GridColumnSize = 1,
                 MaxSelectable = 3,
                 MaxLevel = 10
             });
@@ -86,8 +86,8 @@ namespace GoMemory.DataAccess
             {
                 GameType = GameType.ColourComplex,
                 Difficulty = Difficulty.Normal,
-                GridRowSize = 2,
-                GridColumnSize = 3,
+                GridRowSize = 3,
+                GridColumnSize = 2,
                 MaxSelectable = 6,
                 MaxLevel = 20
             });

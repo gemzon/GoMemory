@@ -9,6 +9,8 @@ namespace GoMemory.Helpers
     {
         private readonly Image[] _images;
 
+       
+
         public ImageHelper() => _images = new[]
             {
                 new Image{Source ="apple.png"},
@@ -51,9 +53,6 @@ namespace GoMemory.Helpers
             };
 
 
-
-
-
         /// <summary>
         /// zero argument method for getting a unmodified ObservableCollection of Image
         /// </summary>
@@ -61,11 +60,8 @@ namespace GoMemory.Helpers
         /// ObservableCollection of Image
         /// </returns>
         public Image[] GetImages(int totalImages)
-        {
-         
-  return  ShuffleCollection(_images).Take(totalImages).ToArray();
-         
-          
+        {  
+            return  ShuffleCollection(_images).Take(totalImages).ToArray();          
         }
 
         /// <summary>
@@ -90,9 +86,7 @@ namespace GoMemory.Helpers
 
         public Image[] ToMatchImagesList(int numberOfImagesNeeded, Image[] images)
         {
-          
-return ShuffleCollection(images).Take(numberOfImagesNeeded).ToArray();
- 
+            return ShuffleCollection(images).Take(numberOfImagesNeeded).ToArray(); 
         }
            
 

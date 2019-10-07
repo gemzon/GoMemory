@@ -8,45 +8,24 @@ using Xamarin.Forms;
 
 namespace GoMemory.ViewModels
 {
-    public class WhatYouSeeGamePlayViewModel : BaseViewModel, IGame
+    public class WhatYouSeeGamePlayViewModel : GameViewModel
     {
-        public DifficultySetting DifficultySetting { get; set; }
-        public ImageHelper ImageHelper { get; set; }
-        public UnorderedGame UnorderedGame { get; set; }
-        public ResumeModel ResumeModel { get; set; }
-
         private int CorrectSelections;
+        public Image[] AllImages { get; set; }
+        public Image[] ToMatchImages { get; set; }
+        public IList<Image> SelectedImages { get; set; }
 
 
         public WhatYouSeeGamePlayViewModel(Difficulty difficulty, ResumeModel resume)
+             : base(GameType.Guess, difficulty, resume)
         {
-            DifficultySetting = SettingsData.SetCurrentDifficulty(GameType.Guess, difficulty);
-            ImageHelper = new ImageHelper();
-            SetGameImages();        
-            CheckIfResume(difficulty, resume);
+         GameModel = new UnorderedGame();
+            SetGameImages();
+            IsResume();
             NextRound();
         }
 
-        //TODO move out to own class
-        private void CheckIfResume(Difficulty difficulty, ResumeModel resume)
-        {
-            if (resume != null)
-            {
-                UnorderedGame.Level = resume.Level;
-                UnorderedGame.MatchesNeeded = resume.MatchesNeeded;
-                ResumeModel = resume;
-            }
-            else
-            {
-                ResumeModel = new ResumeModel
-                {
-                    GameType = GameType.Guess,
-                    Difficulty = difficulty,
-                };
-            }
-        }
-
-
+     
 
         /// <summary>
         /// Retrieve collection of image
@@ -54,9 +33,8 @@ namespace GoMemory.ViewModels
         /// </summary>
         public void SetGameImages()
         {
-            UnorderedGame = new UnorderedGame { AllImages = ImageHelper.GetImages(DifficultySetting.MaxSelectable) };
-
-        }
+            AllImages = ImageHelper.GetImages(DifficultySetting.MaxSelectable);
+  }
 
 
         /// <summary>
@@ -66,12 +44,12 @@ namespace GoMemory.ViewModels
         public bool NextRound()
         {
 
-            UnorderedGame.Level += 1;
-            if (UnorderedGame.Level <= DifficultySetting.MaxLevel)
+            GameModel.Level += 1;
+            if (GameModel.Level <= DifficultySetting.MaxLevel)
             {
-                ResumeModel.Level = UnorderedGame.Level - 1;
+                ResumeModel.Level = GameModel.Level - 1;
                 //todo pull directly from App.DifficultSettings
-                ResumeModel.MatchesNeeded = UnorderedGame.MatchesNeeded;
+                ResumeModel.MatchesNeeded = GameModel.MatchesNeeded;
                 ResumeHelper.SetResume(ResumeModel);
                 InitializeRound();
                 return true;
@@ -88,9 +66,9 @@ namespace GoMemory.ViewModels
         public void InitializeRound()
         {
             CorrectSelections = 0;
-            UnorderedGame.MatchesNeeded += 1;
-            UnorderedGame.ToMatchImages = ImageHelper.ToMatchImagesList(UnorderedGame.MatchesNeeded, UnorderedGame.AllImages);
-            UnorderedGame.SelectedImages = new List<Image>();
+            GameModel.MatchesNeeded += 1;
+            ToMatchImages = ImageHelper.ToMatchImagesList(GameModel.MatchesNeeded, AllImages);
+            SelectedImages = new List<Image>();
         }
 
 
@@ -101,7 +79,7 @@ namespace GoMemory.ViewModels
         public Grid CreateNewGrid(Grid grid)
         {
             grid = GridHelper.CreateGrid(DifficultySetting.GridRowSize, DifficultySetting.GridColumnSize);
-            grid = GridHelper.InsertGridImages(grid, UnorderedGame.AllImages, DifficultySetting);
+            grid = GridHelper.InsertGridImages(grid, AllImages, DifficultySetting);
             return grid;
         }
 
@@ -113,7 +91,7 @@ namespace GoMemory.ViewModels
         /// <param name="selectedImage"></param>
         public bool CheckSelections(Image selectedImage)
         {
-            foreach (var image in UnorderedGame.ToMatchImages)
+            foreach (var image in ToMatchImages)
             {
                 if (image.Source == selectedImage.Source)
                 {
@@ -132,9 +110,11 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public bool CheckIsRoundComplete()
         {
-            return CorrectSelections == UnorderedGame.ToMatchImages.Length;
+            return CorrectSelections == ToMatchImages.Length;
 
         }
+
+
 
         /// <summary>
         /// Set a Labels text to the current level
@@ -142,7 +122,7 @@ namespace GoMemory.ViewModels
         /// <returns></returns>
         public string SetLevelText()
         {
-            return $"Level : {UnorderedGame.Level}";
+            return $"Level : {GameModel.Level}";
         }
 
         /// <summary>
@@ -151,19 +131,19 @@ namespace GoMemory.ViewModels
         public void Retry()
         {
 
-            UnorderedGame.Level -= 1;
-            UnorderedGame.MatchesNeeded -= 1;
+            GameModel.Level -= 1;
+            GameModel.MatchesNeeded -= 1;
 
         }
 
         public FlexLayout CreateSequenceFlexLayout(FlexLayout flexLayout)
         {
             flexLayout.Children.Clear();
-            for (int i = 0; i < UnorderedGame.ToMatchImages.Length; i++)
+            for (int i = 0; i < ToMatchImages.Length; i++)
             {
                 Image img = new Image
                 {
-                    Source = UnorderedGame.ToMatchImages[i].Source,
+                    Source = ToMatchImages[i].Source,
                     Margin = new Thickness(2)
                 };
 

@@ -72,7 +72,8 @@ namespace GoMemory.Pages
 
 
         public async void RulesBtn_OnClicked(object sender, EventArgs e)
-        {  await Navigation.PushAsync(new RulesPage(GameType.ToString()));
+        {
+              await Navigation.PushAsync(new RulesPage(GameType));
         
         }
 

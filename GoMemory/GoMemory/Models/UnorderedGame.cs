@@ -4,13 +4,10 @@ using Xamarin.Forms;
 
 namespace GoMemory.Models
 {
-    public class UnorderedGame : ILevel
+    public class UnorderedGame : IGameModel
     {
-        public Image[] AllImages { get; set; }
-        public Image[] ToMatchImages { get; set; }
-        public List<Image> SelectedImages { get; set; }
-
+     
         public int Level { get; set; } = 0;
-        public int MatchesNeeded { get; set; } = 2;
+        public int MatchesNeeded { get; set ; } = 2;
     }
 }

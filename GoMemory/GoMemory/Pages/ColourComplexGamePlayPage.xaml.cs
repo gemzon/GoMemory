@@ -3,6 +3,7 @@ using GoMemory.Helpers;
 using GoMemory.Models;
 using GoMemory.ViewModels;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,7 +19,7 @@ namespace GoMemory.Pages
         public ColourComplexGamePlayPage(Difficulty difficulty, GameType gameType, ResumeModel resume)
         {
             InitializeComponent();
-            Title = "ColourComplex";
+            Title = "Colour Complex";
             GameStatus = new GameStatus
             {
                 Difficulty = difficulty,
@@ -120,11 +121,11 @@ namespace GoMemory.Pages
                 Grid.IsEnabled = false;
                 Button btn = sender as Button;
 
-                if (_colourComplexGamePlayViewModel.ComplexColorGame.Mode == Mode.Text)
+                if (_colourComplexGamePlayViewModel.Mode == Mode.Text)
                 {
                     found = _colourComplexGamePlayViewModel.CheckSequenceText(btn.Text);
                 }
-                else if (_colourComplexGamePlayViewModel.ComplexColorGame.Mode == Mode.Color)
+                else if (_colourComplexGamePlayViewModel.Mode == Mode.Color)
                 {
                     found = _colourComplexGamePlayViewModel.CheckSequenceColour(btn.TextColor);
 
@@ -156,7 +157,7 @@ namespace GoMemory.Pages
                 if (_colourComplexGamePlayViewModel.CheckIsRoundComplete())
                 {
 
-                    GameStatus.Level = _colourComplexGamePlayViewModel.ComplexColorGame.Level;
+                    GameStatus.Level = _colourComplexGamePlayViewModel.GameModel.Level;
                     UpdateStatusHelper.UpdateStatus(GameStatus);
 
                     NextRound();
@@ -185,6 +186,7 @@ namespace GoMemory.Pages
             //Todo extract reduce duplication
             StackLayout.IsVisible = true;
             Failed.IsVisible = false;
+
             PlayLayout.IsVisible = false;
             Content = StackLayout;
 

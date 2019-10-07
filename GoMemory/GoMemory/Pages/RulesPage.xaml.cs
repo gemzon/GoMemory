@@ -1,4 +1,5 @@
-﻿using GoMemory.ViewModels;
+﻿using GoMemory.Enums;
+using GoMemory.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -8,20 +9,26 @@ namespace GoMemory.Pages
     public partial class RulesPage : ContentPage
     {
         private RulesViewModel _rulesViewModel;
-        public RulesPage(string playStyle)
+        public RulesPage(GameType gameType)
         {
+
+            //TODO refactor out game rules to seperate view components 
+            //and import tha as needed
+
             InitializeComponent();
-            BindingContext = _rulesViewModel = new RulesViewModel(playStyle);
-            Title =  $"{_rulesViewModel.PlayStyle } Rules";
-            switch (playStyle)
+            BindingContext = _rulesViewModel = new RulesViewModel(gameType);           
+            switch (gameType)
             {
-                case "What you see":
+                case GameType.Guess:
+                    Title = "What you see Rules";
                     WhatYouSee.IsVisible = true;
                     break;
-                case "Sequential":
+                case GameType.Sequential:
+                    Title = "Sequential";
                     Sequential.IsVisible = true;
                     break;
-                case "Colour Complex":
+                case GameType.ColourComplex:
+                    Title = "Colour Complex";
                     ColourComplex.IsVisible = true;
                     break;
             }

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace GoMemory.Models
 {
@@ -6,5 +7,7 @@ namespace GoMemory.Models
     {
         public Color TextColor { get; set; }
         public string SpeltColor { get; set; }
+
+      
     }
 }

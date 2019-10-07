@@ -102,6 +102,7 @@ namespace GoMemory.Pages
         /// </summary>
         public void AddTapGestures()
         {
+            //Todo refactor to separate class to handle tap gestures
             foreach (var view in Grid.Children)
             {
                 Image image = view as Image;
@@ -150,7 +151,7 @@ namespace GoMemory.Pages
                 }
                 if (_sequentialGamePlayViewModel.CheckIsRoundComplete())
                 {
-                    GameStat.Level = _sequentialGamePlayViewModel.OrderedGame.Level;
+                    GameStat.Level = _sequentialGamePlayViewModel.GameModel.Level;
                     UpdateStatusHelper.UpdateStatus(GameStat);
                     SequenceStackLayout.Children.Clear();
                     NextRound();
@@ -160,6 +161,7 @@ namespace GoMemory.Pages
             }
             catch (Exception e)
             {
+                //todo look at what might fail and how to handle
                 Console.WriteLine(e);
                 throw;
             }
@@ -175,8 +177,11 @@ namespace GoMemory.Pages
         {
             _sequentialGamePlayViewModel.Retry();
 
+            //TODO refactor 
             StackLayout.IsVisible = true;
             Failed.IsVisible = false;
+
+
             PlayLayout.IsVisible = false;
             Content = StackLayout;
 
