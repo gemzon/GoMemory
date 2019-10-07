@@ -11,16 +11,34 @@ namespace GoMemory.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GameLandingPage : ContentPage
     {
-        public string PlayStyle { get; set; }
+        public GameType GameType { get; set; }
         public ResumeModel ResumeModel { get; set; }
 
-        public GameLandingPage(string playStyle)
+        public GameLandingPage(string buttonText)
         {
             InitializeComponent();
-            Title = playStyle;
-            PlayStyle = playStyle;
+            Title = buttonText;
+            SetGameType(buttonText);
 
         }
+
+        private void SetGameType(string buttonText)
+        {
+
+            switch (buttonText)
+            {
+                case "What you see":
+                    GameType = GameType.Guess;
+                    break;
+                case "Sequential":
+                    GameType = GameType.Sequential;
+                    break;
+                default:
+                    GameType = GameType.ColourComplex;
+                    break;
+            }
+        }
+
 
         protected override void OnAppearing()
         {
@@ -31,9 +49,9 @@ namespace GoMemory.Pages
         /// <summary>
         /// check to see if there is a saved game
         /// </summary>
-        public async void CheckResume()
+        public void CheckResume()
         {
-            ResumeModel = await ResumeHelper.CheckResume(PlayStyle);
+            ResumeModel = ResumeHelper.CheckResume(GameType);
             if (ResumeModel != null)
             {
                 ResumeBtn.IsEnabled = true;
@@ -46,55 +64,65 @@ namespace GoMemory.Pages
             SetGamePlay(ResumeModel.Difficulty, ResumeModel);
         }
 
-        public async void StatsBtn_OnClicked(object sender, EventArgs e)
+    
+        public async void StatusBtn_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new StatsPage(PlayStyle));
+            await Navigation.PushAsync(new StatusPage(GameType));       
         }
+
 
         public async void RulesBtn_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new RulesPage(PlayStyle));
+              await Navigation.PushAsync(new RulesPage(GameType));
+        
         }
 
-        public void Difficulty_OnClicked(object sender, EventArgs e)
+
+        /// <summary>
+        /// setting the difficulty of  the games
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void SetGame_OnClicked(object sender, EventArgs e)
         {
             Button clickedButton = sender as Button;
 
-            if (clickedButton != null && clickedButton.Text == "Easy")
+            if(clickedButton == null)
+                return;
+
+
+            switch (clickedButton.Text)
             {
-                SetGamePlay(Difficulty.Easy);
-            }
-            else if (clickedButton != null && clickedButton.Text == "Normal")
-            {
-                SetGamePlay(Difficulty.Normal);
-            }
-            else
-            {
-                SetGamePlay(Difficulty.Hard);
+                case "Easy":
+                    SetGamePlay(Difficulty.Easy);
+                    break;
+                case "Normal":
+                    SetGamePlay(Difficulty.Normal);
+                    break;
+                default:
+                    SetGamePlay(Difficulty.Hard);
+                    break;
             }
 
 
         }
 
+
+        //set game play style
         public async void SetGamePlay(Difficulty difficulty, ResumeModel resume = null)
         {
-            if (PlayStyle == "What you see")
+            switch (GameType)
             {
-
-                await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty, PlayStyle, resume));
-            }
-            else if (PlayStyle == "Colour Complex")
-            {
-
-                await Navigation.PushAsync(new ColourComplexGamePlayPage(difficulty, PlayStyle, resume));
-            }
-            else
-            {
-                await Navigation.PushAsync(new SequentialGamePlayPage(difficulty, PlayStyle, resume));
+                case GameType.Guess:
+                    await Navigation.PushAsync(new WhatYouSeeGamePlayPage(difficulty, GameType, resume));
+                    break;
+                case GameType.ColourComplex:
+                    await Navigation.PushAsync(new ColourComplexGamePlayPage(difficulty, GameType, resume));
+                    break;
+                default:
+                    await Navigation.PushAsync(new SequentialGamePlayPage(difficulty, GameType, resume));
+                    break;
             }
         }
-
-
-
     }
 }

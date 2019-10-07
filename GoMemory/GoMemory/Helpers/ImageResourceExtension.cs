@@ -11,9 +11,7 @@ namespace GoMemory.Helpers
 
         public object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Source == null) return null;
-
-            return ImageSource.FromResource(Source);
+            return Source == null ? null : ImageSource.FromResource(Source);
         }
     }
 }

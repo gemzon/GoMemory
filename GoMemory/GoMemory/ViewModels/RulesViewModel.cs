@@ -1,11 +1,13 @@
-﻿namespace GoMemory.ViewModels
+﻿using GoMemory.Enums;
+
+namespace GoMemory.ViewModels
 {
     public class RulesViewModel
     {
-        public string PlayStyle { get; set; }
-        public RulesViewModel(string playStyle)
+        public GameType GameType { get; set; }
+        public RulesViewModel(GameType gameType)
         {
-            PlayStyle = playStyle;
+            GameType = gameType;
         }
     }
 }

@@ -96,7 +96,7 @@
                 <Label
                     Margin="10,2,10,0"
                     FontSize="Small"
-                    Text="You will be presented with a selection coloured  text. Your need to memorize the word and the colouring of the text"
+                    Text="You will be presented with a selection colored  text. Your need to memorize the word and the colouring of the text"
                     TextColor="Black" />
                 <Image
                    
@@ -125,12 +125,12 @@
                 <Label
                     Margin="10,5,10,0"
                     FontSize="Small"
-                    Text="Mode: Colour Spelling - Recall the colour from the word"
+                    Text="Mode: How its spelt ? - Recall the color from the word"
                     TextColor="Black" />
                 <Label
                     Margin="10,5,10,0"
                     FontSize="Small"
-                    Text="Mode: Word Colouring - Recall the colour the text was in"
+                    Text="Mode: How was it colored ? - Recall the color the text was in"
                     TextColor="Black" />
 
             </StackLayout>

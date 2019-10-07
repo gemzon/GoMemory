@@ -5,11 +5,8 @@ namespace GoMemory.Interfaces
     public interface IGame
     {
         bool NextRound();
-        void InitilizeRound();
-        void SetDifficultySettings(Difficulty difficulty);
-
+        void InitializeRound();
         string SetLevelText();
-
         void Retry();
     }
 }

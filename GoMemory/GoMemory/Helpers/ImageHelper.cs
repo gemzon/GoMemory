@@ -9,71 +9,48 @@ namespace GoMemory.Helpers
     {
         private readonly Image[] _images;
 
-        public ImageHelper()
-        {
+       
 
-            //  const string imagesPath = "GoMemory.Images.Images.";
-            //Uri  imagesPath = new Uri( "ms-appx:///Images/");
-            string folder = "";
-            switch (Device.RuntimePlatform)
+        public ImageHelper() => _images = new[]
             {
-                case Device.iOS:
-                    folder = "";
-                    break;
-                case Device.Android:
-                    folder = "";
-                    break;
-                default:
-                    folder = "Images/";
-                    break;
-            }
-
-
-            _images = new[]
-            {
-
-                new Image{Source = folder +    "apple.png"},
-                new Image{Source = folder +  "beer.png"},
-                new Image{Source = folder +  "bell.png"},
-                new Image{Source = folder +  "bison.png"},
-                new Image{Source = folder +  "cake.png"},
-                new Image{Source = folder +   "camera.png"},
-                new Image{Source = folder +   "carrot.png"},
-                new Image{Source = folder +   "cheese.png"},
-                new Image{Source = folder +   "chocolate.png"},
-                new Image{Source = folder +   "clock.png"},
-                new Image{Source = folder +   "codfish.png"},
-                new Image{Source = folder +   "crab.png"},
-                new Image{Source = folder +   "egg.png"},
-                new Image{Source = folder +   "frog.png"},
-                new Image{Source = folder +   "hammer.png"},
-                new Image{Source = folder +   "lightbulb.png"},
-                new Image{Source = folder +   "lightning.png"},
-                new Image{Source = folder +   "lolly.png"},
-                new Image{Source = folder +   "microphone.png"},
-                new Image{Source = folder +   "milkshake.png"},
-                new Image{Source = folder +   "orange.png"},
-                new Image{Source = folder +   "parrot.png"},
-                new Image{Source = folder +   "phone.png"},
-                new Image{Source = folder +   "pig.png"},
-                new Image{Source = folder +   "portobello.png"},
-                new Image{Source = folder +   "rabbit.png"},
-                new Image{Source = folder +   "robots.png"},
-                new Image{Source = folder +   "sausage.png"},
-                new Image{Source = folder +   "scissors.png"},
-                new Image{Source = folder +   "spider.png"},
-                new Image{Source = folder +   "star.png"},
-                new Image{Source = folder +   "strawberry.png"},
-                new Image{Source = folder +   "teapot.png"},
-                new Image{Source = folder +   "wasp.png"},
-                new Image{Source = folder +   "watermelon.png"},
-                new Image{Source = folder +   "wine.png"}
+                new Image{Source ="apple.png"},
+                new Image{Source ="beer.png"},
+                new Image{Source ="bell.png"},
+                new Image{Source ="bison.png"},
+                new Image{Source ="cake.png"},
+                new Image{Source ="camera.png"},
+                new Image{Source ="carrot.png"},
+                new Image{Source ="cheese.png"},
+                new Image{Source ="chocolate.png"},
+                new Image{Source ="clock.png"},
+                new Image{Source ="codfish.png"},
+                new Image{Source ="crab.png"},
+                new Image{Source ="egg.png"},
+                new Image{Source ="frog.png"},
+                new Image{Source ="hammer.png"},
+                new Image{Source ="lightbulb.png"},
+                new Image{Source ="lightning.png"},
+                new Image{Source ="lolly.png"},
+                new Image{Source ="microphone.png"},
+                new Image{Source ="milkshake.png"},
+                new Image{Source ="orange.png"},
+                new Image{Source ="parrot.png"},
+                new Image{Source ="phone.png"},
+                new Image{Source ="pig.png"},
+                new Image{Source ="portobello.png"},
+                new Image{Source ="rabbit.png"},
+                new Image{Source ="robots.png"},
+                new Image{Source ="sausage.png"},
+                new Image{Source ="scissors.png"},
+                new Image{Source ="spider.png"},
+                new Image{Source ="star.png"},
+                new Image{Source ="strawberry.png"},
+                new Image{Source ="teapot.png"},
+                new Image{Source ="wasp.png"},
+                new Image{Source ="watermelon.png"},
+                new Image{Source ="wine.png"}
 
             };
-        }
-
-
-
 
 
         /// <summary>
@@ -83,14 +60,8 @@ namespace GoMemory.Helpers
         /// ObservableCollection of Image
         /// </returns>
         public Image[] GetImages(int totalImages)
-        {
-            Image[] shuffled = ShuffleCollection(_images);
-            Image[] unsorted = new Image[totalImages];
-            for (int i = 0; i < unsorted.Length; i++)
-            {
-                unsorted[i] = shuffled[i];
-            }
-            return unsorted;
+        {  
+            return  ShuffleCollection(_images).Take(totalImages).ToArray();          
         }
 
         /// <summary>
@@ -113,36 +84,13 @@ namespace GoMemory.Helpers
             return unsorted;
         }
 
-
-
-        /// <summary>
-        /// Select a defined amount of random Image for game-play 
-        /// </summary>
-        /// <returns>
-        /// Array of Image
-        /// </returns>
-        public List<Image> ToMatchImagesList(int numberOfImagesNeeded, Image[] images)
+        public Image[] ToMatchImagesList(int numberOfImagesNeeded, Image[] images)
         {
-
-
-
-
-            List<Image> matchImages = new List<Image>();
-
-            Random rnd = new Random();
-
-            int count = 0;
-            while (count != numberOfImagesNeeded)
-            {
-                Image selectedImage = images[rnd.Next(0, images.Length)];
-                if (matchImages.Contains(selectedImage)) continue;
-                matchImages.Add(selectedImage);
-                count++;
-
-            }
-
-            return matchImages;
+            return ShuffleCollection(images).Take(numberOfImagesNeeded).ToArray(); 
         }
+           
+
+
 
         public Image[] ToMatchImagesArray(Image[] selectFromImages)
         {

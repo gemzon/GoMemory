@@ -14,7 +14,7 @@ namespace GoMemory.ViewModels
         }
 
 
-        bool isBusy = false;
+        bool isBusy;
         public bool IsBusy
         {
             get => isBusy;

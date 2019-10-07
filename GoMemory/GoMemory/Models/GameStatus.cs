@@ -3,13 +3,13 @@ using SQLite;
 
 namespace GoMemory.Models
 {
-    [Table("Gamestat")]
-    public class GameStat
+    [Table("GameStatus")]
+    public class GameStatus
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
 
-        public string PlayStyle { get; set; }
+        public GameType GameType { get; set; }
         public int Level { get; set; }
         public Difficulty Difficulty { get; set; }
 

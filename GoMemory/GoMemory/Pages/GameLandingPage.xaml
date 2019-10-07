@@ -18,15 +18,15 @@
                 <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
 
                     <Button
-                        Clicked="Difficulty_OnClicked"
+                        Clicked="SetGame_OnClicked"
                         Style="{StaticResource GoldenRodSmallButton}"
                         Text="Easy" />
                     <Button
-                        Clicked="Difficulty_OnClicked"
+                        Clicked="SetGame_OnClicked"
                         Style="{StaticResource GoldenRodSmallButton}"
                         Text="Normal" />
                     <Button
-                        Clicked="Difficulty_OnClicked"
+                        Clicked="SetGame_OnClicked"
                         Style="{StaticResource GoldenRodSmallButton}"
                         Text="Hard" />
                 </StackLayout>
@@ -44,8 +44,8 @@
                         Style="{StaticResource GoldenRodButton}"
                         Text="Resume" />
                     <Button
-                        x:Name="StatsBtn"
-                        Clicked="StatsBtn_OnClicked"
+                        x:Name="StatusBtn"
+                        Clicked="StatusBtn_OnClicked"
                         Style="{StaticResource GoldenRodButton}"
                         Text="Stats" />
                     <Button

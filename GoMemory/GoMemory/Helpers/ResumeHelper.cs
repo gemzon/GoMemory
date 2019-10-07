@@ -1,13 +1,13 @@
-﻿using GoMemory.Models;
-using System.Threading.Tasks;
+﻿using GoMemory.Enums;
+using GoMemory.Models;
 
 namespace GoMemory.Helpers
 {
     public static class ResumeHelper
     {
-        public static async Task<ResumeModel> CheckResume(string playStyle)
+        public static ResumeModel CheckResume(GameType gameType)
         {
-            return await App.ResumeRepository.GetResumeModel(playStyle);
+            return App.ResumeRepository.GetResumeModel(gameType);
         }
 
         public static void SetResume(ResumeModel resumeModel)
@@ -16,9 +16,9 @@ namespace GoMemory.Helpers
             App.ResumeRepository.UpdateGameResume(resumeModel);
         }
 
-        public static void RemoveResume(string playstyle)
+        public static void RemoveResume(GameType gameType)
         {
-            App.ResumeRepository.RemoveResumeModel(playstyle);
+            App.ResumeRepository.RemoveResumeModel(gameType);
         }
     }
 }

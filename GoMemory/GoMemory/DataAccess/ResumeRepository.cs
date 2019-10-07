@@ -1,73 +1,59 @@
-﻿using GoMemory.Interfaces;
+﻿using GoMemory.Enums;
+using GoMemory.Interfaces;
 using GoMemory.Models;
 using SQLite;
 using System;
-using System.Threading.Tasks;
 
 namespace GoMemory.DataAccess
 {
     public class ResumeRepository : IResumeRepository
     {
-
-        public SQLiteAsyncConnection Conn;
+        public SQLiteConnection Conn;
 
         public ResumeRepository(string dbPath)
         {
-
-
-            Conn = new SQLiteAsyncConnection(dbPath);
-            Conn.CreateTableAsync<ResumeModel>();
-
+            Conn = new SQLiteConnection(dbPath);
+            Conn.CreateTable<ResumeModel>();
         }
 
-        public async void UpdateGameResume(ResumeModel resumeModel)
+        public void UpdateGameResume(ResumeModel resumeModel)
         {
-            if (resumeModel.Level == 0)
-            {
-                return;
-            }
-
             try
             {
-                await Conn.InsertOrReplaceAsync(resumeModel);
-
+                if (resumeModel.Level != 0)
+                    Conn.InsertOrReplace(resumeModel);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-                throw;
+                throw new Exception(nameof(UpdateGameResume), ex);
             }
 
         }
 
-        public void RemoveResumeModel(string playStyle)
+        public void RemoveResumeModel(GameType gameType)
         {
             try
             {
-                Conn.Table<ResumeModel>().DeleteAsync(g => g.PlayStyle == playStyle);
+                Conn.Table<ResumeModel>().Delete(g => g.GameType == gameType);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-                throw;
+                throw new Exception(nameof(RemoveResumeModel), ex);
             }
-
         }
 
-        public async Task<ResumeModel> GetResumeModel(string playStyle)
+        public ResumeModel GetResumeModel(GameType gameType)
         {
-            ResumeModel resume = null;
             try
             {
-                resume = await Conn.Table<ResumeModel>().FirstOrDefaultAsync(g => g.PlayStyle == playStyle);
+                return Conn.Table<ResumeModel>().FirstOrDefault(g => g.GameType == gameType);
 
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
-                throw;
+
+                throw new Exception(nameof(GetResumeModel), ex); ;
             }
-            return resume;
         }
     }
 }

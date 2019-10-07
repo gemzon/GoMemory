@@ -1,19 +1,12 @@
-﻿using System;
-using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using Android.Support.V7.App;
-using Android.Util;
 using GoMemory.Droid.DataAccess;
+using System;
 
 namespace GoMemory.Droid
 {
-    [Activity(Label = "GoMemory", Icon = "@mipmap/icon", Theme = "@style/MainTheme",  
+    [Activity(Label = "GoMemory", Icon = "@mipmap/icon", Theme = "@style/MainTheme",
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
      ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
@@ -30,7 +23,7 @@ namespace GoMemory.Droid
         }
     }
 
-   
-    
+
+
 }
 
